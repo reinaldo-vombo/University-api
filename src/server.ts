@@ -3,6 +3,7 @@ import config from './config';
 import globalErrorHandler from './errors/globalErrorHandler';
 import routes from './routes';
 import cors from 'cors';
+import path from 'path';
 
 const app = express();
 app.use(
@@ -11,9 +12,12 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
+
+
+app.use('/uploads', express.static(path.join(__dirname, '..',  'storage', 'uploads')));
 
 app.get('/', (_req, res) => {
   res.send('Hello, TypeScript + Express!');

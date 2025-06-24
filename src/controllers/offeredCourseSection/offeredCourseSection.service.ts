@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OfferedCourseSection } from "@prisma/client";
-import getPrismaQuery from "../../../helpers/getPrismaQuery";
-import { IQueryParams } from "../../../interfaces/common";
-import prisma from "../../../shared/prisma";
-import { asyncForEach } from "../../../shared/utils";
+
+import { OfferedCourseSection } from "../../generated/prisma";
+import getPrismaQuery from "../../helpers/getPrismaQuery";
+import { IQueryParams } from "../../interfaces/common";
+import { prisma } from "../../shared/prisma";
+import { asyncForEach } from "../../shared/utils";
 import {
   checkFacultyAvailable,
   checkRoomAvailable,

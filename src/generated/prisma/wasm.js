@@ -168,6 +168,7 @@ exports.Prisma.StudentScalarFieldEnum = {
   gender: 'gender',
   isWoker: 'isWoker',
   shift: 'shift',
+  isActive: 'isActive',
   password: 'password',
   gradeDeclarationFile: 'gradeDeclarationFile',
   biFile: 'biFile',
@@ -176,9 +177,9 @@ exports.Prisma.StudentScalarFieldEnum = {
   academicSemesterId: 'academicSemesterId',
   academicFacultyId: 'academicFacultyId',
   academicDepartmentId: 'academicDepartmentId',
+  admissionRegistrationId: 'admissionRegistrationId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  admissionRegistrationId: 'admissionRegistrationId'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.FacultyScalarFieldEnum = {
@@ -219,6 +220,8 @@ exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
   title: 'title',
   code: 'code',
+  durationInYears: 'durationInYears',
+  academicDepartmentId: 'academicDepartmentId',
   credits: 'credits',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -239,8 +242,6 @@ exports.Prisma.SemesterRegistrationScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   status: 'status',
-  paymentRecipt: 'paymentRecipt',
-  totalPayment: 'totalPayment',
   createdAt: 'createdAt',
   updateAt: 'updateAt',
   academicSemesterId: 'academicSemesterId'
@@ -266,7 +267,8 @@ exports.Prisma.OfferedCourseScalarFieldEnum = {
   id: 'id',
   academicDepartmentId: 'academicDepartmentId',
   courseId: 'courseId',
-  semesterRegistrationId: 'semesterRegistrationId'
+  semesterRegistrationId: 'semesterRegistrationId',
+  suspendGrade: 'suspendGrade'
 };
 
 exports.Prisma.OfferedCourseSectionScalarFieldEnum = {
@@ -334,15 +336,41 @@ exports.Prisma.StudentEnrolledCourseMarkScalarFieldEnum = {
   studentId: 'studentId',
   studentEnrolledCourseId: 'studentEnrolledCourseId',
   academicSemesterId: 'academicSemesterId',
-  exam1: 'exam1',
-  exam2: 'exam2',
-  exam3: 'exam3',
-  exam4: 'exam4',
-  exam5: 'exam5',
-  exam6: 'exam6',
+  continuousAssessments: 'continuousAssessments',
+  frequencyExam: 'frequencyExam',
   finalExam: 'finalExam',
+  resourceExam: 'resourceExam',
+  specialExam: 'specialExam',
+  recoveryExam: 'recoveryExam',
   totalMarks: 'totalMarks',
   grade: 'grade'
+};
+
+exports.Prisma.CourseDisciplineScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  disciplineId: 'disciplineId',
+  semesterId: 'semesterId',
+  credits: 'credits'
+};
+
+exports.Prisma.CoursePricingScalarFieldEnum = {
+  id: 'id',
+  price: 'price',
+  courseId: 'courseId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DisciplineScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  description: 'description',
+  credits: 'credits',
+  minimumGradeToDismiss: 'minimumGradeToDismiss',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.StudentSemesterPaymentScalarFieldEnum = {
@@ -371,9 +399,25 @@ exports.Prisma.StudentAcademicInfoScalarFieldEnum = {
   cgpa: 'cgpa'
 };
 
+exports.Prisma.EventsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  thumbnail: 'thumbnail',
+  color: 'color',
+  location: 'location',
+  mandatory: 'mandatory',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -462,7 +506,8 @@ exports.Prisma.RoomOrderByRelevanceFieldEnum = {
 exports.Prisma.CourseOrderByRelevanceFieldEnum = {
   id: 'id',
   title: 'title',
-  code: 'code'
+  code: 'code',
+  academicDepartmentId: 'academicDepartmentId'
 };
 
 exports.Prisma.CourseToPreRequisiteOrderByRelevanceFieldEnum = {
@@ -477,7 +522,6 @@ exports.Prisma.CourseFacultyOrderByRelevanceFieldEnum = {
 
 exports.Prisma.SemesterRegistrationOrderByRelevanceFieldEnum = {
   id: 'id',
-  paymentRecipt: 'paymentRecipt',
   academicSemesterId: 'academicSemesterId'
 };
 
@@ -535,11 +579,41 @@ exports.Prisma.StudentEnrolledCourseOrderByRelevanceFieldEnum = {
   courseId: 'courseId'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 exports.Prisma.StudentEnrolledCourseMarkOrderByRelevanceFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   studentEnrolledCourseId: 'studentEnrolledCourseId',
   academicSemesterId: 'academicSemesterId'
+};
+
+exports.Prisma.CourseDisciplineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  disciplineId: 'disciplineId',
+  semesterId: 'semesterId'
+};
+
+exports.Prisma.CoursePricingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  courseId: 'courseId'
+};
+
+exports.Prisma.DisciplineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  description: 'description'
 };
 
 exports.Prisma.StudentSemesterPaymentOrderByRelevanceFieldEnum = {
@@ -553,10 +627,19 @@ exports.Prisma.StudentAcademicInfoOrderByRelevanceFieldEnum = {
   id: 'id',
   studentId: 'studentId'
 };
+
+exports.Prisma.EventsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  thumbnail: 'thumbnail',
+  color: 'color'
+};
 exports.UserRole = exports.$Enums.UserRole = {
   super_admin: 'super_admin',
   admin: 'admin',
   student: 'student',
+  editor: 'editor',
   faculty: 'faculty',
   accountant: 'accountant',
   department_head: 'department_head',
@@ -628,8 +711,12 @@ exports.Prisma.ModelName = {
   StudentSemesterRegistrationCourse: 'StudentSemesterRegistrationCourse',
   StudentEnrolledCourse: 'StudentEnrolledCourse',
   StudentEnrolledCourseMark: 'StudentEnrolledCourseMark',
+  CourseDiscipline: 'CourseDiscipline',
+  CoursePricing: 'CoursePricing',
+  Discipline: 'Discipline',
   StudentSemesterPayment: 'StudentSemesterPayment',
-  StudentAcademicInfo: 'StudentAcademicInfo'
+  StudentAcademicInfo: 'StudentAcademicInfo',
+  Events: 'Events'
 };
 
 /**

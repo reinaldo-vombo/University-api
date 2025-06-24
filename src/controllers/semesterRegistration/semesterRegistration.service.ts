@@ -404,12 +404,10 @@ const startNewSemesterService = async (id: string) => {
       studentSemesterRegistrations,
       async (studentSemReg: StudentSemesterRegistration) => {
         if (studentSemReg.totalCreditsTaken) {
-          const totalPaymentAmount = studentSemReg.totalCreditsTaken * 1000;
 
           await studentSemesterPaymentService.createSemesterPayment(tx, {
             studentId: studentSemReg.studentId,
             academicSemesterId: semesterRegistration.academicSemesterId,
-            totalPaymentAmount,
             paymentRecipt: studentSemReg.paymentRecipt,
           });
         }

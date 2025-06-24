@@ -11,6 +11,14 @@ export const createCourseZodSchema = z.object({
     credits: z.number({
       required_error: "Credits is required",
     }),
+    academicDepartmentId: z.string({
+    required_error: 'Departamento acadêmico é obrigatorio',
+    }),
+    durationInYears: z.number({
+      required_error: 'O ano de duração é obrigatorio',
+    }),
+    yearLevel: z.enum(['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH'],).optional(),
+    shift: z.enum(['Morning', 'Afternoon', 'Evening'],).optional(),
   }),
 });
 
@@ -18,7 +26,11 @@ export const updateCourseZodSchema = z.object({
   body: z.object({
     title: z.string().optional(),
     code: z.string().optional(),
+    academicDepartmentId: z.string().optional(),
+    durationInYears: z.number().optional(),
     credits: z.number().optional(),
+    yearLevel: z.enum(['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH'],).optional(),
+    shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING'],).optional(),
   }),
 });
 

@@ -1,5 +1,4 @@
 import express from "express";
-import { ENUM_USER_ROLE } from "../../../enums/user";
 import authGuard from "../../middlewares/authGuard";
 import queryParams from "../../middlewares/queryParams";
 import validateRequest from "../../middlewares/validateRequest";
@@ -9,6 +8,7 @@ import {
   createOfferedCourseZodSchema,
   updateOfferedCourseZodSchema,
 } from "./offeredCourse.validation";
+import { ENUM_USER_ROLE } from "../../enums/user";
 
 const router = express.Router();
 

@@ -18,6 +18,7 @@ const getSigleUser = async (id: string) => {
   };
 };
 const updatedSigleUser = async (id: string, info: Partial<Users>) => {
+  
   const result = await prisma.users.update({
     where: {
       id,

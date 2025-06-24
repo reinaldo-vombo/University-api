@@ -27,6 +27,7 @@ export const createFacultyZodSchema = z.object({
     academicFacultyId: z.string({
       required_error: 'Academic faculty is required',
     }),
+    shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING'],).optional(),
   }),
 });
 
@@ -44,6 +45,7 @@ export const updateFacultyZodSchema = z.object({
     designation: z.string().optional(),
     academicDepartmentId: z.string().optional(),
     academicFacultyId: z.string().optional(),
+    shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING'],).optional(),
   }),
 });
 

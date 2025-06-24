@@ -1,4 +1,4 @@
-import { WeekDays } from "@prisma/client";
+import { WeekDays } from "../../generated/prisma";
 import { z } from "zod";
 
 export const createOfferedCourseClassScheduleZodSchema = z.object({

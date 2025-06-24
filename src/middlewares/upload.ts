@@ -3,62 +3,6 @@ import path from "path";
 import fs from "fs";
 import { validateMIMEType } from 'validate-image-type';
 
-// import multer from "multer";
-// import path from "path";
-// import fs from "fs";
-// import validateImageType from "validate-image-type"; // Import the library
-
-
-// export const uploadFiles = (
-//   sub_folder_name: string,
-//   file_size_limit: number = 2000000,
-//   allowed_file_types: string[] = ["image/png", "image/jpg", "image/jpeg"]
-// ) => {
-//   const UPLOAD_FOLDER = path.join("storage", sub_folder_name);
-
-//   // Function to create folder if it doesn't exist
-//   const createFolderIfNotExist = (folderPath: string) => {
-//     if (!fs.existsSync(folderPath)) {
-//       fs.mkdirSync(folderPath, { recursive: true });
-//     }
-//   };
-
-//   // multer upload destination and files name
-//   const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//       const folderPath = path.join(process.cwd(), UPLOAD_FOLDER);
-//       createFolderIfNotExist(folderPath); // Create folder if it doesn't exist
-//       cb(null, folderPath);
-//     },
-//     filename: (req, file, cb) => {
-//       const fileExt = path.extname(file.originalname);
-//       const fileName =
-//         file.originalname.replace(fileExt, "").toLowerCase().split(" ").join("-") +
-//         Date.now() +
-//         fileExt;
-//       cb(null, fileName);
-//     },
-//   });
-
-//   // multer upload functionality
-//   return multer({
-//     storage,
-//     limits: { fileSize: file_size_limit },
-//     fileFilter(req, file, cb) {
-//       // Validate the image type using validate-image-type
-//       validateImageType(file.buffer).then((result) => {
-//         if (result && allowed_file_types.includes(result.mime)) {
-//           cb(null, true); // Image is valid and of allowed type
-//         } else {
-//           cb(new Error("The file format is not allowed!"));
-//         }
-//       }).catch(err => {
-//         cb(new Error("Invalid image format!"));
-//       });
-//     },
-//   });
-// };
-
 export const uploadFiles = (
    sub_folder_name: string,
    file_size_limit: number = 2000000,

@@ -1,7 +1,8 @@
 export const semesterTitleCodeMap: {
   [key: string]: string;
 } = {
-  Autumn: "01",
-  Summer: "02",
-  Fall: "03",
+  Primavera: "01",
+  Verão: "02",
+  Outono: "03",
+  Inverno: "04",
 };

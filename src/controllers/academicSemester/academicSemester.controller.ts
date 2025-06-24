@@ -4,6 +4,7 @@ import ApiError from '../../errors/ApiError';
 import asyncHandler from '../../shared/asyncHandler';
 import sendResponse from '../../shared/sendResponse';
 import { AcademicSemesterService } from './academicSemester.service';
+import { FLASH_MESSAGE } from '../../helpers/flashMessage';
 
 const createAcademicSemester = asyncHandler(async (req, res) => {
   const result = await AcademicSemesterService.createAcademicSemester(req.body);
@@ -11,7 +12,7 @@ const createAcademicSemester = asyncHandler(async (req, res) => {
   sendResponse<AcademicSemester>(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: 'AcademicSemester created successfully',
+    message: FLASH_MESSAGE.SEMESTER_CREATE,
     data: result,
   });
 });
@@ -36,7 +37,7 @@ const getSingleAcademicSemester = asyncHandler(async (req, res) => {
   );
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'AcademicSemester not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.COURSE_CREATE);
   }
 
   sendResponse<AcademicSemester>(res, {
@@ -54,13 +55,13 @@ const updateAcademicSemester = asyncHandler(async (req, res) => {
   );
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'AcademicSemester not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.COURSE_CREATE);
   }
 
   sendResponse<AcademicSemester>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Semester updated successfully',
+    message: FLASH_MESSAGE.SEMESTER_UPDATE,
     data: result,
   });
 });
@@ -71,13 +72,13 @@ const deleteAcademicSemester = asyncHandler(async (req, res) => {
   );
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Academic Semester not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.COURSE_CREATE);
   }
 
   sendResponse<AcademicSemester>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Semester deleted successfully',
+    message: FLASH_MESSAGE.SEMESTER_DELETE,
     data: result,
   });
 });

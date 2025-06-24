@@ -3,8 +3,8 @@ import { months } from '../../constants/months';
 
 export const createAcademicSemesterZodSchema = z.object({
   body: z.object({
-    title: z.enum(['Autumn', 'Summer', 'Fall'], {
-      required_error: 'Titulo é obrigatorio',
+    title: z.enum(['Primavera', 'Verão', 'Outono', 'Inverno'], {
+      required_error: 'Temporada é obrigatorio',
     }),
     year: z.string({
       required_error: 'Ano é obrigatorio',
@@ -22,7 +22,7 @@ export const createAcademicSemesterZodSchema = z.object({
 export const updateAcademicSemesterZodSchema = z.object({
   body: z
     .object({
-      title: z.enum(['Autumn', 'Summer', 'Fall']).optional(),
+      title: z.enum(['Primavera', 'Verão', 'Outono', 'Inverno']).optional(),
       year: z.string().optional(),
       code: z.enum(['01', '02', '03']).optional(),
       startMonth: z.enum(months).optional(),

@@ -4,6 +4,7 @@ import ApiError from '../../errors/ApiError';
 import asyncHandler from '../../shared/asyncHandler';
 import sendResponse from '../../shared/sendResponse';
 import { CourseService } from './course.service';
+import { FLASH_MESSAGE } from '../../helpers/flashMessage';
 
 const createCourse = asyncHandler(async (req, res) => {
   const result = await CourseService.createCourseService(req.body);
@@ -11,7 +12,7 @@ const createCourse = asyncHandler(async (req, res) => {
   sendResponse<Course>(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: 'Course created successfully',
+    message: FLASH_MESSAGE.COURSE_CREATE,
     data: result,
   });
 });
@@ -33,7 +34,7 @@ const getSingleCourse = asyncHandler(async (req, res) => {
   const result = await CourseService.getSingleCourseService(req.params.id);
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Course not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.COURSE_NOT_FOUND);
   }
 
   sendResponse<Course>(res, {
@@ -51,13 +52,13 @@ const updateCourse = asyncHandler(async (req, res) => {
   );
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Course not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.COURSE_NOT_FOUND);
   }
 
   sendResponse<Course>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course updated successfully',
+    message: FLASH_MESSAGE.COURSE_UPDATE,
     data: result,
   });
 });
@@ -66,13 +67,13 @@ const deleteCourse = asyncHandler(async (req, res) => {
   const result = await CourseService.deleteCourseService(req.params.id);
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Course not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.COURSE_NOT_FOUND);
   }
 
   sendResponse<Course>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course deleted successfully',
+    message: FLASH_MESSAGE.COURSE_DELETE,
     data: result,
   });
 });
@@ -86,7 +87,7 @@ const assignFaculties = asyncHandler(async (req, res) => {
   sendResponse<CourseFaculty[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Faculty assigned successfully',
+    message: FLASH_MESSAGE.FACULTIES_ASSIED,
     data: result,
   });
 });
@@ -98,13 +99,13 @@ const removeFaculties = asyncHandler(async (req, res) => {
   );
 
   if (!result.count) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to remove faculties');
+    throw new ApiError(httpStatus.BAD_REQUEST, FLASH_MESSAGE.FACULTIES_NOT_ASSIED);
   }
 
   sendResponse<CourseFaculty[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Faculty removed successfully',
+    message: FLASH_MESSAGE.FACULTIES_REMOVED,
   });
 });
 

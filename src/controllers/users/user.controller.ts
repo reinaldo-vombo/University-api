@@ -1,6 +1,7 @@
 import { Users } from '../../generated/prisma';
 import asyncHandler from '../../shared/asyncHandler';
 import sendResponse from '../../shared/sendResponse';
+import { saveUploadedFiles } from '../../utils/saveUploadedFiles';
 import { userService } from './user.service';
 import httpStatus from 'http-status';
 
@@ -46,8 +47,25 @@ const deleteSingleUser = asyncHandler(async (req, res) => {
   });
 });
 const updateSingleUser = asyncHandler(async (req, res) => {
+
   const id = req.params.id;
-  const result = await userService.updatedSigleUser(id, req.body);
+    const files = req.files as {
+      avatar?: Express.Multer.File[];
+    };
+  console.log('file',req.files);
+  
+    const avatraPath = files?.avatar?.[0]
+      ? await saveUploadedFiles(files.avatar[0])
+      : null;
+      const requestbody = {
+        name: req.body.name,
+        email: req.body.email,
+        avatar: avatraPath,
+        role: req.body.role
+      }
+      console.log(req.body);
+      
+  const result = await userService.updatedSigleUser(id, requestbody);
   sendResponse<Users>(res, {
     statusCode: httpStatus.OK,
     success: true,

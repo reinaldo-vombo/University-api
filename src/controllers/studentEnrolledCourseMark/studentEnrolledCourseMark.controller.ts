@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
-import asyncHandler from "../../../shared/asyncHandler";
-import sendResponse from "../../../shared/sendResponse";
 import { StudentEnrolledCourseMarkService } from "./studentEnrolledCourseMark.service";
+import asyncHandler from "../../shared/asyncHandler";
+import sendResponse from "../../shared/sendResponse";
 
 const getAllStudentEnrolledCourseMark = asyncHandler(async (req, res) => {
   const { data, meta } =

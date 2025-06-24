@@ -2,8 +2,10 @@ import express from 'express';
 import authGuard from '../../middlewares/authGuard';
 import { ENUM_USER_ROLE } from '../../enums/user';
 import { UserController } from './user.controller';
+import { uploadFiles } from '../../middlewares/upload';
 
 const router = express.Router();
+const upload = uploadFiles('uploads/users');
 
 router.get(
   '/',
@@ -17,6 +19,9 @@ router.get(
 );
 router.put(
   '/:id',
+  upload.fields([
+    { name: 'avatar', maxCount: 1 },
+  ]),
   authGuard(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.ACCOUNTANT),
   UserController.updateSingleUser
 );

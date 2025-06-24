@@ -1,8 +1,8 @@
 import express from "express";
-import { ENUM_USER_ROLE } from "../../../enums/user";
 import authGuard from "../../middlewares/authGuard";
 import queryParams from "../../middlewares/queryParams";
 import { StudentEnrolledCourseMarkController } from "./studentEnrolledCourseMark.controller";
+import { ENUM_USER_ROLE } from "../../enums/user";
 
 const router = express.Router();
 
