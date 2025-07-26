@@ -58,6 +58,8 @@ model AcademicFaculty {
   academicDepartments AcademicDepartment[]
   faculties           Faculty[]
   students            Student[]
+  AdmitionExamePrice  AdmitionExamePrice[]
+  AdmitionExamePeriod AdmitionExamePeriod[]
 
   @@map("academic_faculties")
 }
@@ -83,8 +85,8 @@ model AcademicDepartment {
 }
 
 model Student {
-  id                      String  @id @default(uuid())
-  studentId               String  @unique
+  id                      String    @id @default(uuid())
+  studentId               String    @unique
   firstName               String
   middleName              String?
   lastName                String
@@ -92,9 +94,10 @@ model Student {
   email                   String?
   contactNo               String?
   gender                  String
-  isWoker                 Boolean @default(false)
-  shift                   Shift   @default(MANHA)
-  isActive                Boolean @default(false)
+  isWoker                 Boolean   @default(false)
+  shift                   Shift     @default(MORNING)
+  yearLevel               YearLevel @default(FIRST)
+  isActive                Boolean   @default(false)
   password                String
   gradeDeclarationFile    String
   biFile                  String
@@ -103,7 +106,7 @@ model Student {
   academicSemesterId      String
   academicFacultyId       String
   academicDepartmentId    String
-  admissionRegistrationId String? @unique
+  admissionRegistrationId String?   @unique
 
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -132,6 +135,7 @@ model Faculty {
   profileImage                String?
   email                       String?
   contactNo                   String?
+  shift                       Shift                        @default(MORNING)
   gender                      String
   designation                 String
   password                    String
@@ -177,9 +181,10 @@ model Course {
   durationInYears      Int
   courseDisciplines    CourseDiscipline[]
   coursePricing        CoursePricing?
+  yearLevel            YearLevel               @default(FIRST)
+  shift                Shift                   @default(MORNING)
   academicDepartmentId String
   academicDepartment   AcademicDepartment      @relation(fields: [academicDepartmentId], references: [id])
-  credits              Int                     @default(0)
   createdAt            DateTime                @default(now())
   updatedAt            DateTime                @updatedAt
   studentCourses       StudentEnrolledCourse[]
@@ -229,23 +234,62 @@ model SemesterRegistration {
 }
 
 model AdmitionExameRegistration {
-  id            String             @id @default(uuid())
-  applicantName String             @unique
-  paymentRecipt String
-  document      String
-  paymentAmoute Int?
-  aprovePayment Boolean?           @default(false)
-  exameResults  Int?
-  passed        Boolean?           @default(false)
-  fase          Int                @default(1)
-  exameDate     DateTime
-  createdAt     DateTime           @default(now())
-  updateAt      DateTime           @updatedAt
-  departmentId  String
-  department    AcademicDepartment @relation(fields: [departmentId], references: [id])
-  Student       Student?
+  id              String    @id @default(uuid())
+  applicantName   String    @unique
+  paymentRecipt   String
+  status          Status    @default(PENDING)
+  document        String
+  paymentAmoute   Int?
+  aprovePayment   Boolean?  @default(false)
+  exameResults    Int?
+  passed          Boolean?  @default(false)
+  faseId          String
+  fase            ExameFase @relation(fields: [faseId], references: [id])
+  exameDate       DateTime
+  rejectionReason String?
+  phoneNumber     String
+  email           String
+  createdAt       DateTime  @default(now())
+  updateAt        DateTime  @updatedAt
+
+  departmentId String
+  department   AcademicDepartment @relation(fields: [departmentId], references: [id])
+  Student      Student?
 
   @@map("admition_exame_registration")
+}
+
+model AdmitionExamePrice {
+  id                String          @id @default(uuid())
+  academicFacultyId String
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
+  price             Int
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model AdmitionExamePeriod {
+  id                String          @id @default(uuid())
+  startDate         DateTime
+  endDate           DateTime
+  academicFacultyId String
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@map("admition_exame_periods")
+}
+
+model ExameFase {
+  id        String   @id @default(uuid())
+  name      String // Ex: "Fase 1", "Fase 2"
+  ordem     Int
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  registrations AdmitionExameRegistration[]
 }
 
 model OfferedCourse {
@@ -469,9 +513,9 @@ enum SemesterRegistrationStatus {
 }
 
 enum Shift {
-  MANHA
-  TARDE
-  NOITE
+  MORNING
+  AFTERNOON
+  EVENING
 }
 
 enum Status {
@@ -505,6 +549,14 @@ enum PaymentStatus {
   PENDING
   NOT_PAID
   FULL_PAID
+}
+
+enum YearLevel {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
 }
 
 enum UserRole {

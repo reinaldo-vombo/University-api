@@ -15,6 +15,28 @@ async function main() {
       password: hashedPassword,
     },
   });
+  await prisma.exameFase.createMany({
+    data: [
+      {
+        name: 'Fase 1',
+        ordem: 1,
+        startDate: new Date('2025-07-01'),
+        endDate: new Date('2025-07-05'),
+      },
+      {
+        name: 'Fase 2',
+        ordem: 2,
+        startDate: new Date('2025-07-06'),
+        endDate: new Date('2025-07-10'),
+      },
+      {
+        name: 'Fase 3',
+        ordem: 3,
+        startDate: new Date('2025-07-11'),
+        endDate: new Date('2025-07-15'),
+      },
+    ],
+  });
 
   console.log('Admin seeded:', user);
 }

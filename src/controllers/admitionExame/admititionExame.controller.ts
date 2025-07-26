@@ -7,7 +7,15 @@ import { AdmitionExameService } from './admitionExame.service';
 import httpStatus from 'http-status';
 
 const createAdmitionExameRegistration = asyncHandler(async (req, res) => {
-  const { applicantName, exameDate, departmentId } = req.body;
+  const {
+    applicantName,
+    exameDate,
+    phoneNumber,
+
+    departmentId,
+    documentUrl,
+    paymentReciptUrl,
+  } = req.body;
   const name: string = applicantName;
 
   const exitenAplicant = await prisma.admitionExameRegistration.findUnique({
@@ -37,16 +45,13 @@ const createAdmitionExameRegistration = asyncHandler(async (req, res) => {
     ? await saveUploadedFiles(files.paymentRecipt[0])
     : null;
 
-  const registrationData: any = {
-    applicantName,
-    exameDate,
-    document: documentPath,
-    paymentRecipt: paymentPath,
-    departmentId, 
+  const requestbody: any = {
+    ...req.body,
+    document: documentPath || documentUrl,
+    paymentRecipt: paymentPath || paymentReciptUrl,
   };
-  const result = await AdmitionExameService.createAdmitionExameRegistration(
-    registrationData
-  );
+  const result =
+    await AdmitionExameService.createAdmitionExameRegistration(requestbody);
 
   sendResponse<AdmitionExameRegistration>(res, {
     statusCode: httpStatus.CREATED,

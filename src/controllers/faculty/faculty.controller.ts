@@ -4,14 +4,24 @@ import ApiError from '../../errors/ApiError';
 import asyncHandler from '../../shared/asyncHandler';
 import sendResponse from '../../shared/sendResponse';
 import { FacultyService } from './faculty.service';
+import { FLASH_MESSAGE } from '../../helpers/flashMessage';
+import { generatePassword, generateUniqueFacultyId } from '../../helpers/utils';
 
 const createFaculty = asyncHandler(async (req, res) => {
-  const result = await FacultyService.createFacultyService(req.body);
+  const generatedPassword = generatePassword(12)
+  const reqBody = {
+    ...req.body,
+    password: generatedPassword,
+    facultyId: await generateUniqueFacultyId()
+  }
+  console.log(reqBody);
+  
+  const result = await FacultyService.createFacultyService(reqBody);
 
   sendResponse<Faculty>(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: 'Faculty created successfully',
+    message: FLASH_MESSAGE.FACULTY_CREATE,
     data: result,
   });
 });
@@ -33,7 +43,7 @@ const getSingleFaculty = asyncHandler(async (req, res) => {
   const result = await FacultyService.getSingleFacultyService(req.params.id);
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Faculty not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.FACULTY_NOT_FOUND);
   }
 
   sendResponse<Faculty>(res, {
@@ -51,13 +61,13 @@ const updateFaculty = asyncHandler(async (req, res) => {
   );
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Faculty not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.FACULTY_NOT_FOUND);
   }
 
   sendResponse<Faculty>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Faculty updated successfully',
+    message: FLASH_MESSAGE.FACULTY_UPDATE,
     data: result,
   });
 });
@@ -66,13 +76,13 @@ const deleteFaculty = asyncHandler(async (req, res) => {
   const result = await FacultyService.deleteFacultyService(req.params.id);
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Faculty not found');
+    throw new ApiError(httpStatus.NOT_FOUND, FLASH_MESSAGE.FACULTY_NOT_FOUND);
   }
 
   sendResponse<Faculty>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Faculty deleted successfully',
+    message: FLASH_MESSAGE.FACULTY_DELETE,
     data: result,
   });
 });
@@ -86,7 +96,7 @@ const assignCourses = asyncHandler(async (req, res) => {
   sendResponse<Faculty>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course faculty assigned successfully',
+    message: FLASH_MESSAGE.COURSE_ASSIED,
     data: result,
   });
 });
@@ -100,14 +110,14 @@ const removeCourses = asyncHandler(async (req, res) => {
   if (!result.count) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      'Failed to remove course faculty'
+      FLASH_MESSAGE.COURSE_NOT_REMOVED
     );
   }
 
   sendResponse<CourseFaculty[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course removed successfully',
+    message: FLASH_MESSAGE.COURSE_NOT_REMOVED,
   });
 });
 

@@ -3,6 +3,8 @@ import authGuard from '../../middlewares/authGuard';
 import { ENUM_USER_ROLE } from '../../enums/user';
 import { UserController } from './user.controller';
 import { uploadFiles } from '../../middlewares/upload';
+import validateRequest from '../../middlewares/validateRequest';
+import { createUserZodSchema } from './user.validation';
 
 const router = express.Router();
 const upload = uploadFiles('uploads/users');
@@ -11,6 +13,12 @@ router.get(
   '/',
   authGuard(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   UserController.getAllUsers
+);
+router.post(
+  '/',
+  authGuard(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  validateRequest(createUserZodSchema),
+  UserController.createUser
 );
 router.get(
   '/:id',
@@ -23,6 +31,7 @@ router.put(
     { name: 'avatar', maxCount: 1 },
   ]),
   authGuard(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.ACCOUNTANT),
+  validateRequest(createUserZodSchema),
   UserController.updateSingleUser
 );
 router.delete(

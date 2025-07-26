@@ -1,3 +1,5 @@
+import { prisma } from "../shared/prisma";
+
 export const generatePassword = (length: number = 12): string => {
    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
    let password = "";
@@ -7,6 +9,45 @@ export const generatePassword = (length: number = 12): string => {
    }
    return password;
  };
+export const generateUniqueStudentNumber = async (): Promise<string> => {
+   let unique = false;
+   let studentNumber = "";
+   const year = new Date().getFullYear();
+
+   while (!unique) {
+      const randomPart = Math.floor(1000 + Math.random() * 9000);
+      studentNumber = `${year}${randomPart}`;
+
+      const existing = await prisma.student.findUnique({
+         where: { studentId: studentNumber },
+         select: { id: true }
+      });
+
+      if (!existing) unique = true;
+   }
+
+   return studentNumber;
+};
+export const generateUniqueFacultyId = async (): Promise<string> => {
+   let unique = false;
+   let facultyId = "";
+   const year = new Date().getFullYear();
+
+   while (!unique) {
+      const randomPart = Math.floor(1000 + Math.random() * 9000);
+      facultyId = `FAC-${year}-${randomPart}`;
+
+      const existing = await prisma.faculty.findUnique({
+         where: { facultyId },
+         select: { id: true }
+      });
+
+      if (!existing) unique = true;
+   }
+
+   return facultyId;
+};
+
  interface StudentMarks {
   continuousAssessments: number[];  // List of continuous assessment scores
   frequencyExam: number;            // Frequency exam score

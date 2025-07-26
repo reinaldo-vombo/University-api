@@ -3,22 +3,22 @@ import { z } from "zod";
 export const createCourseZodSchema = z.object({
   body: z.object({
     title: z.string({
-      required_error: "Title is required",
+      required_error: "Titulo é obrigatorio",
     }),
     code: z.string({
-      required_error: "Code is required",
+      required_error: "Codigo é obrigatorio",
     }),
-    credits: z.number({
-      required_error: "Credits is required",
-    }),
+    // credits: z.number({
+    //   required_error: "Credits is required",
+    // }),
     academicDepartmentId: z.string({
     required_error: 'Departamento acadêmico é obrigatorio',
     }),
     durationInYears: z.number({
       required_error: 'O ano de duração é obrigatorio',
     }),
-    yearLevel: z.enum(['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH'],).optional(),
-    shift: z.enum(['Morning', 'Afternoon', 'Evening'],).optional(),
+    yearLevel: z.enum(['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH'],),
+    shift: z.enum(['Morning', 'Afternoon', 'Evening'],),
   }),
 });
 
@@ -28,7 +28,7 @@ export const updateCourseZodSchema = z.object({
     code: z.string().optional(),
     academicDepartmentId: z.string().optional(),
     durationInYears: z.number().optional(),
-    credits: z.number().optional(),
+    // credits: z.number().optional(),
     yearLevel: z.enum(['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH'],).optional(),
     shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING'],).optional(),
   }),

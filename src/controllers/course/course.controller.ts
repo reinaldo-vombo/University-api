@@ -79,6 +79,8 @@ const deleteCourse = asyncHandler(async (req, res) => {
 });
 
 const assignFaculties = asyncHandler(async (req, res) => {
+  console.log(req.body.faculties);
+  
   const result = await CourseService.assignFacultiesService(
     req.params.id,
     req.body.faculties

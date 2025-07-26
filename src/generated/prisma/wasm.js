@@ -168,6 +168,7 @@ exports.Prisma.StudentScalarFieldEnum = {
   gender: 'gender',
   isWoker: 'isWoker',
   shift: 'shift',
+  yearLevel: 'yearLevel',
   isActive: 'isActive',
   password: 'password',
   gradeDeclarationFile: 'gradeDeclarationFile',
@@ -191,6 +192,7 @@ exports.Prisma.FacultyScalarFieldEnum = {
   profileImage: 'profileImage',
   email: 'email',
   contactNo: 'contactNo',
+  shift: 'shift',
   gender: 'gender',
   designation: 'designation',
   password: 'password',
@@ -221,8 +223,9 @@ exports.Prisma.CourseScalarFieldEnum = {
   title: 'title',
   code: 'code',
   durationInYears: 'durationInYears',
+  yearLevel: 'yearLevel',
+  shift: 'shift',
   academicDepartmentId: 'academicDepartmentId',
-  credits: 'credits',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -251,16 +254,47 @@ exports.Prisma.AdmitionExameRegistrationScalarFieldEnum = {
   id: 'id',
   applicantName: 'applicantName',
   paymentRecipt: 'paymentRecipt',
+  status: 'status',
   document: 'document',
   paymentAmoute: 'paymentAmoute',
   aprovePayment: 'aprovePayment',
   exameResults: 'exameResults',
   passed: 'passed',
-  fase: 'fase',
+  faseId: 'faseId',
   exameDate: 'exameDate',
+  rejectionReason: 'rejectionReason',
+  phoneNumber: 'phoneNumber',
+  email: 'email',
   createdAt: 'createdAt',
   updateAt: 'updateAt',
   departmentId: 'departmentId'
+};
+
+exports.Prisma.AdmitionExamePriceScalarFieldEnum = {
+  id: 'id',
+  academicFacultyId: 'academicFacultyId',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AdmitionExamePeriodScalarFieldEnum = {
+  id: 'id',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  academicFacultyId: 'academicFacultyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ExameFaseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  ordem: 'ordem',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.OfferedCourseScalarFieldEnum = {
@@ -530,7 +564,26 @@ exports.Prisma.AdmitionExameRegistrationOrderByRelevanceFieldEnum = {
   applicantName: 'applicantName',
   paymentRecipt: 'paymentRecipt',
   document: 'document',
+  faseId: 'faseId',
+  rejectionReason: 'rejectionReason',
+  phoneNumber: 'phoneNumber',
+  email: 'email',
   departmentId: 'departmentId'
+};
+
+exports.Prisma.AdmitionExamePriceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  academicFacultyId: 'academicFacultyId'
+};
+
+exports.Prisma.AdmitionExamePeriodOrderByRelevanceFieldEnum = {
+  id: 'id',
+  academicFacultyId: 'academicFacultyId'
+};
+
+exports.Prisma.ExameFaseOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name'
 };
 
 exports.Prisma.OfferedCourseOrderByRelevanceFieldEnum = {
@@ -647,15 +700,29 @@ exports.UserRole = exports.$Enums.UserRole = {
 };
 
 exports.Shift = exports.$Enums.Shift = {
-  MANHA: 'MANHA',
-  TARDE: 'TARDE',
-  NOITE: 'NOITE'
+  MORNING: 'MORNING',
+  AFTERNOON: 'AFTERNOON',
+  EVENING: 'EVENING'
+};
+
+exports.YearLevel = exports.$Enums.YearLevel = {
+  FIRST: 'FIRST',
+  SECOND: 'SECOND',
+  THIRD: 'THIRD',
+  FOURTH: 'FOURTH',
+  FIFTH: 'FIFTH'
 };
 
 exports.SemesterRegistrationStatus = exports.$Enums.SemesterRegistrationStatus = {
   UPCOMING: 'UPCOMING',
   ONGOING: 'ONGOING',
   ENDED: 'ENDED'
+};
+
+exports.Status = exports.$Enums.Status = {
+  APROVE: 'APROVE',
+  PENDING: 'PENDING',
+  DENIDE: 'DENIDE'
 };
 
 exports.WeekDays = exports.$Enums.WeekDays = {
@@ -704,6 +771,9 @@ exports.Prisma.ModelName = {
   CourseFaculty: 'CourseFaculty',
   SemesterRegistration: 'SemesterRegistration',
   AdmitionExameRegistration: 'AdmitionExameRegistration',
+  AdmitionExamePrice: 'AdmitionExamePrice',
+  AdmitionExamePeriod: 'AdmitionExamePeriod',
+  ExameFase: 'ExameFase',
   OfferedCourse: 'OfferedCourse',
   OfferedCourseSection: 'OfferedCourseSection',
   OfferedCourseClassSchedule: 'OfferedCourseClassSchedule',

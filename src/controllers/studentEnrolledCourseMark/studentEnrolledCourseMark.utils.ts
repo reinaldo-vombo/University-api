@@ -50,7 +50,6 @@ export const calculateCGPA = (
   if (payload.length) {
     for (const grade of payload) {
       totalCGPA += grade.point || 0;
-      totalCredit += grade.course.credits || 0;
     }
 
     const avgCGPA = Number((totalCGPA / payload.length).toFixed(2));

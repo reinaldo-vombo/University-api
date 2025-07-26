@@ -41,7 +41,6 @@ export const updateFacultyZodSchema = z.object({
     email: z.string().optional(),
     contactNo: z.string().optional(),
     gender: z.string().optional(),
-    bloodGroup: z.string().optional(),
     designation: z.string().optional(),
     academicDepartmentId: z.string().optional(),
     academicFacultyId: z.string().optional(),

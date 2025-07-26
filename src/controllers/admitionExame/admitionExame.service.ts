@@ -1,12 +1,29 @@
-import { AdmitionExameRegistration } from "../../generated/prisma";
-import { prisma } from "../../shared/prisma";
+import { AdmitionExameRegistration } from '../../generated/prisma';
+import { prisma } from '../../shared/prisma';
 
 const createAdmitionExameRegistration = async (
   info: AdmitionExameRegistration
 ): Promise<AdmitionExameRegistration> => {
-  
+  const now = new Date('2025-07-01');
+
+  // Procurar fase atual
+  const currentFase = await prisma.exameFase.findFirst({
+    where: {
+      startDate: { lte: now },
+      endDate: { gte: now },
+    },
+  });
+
+  if (!currentFase) {
+    throw new Error('Nenhuma fase de exame válida no momento.');
+  }
+  const body = {
+    ...info,
+    faseId: currentFase.id,
+    exameDate: currentFase.startDate,
+  };
   const result = await prisma.admitionExameRegistration.create({
-    data: info,
+    data: body,
   });
 
   return result;
@@ -15,7 +32,7 @@ const createAdmitionExameRegistration = async (
 const getAllAdmitionExameRegistration = async () => {
   const result = await prisma.admitionExameRegistration.findMany();
   return {
-    data: result
+    data: result,
   };
 };
 
@@ -54,7 +71,10 @@ const getSingleCandidate = async (id: string) => {
   });
   return candidate;
 };
-const updateSingleCandidate = async (id: string, info: Partial<AdmitionExameRegistration>) => {
+const updateSingleCandidate = async (
+  id: string,
+  info: Partial<AdmitionExameRegistration>
+) => {
   const candidate = await prisma.admitionExameRegistration.update({
     where: {
       id,
@@ -71,5 +91,5 @@ export const AdmitionExameService = {
   getPaymentApprovedApplicants,
   getSingleCandidate,
   updateSingleCandidate,
-  getAllAdmitionExameRegistration
+  getAllAdmitionExameRegistration,
 };

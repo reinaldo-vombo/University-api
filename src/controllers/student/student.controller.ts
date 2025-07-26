@@ -18,6 +18,8 @@ const createStudent = asyncHandler(async (req, res) => {
     email,
     contactNo,
     gender,
+    declarationFileUrl,
+    biFileUrl,
     presentAddress,
     academicSemesterId,
     academicDepartmentId,
@@ -45,7 +47,7 @@ const createStudent = asyncHandler(async (req, res) => {
     return sendResponse(res, {
       statusCode: httpStatus.NOT_ACCEPTABLE,
       success: false,
-      message: 'Tu não estas apto para fazer o registro',
+      message: 'Candidato não estas apto para fazer o registro',
       data: [],
     });
   }
@@ -72,8 +74,8 @@ const createStudent = asyncHandler(async (req, res) => {
     email,
     contactNo,
     gender,
-    gradeDeclarationFile: documentPath,
-    biFile: biFilePath,
+    gradeDeclarationFile: documentPath || declarationFileUrl,
+    biFile: biFilePath || biFileUrl,
     presentAddress,
     academicSemesterId,
     academicDepartmentId,
@@ -86,7 +88,7 @@ const createStudent = asyncHandler(async (req, res) => {
   sendResponse<Student>(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: 'Student created successfully',
+    message: 'Estudadente registrado',
     data: result,
   });
 });
@@ -108,7 +110,7 @@ const getSingleStudent = asyncHandler(async (req, res) => {
   const result = await StudentService.getSingleStudentService(req.params.id);
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Student not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Estudadente não encontrado');
   }
 
   sendResponse<Student>(res, {
@@ -126,13 +128,13 @@ const updateStudent = asyncHandler(async (req, res) => {
   );
 
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Student not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Estudadente não encontrado');
   }
 
   sendResponse<Student>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student updated successfully',
+    message: 'Dados atualizados',
     data: result,
   });
 });
@@ -147,7 +149,7 @@ const deleteStudent = asyncHandler(async (req, res) => {
   sendResponse<Student>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student deleted successfully',
+    message: 'Estudadente eliminado',
     data: result,
   });
 });

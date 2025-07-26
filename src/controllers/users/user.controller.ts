@@ -1,13 +1,40 @@
+import { render } from '@react-email/components';
 import { Users } from '../../generated/prisma';
+import { FLASH_MESSAGE } from '../../helpers/flashMessage';
 import asyncHandler from '../../shared/asyncHandler';
+import { prisma } from '../../shared/prisma';
 import sendResponse from '../../shared/sendResponse';
 import { saveUploadedFiles } from '../../utils/saveUploadedFiles';
 import { userService } from './user.service';
 import httpStatus from 'http-status';
 
+const createUser = asyncHandler(async (req, res) => {
+  const userExist = await prisma.users.findUnique({
+    where: {
+      email: req.body.email as string,
+    },
+  });
+
+  if (userExist) {
+    return sendResponse(res, {
+      statusCode: httpStatus.IM_USED,
+      success: true,
+      message: 'Já existe um utilizadore com esté email',
+      data: [],
+    });
+  }
+  const result = await userService.createUserService(req.body);
+
+  sendResponse<Users>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'utilizadore retornados com sucesso',
+    data: result,
+  });
+});
 const getAllUsers = asyncHandler(async (req, res) => {
   try {
-    const { data } = await userService.getAllUsers();  // Get users from the service
+    const { data } = await userService.getAllUsersService(); // Get users from the service
     sendResponse<Users[]>(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -15,19 +42,19 @@ const getAllUsers = asyncHandler(async (req, res) => {
       data,
     });
   } catch (error: any) {
-    console.error('Error fetching users from the service:', error);  // Log the error
     res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: 'Error fetching users.',
-      error: error.message as string || 'Unknown error occurred.',
+      error: (error.message as string) || 'Unknown error occurred.',
     });
   }
 });
+
 const getSingleUser = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const result = await userService.getSigleUser(id);
-  if(!result.data){
-    throw new Error('utilizador nao encontrado')
+  const result = await userService.getSigleUserService(id);
+  if (!result.data) {
+    throw new Error('utilizador nao encontrado');
   }
   sendResponse<Users>(res, {
     statusCode: httpStatus.OK,
@@ -38,7 +65,7 @@ const getSingleUser = asyncHandler(async (req, res) => {
 });
 const deleteSingleUser = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const result = await userService.deleteSigleUser(id);
+  const result = await userService.deleteSigleUserService(id);
   sendResponse<Users>(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -47,34 +74,32 @@ const deleteSingleUser = asyncHandler(async (req, res) => {
   });
 });
 const updateSingleUser = asyncHandler(async (req, res) => {
-
   const id = req.params.id;
-    const files = req.files as {
-      avatar?: Express.Multer.File[];
-    };
-  console.log('file',req.files);
-  
-    const avatraPath = files?.avatar?.[0]
-      ? await saveUploadedFiles(files.avatar[0])
-      : null;
-      const requestbody = {
-        name: req.body.name,
-        email: req.body.email,
-        avatar: avatraPath,
-        role: req.body.role
-      }
-      console.log(req.body);
-      
-  const result = await userService.updatedSigleUser(id, requestbody);
+  const files = req.files as {
+    avatar?: Express.Multer.File[];
+  };
+  const avatraPath = files?.avatar?.[0]
+    ? await saveUploadedFiles(files.avatar[0])
+    : null;
+
+  const requestbody = {
+    name: req.body.name,
+    email: req.body.email,
+    avatar: avatraPath || req.body.avatar,
+    role: req.body.role,
+  };
+
+  const result = await userService.updatedSigleUserService(id, requestbody);
   sendResponse<Users>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'utilizadores atualizado com sucesso',
+    message: FLASH_MESSAGE.USER_UPDATED,
     data: result.data,
   });
 });
 
 export const UserController = {
+  createUser,
   getAllUsers,
   getSingleUser,
   updateSingleUser,

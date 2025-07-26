@@ -79,6 +79,21 @@ export type SemesterRegistration = $Result.DefaultSelection<Prisma.$SemesterRegi
  */
 export type AdmitionExameRegistration = $Result.DefaultSelection<Prisma.$AdmitionExameRegistrationPayload>
 /**
+ * Model AdmitionExamePrice
+ * 
+ */
+export type AdmitionExamePrice = $Result.DefaultSelection<Prisma.$AdmitionExamePricePayload>
+/**
+ * Model AdmitionExamePeriod
+ * 
+ */
+export type AdmitionExamePeriod = $Result.DefaultSelection<Prisma.$AdmitionExamePeriodPayload>
+/**
+ * Model ExameFase
+ * 
+ */
+export type ExameFase = $Result.DefaultSelection<Prisma.$ExameFasePayload>
+/**
  * Model OfferedCourse
  * 
  */
@@ -158,9 +173,9 @@ export type SemesterRegistrationStatus = (typeof SemesterRegistrationStatus)[key
 
 
 export const Shift: {
-  MANHA: 'MANHA',
-  TARDE: 'TARDE',
-  NOITE: 'NOITE'
+  MORNING: 'MORNING',
+  AFTERNOON: 'AFTERNOON',
+  EVENING: 'EVENING'
 };
 
 export type Shift = (typeof Shift)[keyof typeof Shift]
@@ -214,6 +229,17 @@ export const PaymentStatus: {
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
 
+export const YearLevel: {
+  FIRST: 'FIRST',
+  SECOND: 'SECOND',
+  THIRD: 'THIRD',
+  FOURTH: 'FOURTH',
+  FIFTH: 'FIFTH'
+};
+
+export type YearLevel = (typeof YearLevel)[keyof typeof YearLevel]
+
+
 export const UserRole: {
   super_admin: 'super_admin',
   admin: 'admin',
@@ -264,6 +290,10 @@ export const ExamType: typeof $Enums.ExamType
 export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type YearLevel = $Enums.YearLevel
+
+export const YearLevel: typeof $Enums.YearLevel
 
 export type UserRole = $Enums.UserRole
 
@@ -527,6 +557,36 @@ export class PrismaClient<
     * ```
     */
   get admitionExameRegistration(): Prisma.AdmitionExameRegistrationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.admitionExamePrice`: Exposes CRUD operations for the **AdmitionExamePrice** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AdmitionExamePrices
+    * const admitionExamePrices = await prisma.admitionExamePrice.findMany()
+    * ```
+    */
+  get admitionExamePrice(): Prisma.AdmitionExamePriceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.admitionExamePeriod`: Exposes CRUD operations for the **AdmitionExamePeriod** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AdmitionExamePeriods
+    * const admitionExamePeriods = await prisma.admitionExamePeriod.findMany()
+    * ```
+    */
+  get admitionExamePeriod(): Prisma.AdmitionExamePeriodDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.exameFase`: Exposes CRUD operations for the **ExameFase** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ExameFases
+    * const exameFases = await prisma.exameFase.findMany()
+    * ```
+    */
+  get exameFase(): Prisma.ExameFaseDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.offeredCourse`: Exposes CRUD operations for the **OfferedCourse** model.
@@ -1110,6 +1170,9 @@ export namespace Prisma {
     CourseFaculty: 'CourseFaculty',
     SemesterRegistration: 'SemesterRegistration',
     AdmitionExameRegistration: 'AdmitionExameRegistration',
+    AdmitionExamePrice: 'AdmitionExamePrice',
+    AdmitionExamePeriod: 'AdmitionExamePeriod',
+    ExameFase: 'ExameFase',
     OfferedCourse: 'OfferedCourse',
     OfferedCourseSection: 'OfferedCourseSection',
     OfferedCourseClassSchedule: 'OfferedCourseClassSchedule',
@@ -1141,7 +1204,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "users" | "academicSemester" | "academicFaculty" | "academicDepartment" | "student" | "faculty" | "building" | "room" | "course" | "courseToPreRequisite" | "courseFaculty" | "semesterRegistration" | "admitionExameRegistration" | "offeredCourse" | "offeredCourseSection" | "offeredCourseClassSchedule" | "studentSemesterRegistration" | "studentSemesterRegistrationCourse" | "studentEnrolledCourse" | "studentEnrolledCourseMark" | "courseDiscipline" | "coursePricing" | "discipline" | "studentSemesterPayment" | "studentAcademicInfo" | "events"
+      modelProps: "users" | "academicSemester" | "academicFaculty" | "academicDepartment" | "student" | "faculty" | "building" | "room" | "course" | "courseToPreRequisite" | "courseFaculty" | "semesterRegistration" | "admitionExameRegistration" | "admitionExamePrice" | "admitionExamePeriod" | "exameFase" | "offeredCourse" | "offeredCourseSection" | "offeredCourseClassSchedule" | "studentSemesterRegistration" | "studentSemesterRegistrationCourse" | "studentEnrolledCourse" | "studentEnrolledCourseMark" | "courseDiscipline" | "coursePricing" | "discipline" | "studentSemesterPayment" | "studentAcademicInfo" | "events"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2000,6 +2063,204 @@ export namespace Prisma {
           count: {
             args: Prisma.AdmitionExameRegistrationCountArgs<ExtArgs>
             result: $Utils.Optional<AdmitionExameRegistrationCountAggregateOutputType> | number
+          }
+        }
+      }
+      AdmitionExamePrice: {
+        payload: Prisma.$AdmitionExamePricePayload<ExtArgs>
+        fields: Prisma.AdmitionExamePriceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdmitionExamePriceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdmitionExamePriceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload>
+          }
+          findFirst: {
+            args: Prisma.AdmitionExamePriceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdmitionExamePriceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload>
+          }
+          findMany: {
+            args: Prisma.AdmitionExamePriceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload>[]
+          }
+          create: {
+            args: Prisma.AdmitionExamePriceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload>
+          }
+          createMany: {
+            args: Prisma.AdmitionExamePriceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.AdmitionExamePriceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload>
+          }
+          update: {
+            args: Prisma.AdmitionExamePriceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload>
+          }
+          deleteMany: {
+            args: Prisma.AdmitionExamePriceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdmitionExamePriceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AdmitionExamePriceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePricePayload>
+          }
+          aggregate: {
+            args: Prisma.AdmitionExamePriceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmitionExamePrice>
+          }
+          groupBy: {
+            args: Prisma.AdmitionExamePriceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdmitionExamePriceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdmitionExamePriceCountArgs<ExtArgs>
+            result: $Utils.Optional<AdmitionExamePriceCountAggregateOutputType> | number
+          }
+        }
+      }
+      AdmitionExamePeriod: {
+        payload: Prisma.$AdmitionExamePeriodPayload<ExtArgs>
+        fields: Prisma.AdmitionExamePeriodFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdmitionExamePeriodFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdmitionExamePeriodFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload>
+          }
+          findFirst: {
+            args: Prisma.AdmitionExamePeriodFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdmitionExamePeriodFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload>
+          }
+          findMany: {
+            args: Prisma.AdmitionExamePeriodFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload>[]
+          }
+          create: {
+            args: Prisma.AdmitionExamePeriodCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload>
+          }
+          createMany: {
+            args: Prisma.AdmitionExamePeriodCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.AdmitionExamePeriodDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload>
+          }
+          update: {
+            args: Prisma.AdmitionExamePeriodUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload>
+          }
+          deleteMany: {
+            args: Prisma.AdmitionExamePeriodDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdmitionExamePeriodUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AdmitionExamePeriodUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdmitionExamePeriodPayload>
+          }
+          aggregate: {
+            args: Prisma.AdmitionExamePeriodAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmitionExamePeriod>
+          }
+          groupBy: {
+            args: Prisma.AdmitionExamePeriodGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdmitionExamePeriodGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdmitionExamePeriodCountArgs<ExtArgs>
+            result: $Utils.Optional<AdmitionExamePeriodCountAggregateOutputType> | number
+          }
+        }
+      }
+      ExameFase: {
+        payload: Prisma.$ExameFasePayload<ExtArgs>
+        fields: Prisma.ExameFaseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ExameFaseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ExameFaseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload>
+          }
+          findFirst: {
+            args: Prisma.ExameFaseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ExameFaseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload>
+          }
+          findMany: {
+            args: Prisma.ExameFaseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload>[]
+          }
+          create: {
+            args: Prisma.ExameFaseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload>
+          }
+          createMany: {
+            args: Prisma.ExameFaseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ExameFaseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload>
+          }
+          update: {
+            args: Prisma.ExameFaseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload>
+          }
+          deleteMany: {
+            args: Prisma.ExameFaseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ExameFaseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ExameFaseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExameFasePayload>
+          }
+          aggregate: {
+            args: Prisma.ExameFaseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateExameFase>
+          }
+          groupBy: {
+            args: Prisma.ExameFaseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ExameFaseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ExameFaseCountArgs<ExtArgs>
+            result: $Utils.Optional<ExameFaseCountAggregateOutputType> | number
           }
         }
       }
@@ -2958,6 +3219,9 @@ export namespace Prisma {
     courseFaculty?: CourseFacultyOmit
     semesterRegistration?: SemesterRegistrationOmit
     admitionExameRegistration?: AdmitionExameRegistrationOmit
+    admitionExamePrice?: AdmitionExamePriceOmit
+    admitionExamePeriod?: AdmitionExamePeriodOmit
+    exameFase?: ExameFaseOmit
     offeredCourse?: OfferedCourseOmit
     offeredCourseSection?: OfferedCourseSectionOmit
     offeredCourseClassSchedule?: OfferedCourseClassScheduleOmit
@@ -3175,12 +3439,16 @@ export namespace Prisma {
     academicDepartments: number
     faculties: number
     students: number
+    AdmitionExamePrice: number
+    AdmitionExamePeriod: number
   }
 
   export type AcademicFacultyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     academicDepartments?: boolean | AcademicFacultyCountOutputTypeCountAcademicDepartmentsArgs
     faculties?: boolean | AcademicFacultyCountOutputTypeCountFacultiesArgs
     students?: boolean | AcademicFacultyCountOutputTypeCountStudentsArgs
+    AdmitionExamePrice?: boolean | AcademicFacultyCountOutputTypeCountAdmitionExamePriceArgs
+    AdmitionExamePeriod?: boolean | AcademicFacultyCountOutputTypeCountAdmitionExamePeriodArgs
   }
 
   // Custom InputTypes
@@ -3213,6 +3481,20 @@ export namespace Prisma {
    */
   export type AcademicFacultyCountOutputTypeCountStudentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StudentWhereInput
+  }
+
+  /**
+   * AcademicFacultyCountOutputType without action
+   */
+  export type AcademicFacultyCountOutputTypeCountAdmitionExamePriceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmitionExamePriceWhereInput
+  }
+
+  /**
+   * AcademicFacultyCountOutputType without action
+   */
+  export type AcademicFacultyCountOutputTypeCountAdmitionExamePeriodArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmitionExamePeriodWhereInput
   }
 
 
@@ -3610,6 +3892,37 @@ export namespace Prisma {
    */
   export type SemesterRegistrationCountOutputTypeCountStudentSemesterRegistrationCoursesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StudentSemesterRegistrationCourseWhereInput
+  }
+
+
+  /**
+   * Count Type ExameFaseCountOutputType
+   */
+
+  export type ExameFaseCountOutputType = {
+    registrations: number
+  }
+
+  export type ExameFaseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registrations?: boolean | ExameFaseCountOutputTypeCountRegistrationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ExameFaseCountOutputType without action
+   */
+  export type ExameFaseCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFaseCountOutputType
+     */
+    select?: ExameFaseCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ExameFaseCountOutputType without action
+   */
+  export type ExameFaseCountOutputTypeCountRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmitionExameRegistrationWhereInput
   }
 
 
@@ -6068,6 +6381,8 @@ export namespace Prisma {
     academicDepartments?: boolean | AcademicFaculty$academicDepartmentsArgs<ExtArgs>
     faculties?: boolean | AcademicFaculty$facultiesArgs<ExtArgs>
     students?: boolean | AcademicFaculty$studentsArgs<ExtArgs>
+    AdmitionExamePrice?: boolean | AcademicFaculty$AdmitionExamePriceArgs<ExtArgs>
+    AdmitionExamePeriod?: boolean | AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs>
     _count?: boolean | AcademicFacultyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["academicFaculty"]>
 
@@ -6085,6 +6400,8 @@ export namespace Prisma {
     academicDepartments?: boolean | AcademicFaculty$academicDepartmentsArgs<ExtArgs>
     faculties?: boolean | AcademicFaculty$facultiesArgs<ExtArgs>
     students?: boolean | AcademicFaculty$studentsArgs<ExtArgs>
+    AdmitionExamePrice?: boolean | AcademicFaculty$AdmitionExamePriceArgs<ExtArgs>
+    AdmitionExamePeriod?: boolean | AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs>
     _count?: boolean | AcademicFacultyCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -6094,6 +6411,8 @@ export namespace Prisma {
       academicDepartments: Prisma.$AcademicDepartmentPayload<ExtArgs>[]
       faculties: Prisma.$FacultyPayload<ExtArgs>[]
       students: Prisma.$StudentPayload<ExtArgs>[]
+      AdmitionExamePrice: Prisma.$AdmitionExamePricePayload<ExtArgs>[]
+      AdmitionExamePeriod: Prisma.$AdmitionExamePeriodPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6443,6 +6762,8 @@ export namespace Prisma {
     academicDepartments<T extends AcademicFaculty$academicDepartmentsArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$academicDepartmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicDepartmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     faculties<T extends AcademicFaculty$facultiesArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$facultiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FacultyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     students<T extends AcademicFaculty$studentsArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$studentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    AdmitionExamePrice<T extends AcademicFaculty$AdmitionExamePriceArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$AdmitionExamePriceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    AdmitionExamePeriod<T extends AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6888,6 +7209,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StudentScalarFieldEnum | StudentScalarFieldEnum[]
+  }
+
+  /**
+   * AcademicFaculty.AdmitionExamePrice
+   */
+  export type AcademicFaculty$AdmitionExamePriceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    where?: AdmitionExamePriceWhereInput
+    orderBy?: AdmitionExamePriceOrderByWithRelationInput | AdmitionExamePriceOrderByWithRelationInput[]
+    cursor?: AdmitionExamePriceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmitionExamePriceScalarFieldEnum | AdmitionExamePriceScalarFieldEnum[]
+  }
+
+  /**
+   * AcademicFaculty.AdmitionExamePeriod
+   */
+  export type AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    where?: AdmitionExamePeriodWhereInput
+    orderBy?: AdmitionExamePeriodOrderByWithRelationInput | AdmitionExamePeriodOrderByWithRelationInput[]
+    cursor?: AdmitionExamePeriodWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmitionExamePeriodScalarFieldEnum | AdmitionExamePeriodScalarFieldEnum[]
   }
 
   /**
@@ -8064,6 +8433,7 @@ export namespace Prisma {
     gender: string | null
     isWoker: boolean | null
     shift: $Enums.Shift | null
+    yearLevel: $Enums.YearLevel | null
     isActive: boolean | null
     password: string | null
     gradeDeclarationFile: string | null
@@ -8090,6 +8460,7 @@ export namespace Prisma {
     gender: string | null
     isWoker: boolean | null
     shift: $Enums.Shift | null
+    yearLevel: $Enums.YearLevel | null
     isActive: boolean | null
     password: string | null
     gradeDeclarationFile: string | null
@@ -8116,6 +8487,7 @@ export namespace Prisma {
     gender: number
     isWoker: number
     shift: number
+    yearLevel: number
     isActive: number
     password: number
     gradeDeclarationFile: number
@@ -8144,6 +8516,7 @@ export namespace Prisma {
     gender?: true
     isWoker?: true
     shift?: true
+    yearLevel?: true
     isActive?: true
     password?: true
     gradeDeclarationFile?: true
@@ -8170,6 +8543,7 @@ export namespace Prisma {
     gender?: true
     isWoker?: true
     shift?: true
+    yearLevel?: true
     isActive?: true
     password?: true
     gradeDeclarationFile?: true
@@ -8196,6 +8570,7 @@ export namespace Prisma {
     gender?: true
     isWoker?: true
     shift?: true
+    yearLevel?: true
     isActive?: true
     password?: true
     gradeDeclarationFile?: true
@@ -8295,6 +8670,7 @@ export namespace Prisma {
     gender: string
     isWoker: boolean
     shift: $Enums.Shift
+    yearLevel: $Enums.YearLevel
     isActive: boolean
     password: string
     gradeDeclarationFile: string
@@ -8338,6 +8714,7 @@ export namespace Prisma {
     gender?: boolean
     isWoker?: boolean
     shift?: boolean
+    yearLevel?: boolean
     isActive?: boolean
     password?: boolean
     gradeDeclarationFile?: boolean
@@ -8377,6 +8754,7 @@ export namespace Prisma {
     gender?: boolean
     isWoker?: boolean
     shift?: boolean
+    yearLevel?: boolean
     isActive?: boolean
     password?: boolean
     gradeDeclarationFile?: boolean
@@ -8391,7 +8769,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "firstName" | "middleName" | "lastName" | "profileImage" | "email" | "contactNo" | "gender" | "isWoker" | "shift" | "isActive" | "password" | "gradeDeclarationFile" | "biFile" | "presentAddress" | "permanentAddress" | "academicSemesterId" | "academicFacultyId" | "academicDepartmentId" | "admissionRegistrationId" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
+  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "firstName" | "middleName" | "lastName" | "profileImage" | "email" | "contactNo" | "gender" | "isWoker" | "shift" | "yearLevel" | "isActive" | "password" | "gradeDeclarationFile" | "biFile" | "presentAddress" | "permanentAddress" | "academicSemesterId" | "academicFacultyId" | "academicDepartmentId" | "admissionRegistrationId" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
   export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     academicFaculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
     admissionRegistration?: boolean | Student$admissionRegistrationArgs<ExtArgs>
@@ -8432,6 +8810,7 @@ export namespace Prisma {
       gender: string
       isWoker: boolean
       shift: $Enums.Shift
+      yearLevel: $Enums.YearLevel
       isActive: boolean
       password: string
       gradeDeclarationFile: string
@@ -8834,6 +9213,7 @@ export namespace Prisma {
     readonly gender: FieldRef<"Student", 'String'>
     readonly isWoker: FieldRef<"Student", 'Boolean'>
     readonly shift: FieldRef<"Student", 'Shift'>
+    readonly yearLevel: FieldRef<"Student", 'YearLevel'>
     readonly isActive: FieldRef<"Student", 'Boolean'>
     readonly password: FieldRef<"Student", 'String'>
     readonly gradeDeclarationFile: FieldRef<"Student", 'String'>
@@ -9389,6 +9769,7 @@ export namespace Prisma {
     profileImage: string | null
     email: string | null
     contactNo: string | null
+    shift: $Enums.Shift | null
     gender: string | null
     designation: string | null
     password: string | null
@@ -9407,6 +9788,7 @@ export namespace Prisma {
     profileImage: string | null
     email: string | null
     contactNo: string | null
+    shift: $Enums.Shift | null
     gender: string | null
     designation: string | null
     password: string | null
@@ -9425,6 +9807,7 @@ export namespace Prisma {
     profileImage: number
     email: number
     contactNo: number
+    shift: number
     gender: number
     designation: number
     password: number
@@ -9445,6 +9828,7 @@ export namespace Prisma {
     profileImage?: true
     email?: true
     contactNo?: true
+    shift?: true
     gender?: true
     designation?: true
     password?: true
@@ -9463,6 +9847,7 @@ export namespace Prisma {
     profileImage?: true
     email?: true
     contactNo?: true
+    shift?: true
     gender?: true
     designation?: true
     password?: true
@@ -9481,6 +9866,7 @@ export namespace Prisma {
     profileImage?: true
     email?: true
     contactNo?: true
+    shift?: true
     gender?: true
     designation?: true
     password?: true
@@ -9572,6 +9958,7 @@ export namespace Prisma {
     profileImage: string | null
     email: string | null
     contactNo: string | null
+    shift: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -9607,6 +9994,7 @@ export namespace Prisma {
     profileImage?: boolean
     email?: boolean
     contactNo?: boolean
+    shift?: boolean
     gender?: boolean
     designation?: boolean
     password?: boolean
@@ -9632,6 +10020,7 @@ export namespace Prisma {
     profileImage?: boolean
     email?: boolean
     contactNo?: boolean
+    shift?: boolean
     gender?: boolean
     designation?: boolean
     password?: boolean
@@ -9641,7 +10030,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type FacultyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "facultyId" | "firstName" | "middleName" | "lastName" | "profileImage" | "email" | "contactNo" | "gender" | "designation" | "password" | "academicFacultyId" | "academicDepartmentId" | "createdAt" | "updatedAt", ExtArgs["result"]["faculty"]>
+  export type FacultyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "facultyId" | "firstName" | "middleName" | "lastName" | "profileImage" | "email" | "contactNo" | "shift" | "gender" | "designation" | "password" | "academicFacultyId" | "academicDepartmentId" | "createdAt" | "updatedAt", ExtArgs["result"]["faculty"]>
   export type FacultyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     courses?: boolean | Faculty$coursesArgs<ExtArgs>
     academicDepartment?: boolean | AcademicDepartmentDefaultArgs<ExtArgs>
@@ -9667,6 +10056,7 @@ export namespace Prisma {
       profileImage: string | null
       email: string | null
       contactNo: string | null
+      shift: $Enums.Shift
       gender: string
       designation: string
       password: string
@@ -10055,6 +10445,7 @@ export namespace Prisma {
     readonly profileImage: FieldRef<"Faculty", 'String'>
     readonly email: FieldRef<"Faculty", 'String'>
     readonly contactNo: FieldRef<"Faculty", 'String'>
+    readonly shift: FieldRef<"Faculty", 'Shift'>
     readonly gender: FieldRef<"Faculty", 'String'>
     readonly designation: FieldRef<"Faculty", 'String'>
     readonly password: FieldRef<"Faculty", 'String'>
@@ -12399,12 +12790,10 @@ export namespace Prisma {
 
   export type CourseAvgAggregateOutputType = {
     durationInYears: number | null
-    credits: number | null
   }
 
   export type CourseSumAggregateOutputType = {
     durationInYears: number | null
-    credits: number | null
   }
 
   export type CourseMinAggregateOutputType = {
@@ -12412,8 +12801,9 @@ export namespace Prisma {
     title: string | null
     code: string | null
     durationInYears: number | null
+    yearLevel: $Enums.YearLevel | null
+    shift: $Enums.Shift | null
     academicDepartmentId: string | null
-    credits: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -12423,8 +12813,9 @@ export namespace Prisma {
     title: string | null
     code: string | null
     durationInYears: number | null
+    yearLevel: $Enums.YearLevel | null
+    shift: $Enums.Shift | null
     academicDepartmentId: string | null
-    credits: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -12434,8 +12825,9 @@ export namespace Prisma {
     title: number
     code: number
     durationInYears: number
+    yearLevel: number
+    shift: number
     academicDepartmentId: number
-    credits: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -12444,12 +12836,10 @@ export namespace Prisma {
 
   export type CourseAvgAggregateInputType = {
     durationInYears?: true
-    credits?: true
   }
 
   export type CourseSumAggregateInputType = {
     durationInYears?: true
-    credits?: true
   }
 
   export type CourseMinAggregateInputType = {
@@ -12457,8 +12847,9 @@ export namespace Prisma {
     title?: true
     code?: true
     durationInYears?: true
+    yearLevel?: true
+    shift?: true
     academicDepartmentId?: true
-    credits?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -12468,8 +12859,9 @@ export namespace Prisma {
     title?: true
     code?: true
     durationInYears?: true
+    yearLevel?: true
+    shift?: true
     academicDepartmentId?: true
-    credits?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -12479,8 +12871,9 @@ export namespace Prisma {
     title?: true
     code?: true
     durationInYears?: true
+    yearLevel?: true
+    shift?: true
     academicDepartmentId?: true
-    credits?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -12577,8 +12970,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel: $Enums.YearLevel
+    shift: $Enums.Shift
     academicDepartmentId: string
-    credits: number
     createdAt: Date
     updatedAt: Date
     _count: CourseCountAggregateOutputType | null
@@ -12607,8 +13001,9 @@ export namespace Prisma {
     title?: boolean
     code?: boolean
     durationInYears?: boolean
+    yearLevel?: boolean
+    shift?: boolean
     academicDepartmentId?: boolean
-    credits?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     courseDisciplines?: boolean | Course$courseDisciplinesArgs<ExtArgs>
@@ -12629,13 +13024,14 @@ export namespace Prisma {
     title?: boolean
     code?: boolean
     durationInYears?: boolean
+    yearLevel?: boolean
+    shift?: boolean
     academicDepartmentId?: boolean
-    credits?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "code" | "durationInYears" | "academicDepartmentId" | "credits" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "code" | "durationInYears" | "yearLevel" | "shift" | "academicDepartmentId" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     courseDisciplines?: boolean | Course$courseDisciplinesArgs<ExtArgs>
     coursePricing?: boolean | Course$coursePricingArgs<ExtArgs>
@@ -12665,8 +13061,9 @@ export namespace Prisma {
       title: string
       code: string
       durationInYears: number
+      yearLevel: $Enums.YearLevel
+      shift: $Enums.Shift
       academicDepartmentId: string
-      credits: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["course"]>
@@ -13050,8 +13447,9 @@ export namespace Prisma {
     readonly title: FieldRef<"Course", 'String'>
     readonly code: FieldRef<"Course", 'String'>
     readonly durationInYears: FieldRef<"Course", 'Int'>
+    readonly yearLevel: FieldRef<"Course", 'YearLevel'>
+    readonly shift: FieldRef<"Course", 'Shift'>
     readonly academicDepartmentId: FieldRef<"Course", 'String'>
-    readonly credits: FieldRef<"Course", 'Int'>
     readonly createdAt: FieldRef<"Course", 'DateTime'>
     readonly updatedAt: FieldRef<"Course", 'DateTime'>
   }
@@ -16486,26 +16884,28 @@ export namespace Prisma {
   export type AdmitionExameRegistrationAvgAggregateOutputType = {
     paymentAmoute: number | null
     exameResults: number | null
-    fase: number | null
   }
 
   export type AdmitionExameRegistrationSumAggregateOutputType = {
     paymentAmoute: number | null
     exameResults: number | null
-    fase: number | null
   }
 
   export type AdmitionExameRegistrationMinAggregateOutputType = {
     id: string | null
     applicantName: string | null
     paymentRecipt: string | null
+    status: $Enums.Status | null
     document: string | null
     paymentAmoute: number | null
     aprovePayment: boolean | null
     exameResults: number | null
     passed: boolean | null
-    fase: number | null
+    faseId: string | null
     exameDate: Date | null
+    rejectionReason: string | null
+    phoneNumber: string | null
+    email: string | null
     createdAt: Date | null
     updateAt: Date | null
     departmentId: string | null
@@ -16515,13 +16915,17 @@ export namespace Prisma {
     id: string | null
     applicantName: string | null
     paymentRecipt: string | null
+    status: $Enums.Status | null
     document: string | null
     paymentAmoute: number | null
     aprovePayment: boolean | null
     exameResults: number | null
     passed: boolean | null
-    fase: number | null
+    faseId: string | null
     exameDate: Date | null
+    rejectionReason: string | null
+    phoneNumber: string | null
+    email: string | null
     createdAt: Date | null
     updateAt: Date | null
     departmentId: string | null
@@ -16531,13 +16935,17 @@ export namespace Prisma {
     id: number
     applicantName: number
     paymentRecipt: number
+    status: number
     document: number
     paymentAmoute: number
     aprovePayment: number
     exameResults: number
     passed: number
-    fase: number
+    faseId: number
     exameDate: number
+    rejectionReason: number
+    phoneNumber: number
+    email: number
     createdAt: number
     updateAt: number
     departmentId: number
@@ -16548,26 +16956,28 @@ export namespace Prisma {
   export type AdmitionExameRegistrationAvgAggregateInputType = {
     paymentAmoute?: true
     exameResults?: true
-    fase?: true
   }
 
   export type AdmitionExameRegistrationSumAggregateInputType = {
     paymentAmoute?: true
     exameResults?: true
-    fase?: true
   }
 
   export type AdmitionExameRegistrationMinAggregateInputType = {
     id?: true
     applicantName?: true
     paymentRecipt?: true
+    status?: true
     document?: true
     paymentAmoute?: true
     aprovePayment?: true
     exameResults?: true
     passed?: true
-    fase?: true
+    faseId?: true
     exameDate?: true
+    rejectionReason?: true
+    phoneNumber?: true
+    email?: true
     createdAt?: true
     updateAt?: true
     departmentId?: true
@@ -16577,13 +16987,17 @@ export namespace Prisma {
     id?: true
     applicantName?: true
     paymentRecipt?: true
+    status?: true
     document?: true
     paymentAmoute?: true
     aprovePayment?: true
     exameResults?: true
     passed?: true
-    fase?: true
+    faseId?: true
     exameDate?: true
+    rejectionReason?: true
+    phoneNumber?: true
+    email?: true
     createdAt?: true
     updateAt?: true
     departmentId?: true
@@ -16593,13 +17007,17 @@ export namespace Prisma {
     id?: true
     applicantName?: true
     paymentRecipt?: true
+    status?: true
     document?: true
     paymentAmoute?: true
     aprovePayment?: true
     exameResults?: true
     passed?: true
-    fase?: true
+    faseId?: true
     exameDate?: true
+    rejectionReason?: true
+    phoneNumber?: true
+    email?: true
     createdAt?: true
     updateAt?: true
     departmentId?: true
@@ -16696,13 +17114,17 @@ export namespace Prisma {
     id: string
     applicantName: string
     paymentRecipt: string
+    status: $Enums.Status
     document: string
     paymentAmoute: number | null
     aprovePayment: boolean | null
     exameResults: number | null
     passed: boolean | null
-    fase: number
+    faseId: string
     exameDate: Date
+    rejectionReason: string | null
+    phoneNumber: string
+    email: string
     createdAt: Date
     updateAt: Date
     departmentId: string
@@ -16731,16 +17153,21 @@ export namespace Prisma {
     id?: boolean
     applicantName?: boolean
     paymentRecipt?: boolean
+    status?: boolean
     document?: boolean
     paymentAmoute?: boolean
     aprovePayment?: boolean
     exameResults?: boolean
     passed?: boolean
-    fase?: boolean
+    faseId?: boolean
     exameDate?: boolean
+    rejectionReason?: boolean
+    phoneNumber?: boolean
+    email?: boolean
     createdAt?: boolean
     updateAt?: boolean
     departmentId?: boolean
+    fase?: boolean | ExameFaseDefaultArgs<ExtArgs>
     department?: boolean | AcademicDepartmentDefaultArgs<ExtArgs>
     Student?: boolean | AdmitionExameRegistration$StudentArgs<ExtArgs>
   }, ExtArgs["result"]["admitionExameRegistration"]>
@@ -16751,20 +17178,25 @@ export namespace Prisma {
     id?: boolean
     applicantName?: boolean
     paymentRecipt?: boolean
+    status?: boolean
     document?: boolean
     paymentAmoute?: boolean
     aprovePayment?: boolean
     exameResults?: boolean
     passed?: boolean
-    fase?: boolean
+    faseId?: boolean
     exameDate?: boolean
+    rejectionReason?: boolean
+    phoneNumber?: boolean
+    email?: boolean
     createdAt?: boolean
     updateAt?: boolean
     departmentId?: boolean
   }
 
-  export type AdmitionExameRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicantName" | "paymentRecipt" | "document" | "paymentAmoute" | "aprovePayment" | "exameResults" | "passed" | "fase" | "exameDate" | "createdAt" | "updateAt" | "departmentId", ExtArgs["result"]["admitionExameRegistration"]>
+  export type AdmitionExameRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicantName" | "paymentRecipt" | "status" | "document" | "paymentAmoute" | "aprovePayment" | "exameResults" | "passed" | "faseId" | "exameDate" | "rejectionReason" | "phoneNumber" | "email" | "createdAt" | "updateAt" | "departmentId", ExtArgs["result"]["admitionExameRegistration"]>
   export type AdmitionExameRegistrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fase?: boolean | ExameFaseDefaultArgs<ExtArgs>
     department?: boolean | AcademicDepartmentDefaultArgs<ExtArgs>
     Student?: boolean | AdmitionExameRegistration$StudentArgs<ExtArgs>
   }
@@ -16772,6 +17204,7 @@ export namespace Prisma {
   export type $AdmitionExameRegistrationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AdmitionExameRegistration"
     objects: {
+      fase: Prisma.$ExameFasePayload<ExtArgs>
       department: Prisma.$AcademicDepartmentPayload<ExtArgs>
       Student: Prisma.$StudentPayload<ExtArgs> | null
     }
@@ -16779,13 +17212,17 @@ export namespace Prisma {
       id: string
       applicantName: string
       paymentRecipt: string
+      status: $Enums.Status
       document: string
       paymentAmoute: number | null
       aprovePayment: boolean | null
       exameResults: number | null
       passed: boolean | null
-      fase: number
+      faseId: string
       exameDate: Date
+      rejectionReason: string | null
+      phoneNumber: string
+      email: string
       createdAt: Date
       updateAt: Date
       departmentId: string
@@ -17129,6 +17566,7 @@ export namespace Prisma {
    */
   export interface Prisma__AdmitionExameRegistrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    fase<T extends ExameFaseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ExameFaseDefaultArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     department<T extends AcademicDepartmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicDepartmentDefaultArgs<ExtArgs>>): Prisma__AcademicDepartmentClient<$Result.GetResult<Prisma.$AcademicDepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Student<T extends AdmitionExameRegistration$StudentArgs<ExtArgs> = {}>(args?: Subset<T, AdmitionExameRegistration$StudentArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -17163,13 +17601,17 @@ export namespace Prisma {
     readonly id: FieldRef<"AdmitionExameRegistration", 'String'>
     readonly applicantName: FieldRef<"AdmitionExameRegistration", 'String'>
     readonly paymentRecipt: FieldRef<"AdmitionExameRegistration", 'String'>
+    readonly status: FieldRef<"AdmitionExameRegistration", 'Status'>
     readonly document: FieldRef<"AdmitionExameRegistration", 'String'>
     readonly paymentAmoute: FieldRef<"AdmitionExameRegistration", 'Int'>
     readonly aprovePayment: FieldRef<"AdmitionExameRegistration", 'Boolean'>
     readonly exameResults: FieldRef<"AdmitionExameRegistration", 'Int'>
     readonly passed: FieldRef<"AdmitionExameRegistration", 'Boolean'>
-    readonly fase: FieldRef<"AdmitionExameRegistration", 'Int'>
+    readonly faseId: FieldRef<"AdmitionExameRegistration", 'String'>
     readonly exameDate: FieldRef<"AdmitionExameRegistration", 'DateTime'>
+    readonly rejectionReason: FieldRef<"AdmitionExameRegistration", 'String'>
+    readonly phoneNumber: FieldRef<"AdmitionExameRegistration", 'String'>
+    readonly email: FieldRef<"AdmitionExameRegistration", 'String'>
     readonly createdAt: FieldRef<"AdmitionExameRegistration", 'DateTime'>
     readonly updateAt: FieldRef<"AdmitionExameRegistration", 'DateTime'>
     readonly departmentId: FieldRef<"AdmitionExameRegistration", 'String'>
@@ -17550,6 +17992,2920 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AdmitionExameRegistrationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AdmitionExamePrice
+   */
+
+  export type AggregateAdmitionExamePrice = {
+    _count: AdmitionExamePriceCountAggregateOutputType | null
+    _avg: AdmitionExamePriceAvgAggregateOutputType | null
+    _sum: AdmitionExamePriceSumAggregateOutputType | null
+    _min: AdmitionExamePriceMinAggregateOutputType | null
+    _max: AdmitionExamePriceMaxAggregateOutputType | null
+  }
+
+  export type AdmitionExamePriceAvgAggregateOutputType = {
+    price: number | null
+  }
+
+  export type AdmitionExamePriceSumAggregateOutputType = {
+    price: number | null
+  }
+
+  export type AdmitionExamePriceMinAggregateOutputType = {
+    id: string | null
+    academicFacultyId: string | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdmitionExamePriceMaxAggregateOutputType = {
+    id: string | null
+    academicFacultyId: string | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdmitionExamePriceCountAggregateOutputType = {
+    id: number
+    academicFacultyId: number
+    price: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AdmitionExamePriceAvgAggregateInputType = {
+    price?: true
+  }
+
+  export type AdmitionExamePriceSumAggregateInputType = {
+    price?: true
+  }
+
+  export type AdmitionExamePriceMinAggregateInputType = {
+    id?: true
+    academicFacultyId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdmitionExamePriceMaxAggregateInputType = {
+    id?: true
+    academicFacultyId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdmitionExamePriceCountAggregateInputType = {
+    id?: true
+    academicFacultyId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AdmitionExamePriceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmitionExamePrice to aggregate.
+     */
+    where?: AdmitionExamePriceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePrices to fetch.
+     */
+    orderBy?: AdmitionExamePriceOrderByWithRelationInput | AdmitionExamePriceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdmitionExamePriceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePrices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePrices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AdmitionExamePrices
+    **/
+    _count?: true | AdmitionExamePriceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AdmitionExamePriceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AdmitionExamePriceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdmitionExamePriceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdmitionExamePriceMaxAggregateInputType
+  }
+
+  export type GetAdmitionExamePriceAggregateType<T extends AdmitionExamePriceAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmitionExamePrice]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdmitionExamePrice[P]>
+      : GetScalarType<T[P], AggregateAdmitionExamePrice[P]>
+  }
+
+
+
+
+  export type AdmitionExamePriceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmitionExamePriceWhereInput
+    orderBy?: AdmitionExamePriceOrderByWithAggregationInput | AdmitionExamePriceOrderByWithAggregationInput[]
+    by: AdmitionExamePriceScalarFieldEnum[] | AdmitionExamePriceScalarFieldEnum
+    having?: AdmitionExamePriceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdmitionExamePriceCountAggregateInputType | true
+    _avg?: AdmitionExamePriceAvgAggregateInputType
+    _sum?: AdmitionExamePriceSumAggregateInputType
+    _min?: AdmitionExamePriceMinAggregateInputType
+    _max?: AdmitionExamePriceMaxAggregateInputType
+  }
+
+  export type AdmitionExamePriceGroupByOutputType = {
+    id: string
+    academicFacultyId: string
+    price: number
+    createdAt: Date
+    updatedAt: Date
+    _count: AdmitionExamePriceCountAggregateOutputType | null
+    _avg: AdmitionExamePriceAvgAggregateOutputType | null
+    _sum: AdmitionExamePriceSumAggregateOutputType | null
+    _min: AdmitionExamePriceMinAggregateOutputType | null
+    _max: AdmitionExamePriceMaxAggregateOutputType | null
+  }
+
+  type GetAdmitionExamePriceGroupByPayload<T extends AdmitionExamePriceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdmitionExamePriceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdmitionExamePriceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdmitionExamePriceGroupByOutputType[P]>
+            : GetScalarType<T[P], AdmitionExamePriceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdmitionExamePriceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    academicFacultyId?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    academicFaculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admitionExamePrice"]>
+
+
+
+  export type AdmitionExamePriceSelectScalar = {
+    id?: boolean
+    academicFacultyId?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AdmitionExamePriceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "academicFacultyId" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["admitionExamePrice"]>
+  export type AdmitionExamePriceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    academicFaculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
+  }
+
+  export type $AdmitionExamePricePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AdmitionExamePrice"
+    objects: {
+      academicFaculty: Prisma.$AcademicFacultyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      academicFacultyId: string
+      price: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["admitionExamePrice"]>
+    composites: {}
+  }
+
+  type AdmitionExamePriceGetPayload<S extends boolean | null | undefined | AdmitionExamePriceDefaultArgs> = $Result.GetResult<Prisma.$AdmitionExamePricePayload, S>
+
+  type AdmitionExamePriceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AdmitionExamePriceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AdmitionExamePriceCountAggregateInputType | true
+    }
+
+  export interface AdmitionExamePriceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AdmitionExamePrice'], meta: { name: 'AdmitionExamePrice' } }
+    /**
+     * Find zero or one AdmitionExamePrice that matches the filter.
+     * @param {AdmitionExamePriceFindUniqueArgs} args - Arguments to find a AdmitionExamePrice
+     * @example
+     * // Get one AdmitionExamePrice
+     * const admitionExamePrice = await prisma.admitionExamePrice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdmitionExamePriceFindUniqueArgs>(args: SelectSubset<T, AdmitionExamePriceFindUniqueArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AdmitionExamePrice that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AdmitionExamePriceFindUniqueOrThrowArgs} args - Arguments to find a AdmitionExamePrice
+     * @example
+     * // Get one AdmitionExamePrice
+     * const admitionExamePrice = await prisma.admitionExamePrice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdmitionExamePriceFindUniqueOrThrowArgs>(args: SelectSubset<T, AdmitionExamePriceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AdmitionExamePrice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePriceFindFirstArgs} args - Arguments to find a AdmitionExamePrice
+     * @example
+     * // Get one AdmitionExamePrice
+     * const admitionExamePrice = await prisma.admitionExamePrice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdmitionExamePriceFindFirstArgs>(args?: SelectSubset<T, AdmitionExamePriceFindFirstArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AdmitionExamePrice that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePriceFindFirstOrThrowArgs} args - Arguments to find a AdmitionExamePrice
+     * @example
+     * // Get one AdmitionExamePrice
+     * const admitionExamePrice = await prisma.admitionExamePrice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdmitionExamePriceFindFirstOrThrowArgs>(args?: SelectSubset<T, AdmitionExamePriceFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AdmitionExamePrices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePriceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AdmitionExamePrices
+     * const admitionExamePrices = await prisma.admitionExamePrice.findMany()
+     * 
+     * // Get first 10 AdmitionExamePrices
+     * const admitionExamePrices = await prisma.admitionExamePrice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const admitionExamePriceWithIdOnly = await prisma.admitionExamePrice.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdmitionExamePriceFindManyArgs>(args?: SelectSubset<T, AdmitionExamePriceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AdmitionExamePrice.
+     * @param {AdmitionExamePriceCreateArgs} args - Arguments to create a AdmitionExamePrice.
+     * @example
+     * // Create one AdmitionExamePrice
+     * const AdmitionExamePrice = await prisma.admitionExamePrice.create({
+     *   data: {
+     *     // ... data to create a AdmitionExamePrice
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdmitionExamePriceCreateArgs>(args: SelectSubset<T, AdmitionExamePriceCreateArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AdmitionExamePrices.
+     * @param {AdmitionExamePriceCreateManyArgs} args - Arguments to create many AdmitionExamePrices.
+     * @example
+     * // Create many AdmitionExamePrices
+     * const admitionExamePrice = await prisma.admitionExamePrice.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdmitionExamePriceCreateManyArgs>(args?: SelectSubset<T, AdmitionExamePriceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a AdmitionExamePrice.
+     * @param {AdmitionExamePriceDeleteArgs} args - Arguments to delete one AdmitionExamePrice.
+     * @example
+     * // Delete one AdmitionExamePrice
+     * const AdmitionExamePrice = await prisma.admitionExamePrice.delete({
+     *   where: {
+     *     // ... filter to delete one AdmitionExamePrice
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdmitionExamePriceDeleteArgs>(args: SelectSubset<T, AdmitionExamePriceDeleteArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AdmitionExamePrice.
+     * @param {AdmitionExamePriceUpdateArgs} args - Arguments to update one AdmitionExamePrice.
+     * @example
+     * // Update one AdmitionExamePrice
+     * const admitionExamePrice = await prisma.admitionExamePrice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdmitionExamePriceUpdateArgs>(args: SelectSubset<T, AdmitionExamePriceUpdateArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AdmitionExamePrices.
+     * @param {AdmitionExamePriceDeleteManyArgs} args - Arguments to filter AdmitionExamePrices to delete.
+     * @example
+     * // Delete a few AdmitionExamePrices
+     * const { count } = await prisma.admitionExamePrice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdmitionExamePriceDeleteManyArgs>(args?: SelectSubset<T, AdmitionExamePriceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdmitionExamePrices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePriceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AdmitionExamePrices
+     * const admitionExamePrice = await prisma.admitionExamePrice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdmitionExamePriceUpdateManyArgs>(args: SelectSubset<T, AdmitionExamePriceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AdmitionExamePrice.
+     * @param {AdmitionExamePriceUpsertArgs} args - Arguments to update or create a AdmitionExamePrice.
+     * @example
+     * // Update or create a AdmitionExamePrice
+     * const admitionExamePrice = await prisma.admitionExamePrice.upsert({
+     *   create: {
+     *     // ... data to create a AdmitionExamePrice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AdmitionExamePrice we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdmitionExamePriceUpsertArgs>(args: SelectSubset<T, AdmitionExamePriceUpsertArgs<ExtArgs>>): Prisma__AdmitionExamePriceClient<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AdmitionExamePrices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePriceCountArgs} args - Arguments to filter AdmitionExamePrices to count.
+     * @example
+     * // Count the number of AdmitionExamePrices
+     * const count = await prisma.admitionExamePrice.count({
+     *   where: {
+     *     // ... the filter for the AdmitionExamePrices we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdmitionExamePriceCountArgs>(
+      args?: Subset<T, AdmitionExamePriceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdmitionExamePriceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AdmitionExamePrice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePriceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdmitionExamePriceAggregateArgs>(args: Subset<T, AdmitionExamePriceAggregateArgs>): Prisma.PrismaPromise<GetAdmitionExamePriceAggregateType<T>>
+
+    /**
+     * Group by AdmitionExamePrice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePriceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdmitionExamePriceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdmitionExamePriceGroupByArgs['orderBy'] }
+        : { orderBy?: AdmitionExamePriceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdmitionExamePriceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdmitionExamePriceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AdmitionExamePrice model
+   */
+  readonly fields: AdmitionExamePriceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AdmitionExamePrice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdmitionExamePriceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    academicFaculty<T extends AcademicFacultyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFacultyDefaultArgs<ExtArgs>>): Prisma__AcademicFacultyClient<$Result.GetResult<Prisma.$AcademicFacultyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AdmitionExamePrice model
+   */
+  interface AdmitionExamePriceFieldRefs {
+    readonly id: FieldRef<"AdmitionExamePrice", 'String'>
+    readonly academicFacultyId: FieldRef<"AdmitionExamePrice", 'String'>
+    readonly price: FieldRef<"AdmitionExamePrice", 'Int'>
+    readonly createdAt: FieldRef<"AdmitionExamePrice", 'DateTime'>
+    readonly updatedAt: FieldRef<"AdmitionExamePrice", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AdmitionExamePrice findUnique
+   */
+  export type AdmitionExamePriceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePrice to fetch.
+     */
+    where: AdmitionExamePriceWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePrice findUniqueOrThrow
+   */
+  export type AdmitionExamePriceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePrice to fetch.
+     */
+    where: AdmitionExamePriceWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePrice findFirst
+   */
+  export type AdmitionExamePriceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePrice to fetch.
+     */
+    where?: AdmitionExamePriceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePrices to fetch.
+     */
+    orderBy?: AdmitionExamePriceOrderByWithRelationInput | AdmitionExamePriceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmitionExamePrices.
+     */
+    cursor?: AdmitionExamePriceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePrices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePrices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmitionExamePrices.
+     */
+    distinct?: AdmitionExamePriceScalarFieldEnum | AdmitionExamePriceScalarFieldEnum[]
+  }
+
+  /**
+   * AdmitionExamePrice findFirstOrThrow
+   */
+  export type AdmitionExamePriceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePrice to fetch.
+     */
+    where?: AdmitionExamePriceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePrices to fetch.
+     */
+    orderBy?: AdmitionExamePriceOrderByWithRelationInput | AdmitionExamePriceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmitionExamePrices.
+     */
+    cursor?: AdmitionExamePriceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePrices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePrices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmitionExamePrices.
+     */
+    distinct?: AdmitionExamePriceScalarFieldEnum | AdmitionExamePriceScalarFieldEnum[]
+  }
+
+  /**
+   * AdmitionExamePrice findMany
+   */
+  export type AdmitionExamePriceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePrices to fetch.
+     */
+    where?: AdmitionExamePriceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePrices to fetch.
+     */
+    orderBy?: AdmitionExamePriceOrderByWithRelationInput | AdmitionExamePriceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AdmitionExamePrices.
+     */
+    cursor?: AdmitionExamePriceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePrices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePrices.
+     */
+    skip?: number
+    distinct?: AdmitionExamePriceScalarFieldEnum | AdmitionExamePriceScalarFieldEnum[]
+  }
+
+  /**
+   * AdmitionExamePrice create
+   */
+  export type AdmitionExamePriceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AdmitionExamePrice.
+     */
+    data: XOR<AdmitionExamePriceCreateInput, AdmitionExamePriceUncheckedCreateInput>
+  }
+
+  /**
+   * AdmitionExamePrice createMany
+   */
+  export type AdmitionExamePriceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AdmitionExamePrices.
+     */
+    data: AdmitionExamePriceCreateManyInput | AdmitionExamePriceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AdmitionExamePrice update
+   */
+  export type AdmitionExamePriceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AdmitionExamePrice.
+     */
+    data: XOR<AdmitionExamePriceUpdateInput, AdmitionExamePriceUncheckedUpdateInput>
+    /**
+     * Choose, which AdmitionExamePrice to update.
+     */
+    where: AdmitionExamePriceWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePrice updateMany
+   */
+  export type AdmitionExamePriceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AdmitionExamePrices.
+     */
+    data: XOR<AdmitionExamePriceUpdateManyMutationInput, AdmitionExamePriceUncheckedUpdateManyInput>
+    /**
+     * Filter which AdmitionExamePrices to update
+     */
+    where?: AdmitionExamePriceWhereInput
+    /**
+     * Limit how many AdmitionExamePrices to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdmitionExamePrice upsert
+   */
+  export type AdmitionExamePriceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AdmitionExamePrice to update in case it exists.
+     */
+    where: AdmitionExamePriceWhereUniqueInput
+    /**
+     * In case the AdmitionExamePrice found by the `where` argument doesn't exist, create a new AdmitionExamePrice with this data.
+     */
+    create: XOR<AdmitionExamePriceCreateInput, AdmitionExamePriceUncheckedCreateInput>
+    /**
+     * In case the AdmitionExamePrice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdmitionExamePriceUpdateInput, AdmitionExamePriceUncheckedUpdateInput>
+  }
+
+  /**
+   * AdmitionExamePrice delete
+   */
+  export type AdmitionExamePriceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+    /**
+     * Filter which AdmitionExamePrice to delete.
+     */
+    where: AdmitionExamePriceWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePrice deleteMany
+   */
+  export type AdmitionExamePriceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmitionExamePrices to delete
+     */
+    where?: AdmitionExamePriceWhereInput
+    /**
+     * Limit how many AdmitionExamePrices to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdmitionExamePrice without action
+   */
+  export type AdmitionExamePriceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePrice
+     */
+    select?: AdmitionExamePriceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePrice
+     */
+    omit?: AdmitionExamePriceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePriceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AdmitionExamePeriod
+   */
+
+  export type AggregateAdmitionExamePeriod = {
+    _count: AdmitionExamePeriodCountAggregateOutputType | null
+    _min: AdmitionExamePeriodMinAggregateOutputType | null
+    _max: AdmitionExamePeriodMaxAggregateOutputType | null
+  }
+
+  export type AdmitionExamePeriodMinAggregateOutputType = {
+    id: string | null
+    startDate: Date | null
+    endDate: Date | null
+    academicFacultyId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdmitionExamePeriodMaxAggregateOutputType = {
+    id: string | null
+    startDate: Date | null
+    endDate: Date | null
+    academicFacultyId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdmitionExamePeriodCountAggregateOutputType = {
+    id: number
+    startDate: number
+    endDate: number
+    academicFacultyId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AdmitionExamePeriodMinAggregateInputType = {
+    id?: true
+    startDate?: true
+    endDate?: true
+    academicFacultyId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdmitionExamePeriodMaxAggregateInputType = {
+    id?: true
+    startDate?: true
+    endDate?: true
+    academicFacultyId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdmitionExamePeriodCountAggregateInputType = {
+    id?: true
+    startDate?: true
+    endDate?: true
+    academicFacultyId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AdmitionExamePeriodAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmitionExamePeriod to aggregate.
+     */
+    where?: AdmitionExamePeriodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePeriods to fetch.
+     */
+    orderBy?: AdmitionExamePeriodOrderByWithRelationInput | AdmitionExamePeriodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdmitionExamePeriodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePeriods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePeriods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AdmitionExamePeriods
+    **/
+    _count?: true | AdmitionExamePeriodCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdmitionExamePeriodMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdmitionExamePeriodMaxAggregateInputType
+  }
+
+  export type GetAdmitionExamePeriodAggregateType<T extends AdmitionExamePeriodAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmitionExamePeriod]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdmitionExamePeriod[P]>
+      : GetScalarType<T[P], AggregateAdmitionExamePeriod[P]>
+  }
+
+
+
+
+  export type AdmitionExamePeriodGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmitionExamePeriodWhereInput
+    orderBy?: AdmitionExamePeriodOrderByWithAggregationInput | AdmitionExamePeriodOrderByWithAggregationInput[]
+    by: AdmitionExamePeriodScalarFieldEnum[] | AdmitionExamePeriodScalarFieldEnum
+    having?: AdmitionExamePeriodScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdmitionExamePeriodCountAggregateInputType | true
+    _min?: AdmitionExamePeriodMinAggregateInputType
+    _max?: AdmitionExamePeriodMaxAggregateInputType
+  }
+
+  export type AdmitionExamePeriodGroupByOutputType = {
+    id: string
+    startDate: Date
+    endDate: Date
+    academicFacultyId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: AdmitionExamePeriodCountAggregateOutputType | null
+    _min: AdmitionExamePeriodMinAggregateOutputType | null
+    _max: AdmitionExamePeriodMaxAggregateOutputType | null
+  }
+
+  type GetAdmitionExamePeriodGroupByPayload<T extends AdmitionExamePeriodGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdmitionExamePeriodGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdmitionExamePeriodGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdmitionExamePeriodGroupByOutputType[P]>
+            : GetScalarType<T[P], AdmitionExamePeriodGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdmitionExamePeriodSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    academicFacultyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    academicFaculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admitionExamePeriod"]>
+
+
+
+  export type AdmitionExamePeriodSelectScalar = {
+    id?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    academicFacultyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AdmitionExamePeriodOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "startDate" | "endDate" | "academicFacultyId" | "createdAt" | "updatedAt", ExtArgs["result"]["admitionExamePeriod"]>
+  export type AdmitionExamePeriodInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    academicFaculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
+  }
+
+  export type $AdmitionExamePeriodPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AdmitionExamePeriod"
+    objects: {
+      academicFaculty: Prisma.$AcademicFacultyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      startDate: Date
+      endDate: Date
+      academicFacultyId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["admitionExamePeriod"]>
+    composites: {}
+  }
+
+  type AdmitionExamePeriodGetPayload<S extends boolean | null | undefined | AdmitionExamePeriodDefaultArgs> = $Result.GetResult<Prisma.$AdmitionExamePeriodPayload, S>
+
+  type AdmitionExamePeriodCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AdmitionExamePeriodFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AdmitionExamePeriodCountAggregateInputType | true
+    }
+
+  export interface AdmitionExamePeriodDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AdmitionExamePeriod'], meta: { name: 'AdmitionExamePeriod' } }
+    /**
+     * Find zero or one AdmitionExamePeriod that matches the filter.
+     * @param {AdmitionExamePeriodFindUniqueArgs} args - Arguments to find a AdmitionExamePeriod
+     * @example
+     * // Get one AdmitionExamePeriod
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdmitionExamePeriodFindUniqueArgs>(args: SelectSubset<T, AdmitionExamePeriodFindUniqueArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AdmitionExamePeriod that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AdmitionExamePeriodFindUniqueOrThrowArgs} args - Arguments to find a AdmitionExamePeriod
+     * @example
+     * // Get one AdmitionExamePeriod
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdmitionExamePeriodFindUniqueOrThrowArgs>(args: SelectSubset<T, AdmitionExamePeriodFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AdmitionExamePeriod that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePeriodFindFirstArgs} args - Arguments to find a AdmitionExamePeriod
+     * @example
+     * // Get one AdmitionExamePeriod
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdmitionExamePeriodFindFirstArgs>(args?: SelectSubset<T, AdmitionExamePeriodFindFirstArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AdmitionExamePeriod that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePeriodFindFirstOrThrowArgs} args - Arguments to find a AdmitionExamePeriod
+     * @example
+     * // Get one AdmitionExamePeriod
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdmitionExamePeriodFindFirstOrThrowArgs>(args?: SelectSubset<T, AdmitionExamePeriodFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AdmitionExamePeriods that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePeriodFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AdmitionExamePeriods
+     * const admitionExamePeriods = await prisma.admitionExamePeriod.findMany()
+     * 
+     * // Get first 10 AdmitionExamePeriods
+     * const admitionExamePeriods = await prisma.admitionExamePeriod.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const admitionExamePeriodWithIdOnly = await prisma.admitionExamePeriod.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdmitionExamePeriodFindManyArgs>(args?: SelectSubset<T, AdmitionExamePeriodFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AdmitionExamePeriod.
+     * @param {AdmitionExamePeriodCreateArgs} args - Arguments to create a AdmitionExamePeriod.
+     * @example
+     * // Create one AdmitionExamePeriod
+     * const AdmitionExamePeriod = await prisma.admitionExamePeriod.create({
+     *   data: {
+     *     // ... data to create a AdmitionExamePeriod
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdmitionExamePeriodCreateArgs>(args: SelectSubset<T, AdmitionExamePeriodCreateArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AdmitionExamePeriods.
+     * @param {AdmitionExamePeriodCreateManyArgs} args - Arguments to create many AdmitionExamePeriods.
+     * @example
+     * // Create many AdmitionExamePeriods
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdmitionExamePeriodCreateManyArgs>(args?: SelectSubset<T, AdmitionExamePeriodCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a AdmitionExamePeriod.
+     * @param {AdmitionExamePeriodDeleteArgs} args - Arguments to delete one AdmitionExamePeriod.
+     * @example
+     * // Delete one AdmitionExamePeriod
+     * const AdmitionExamePeriod = await prisma.admitionExamePeriod.delete({
+     *   where: {
+     *     // ... filter to delete one AdmitionExamePeriod
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdmitionExamePeriodDeleteArgs>(args: SelectSubset<T, AdmitionExamePeriodDeleteArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AdmitionExamePeriod.
+     * @param {AdmitionExamePeriodUpdateArgs} args - Arguments to update one AdmitionExamePeriod.
+     * @example
+     * // Update one AdmitionExamePeriod
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdmitionExamePeriodUpdateArgs>(args: SelectSubset<T, AdmitionExamePeriodUpdateArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AdmitionExamePeriods.
+     * @param {AdmitionExamePeriodDeleteManyArgs} args - Arguments to filter AdmitionExamePeriods to delete.
+     * @example
+     * // Delete a few AdmitionExamePeriods
+     * const { count } = await prisma.admitionExamePeriod.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdmitionExamePeriodDeleteManyArgs>(args?: SelectSubset<T, AdmitionExamePeriodDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdmitionExamePeriods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePeriodUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AdmitionExamePeriods
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdmitionExamePeriodUpdateManyArgs>(args: SelectSubset<T, AdmitionExamePeriodUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AdmitionExamePeriod.
+     * @param {AdmitionExamePeriodUpsertArgs} args - Arguments to update or create a AdmitionExamePeriod.
+     * @example
+     * // Update or create a AdmitionExamePeriod
+     * const admitionExamePeriod = await prisma.admitionExamePeriod.upsert({
+     *   create: {
+     *     // ... data to create a AdmitionExamePeriod
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AdmitionExamePeriod we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdmitionExamePeriodUpsertArgs>(args: SelectSubset<T, AdmitionExamePeriodUpsertArgs<ExtArgs>>): Prisma__AdmitionExamePeriodClient<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AdmitionExamePeriods.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePeriodCountArgs} args - Arguments to filter AdmitionExamePeriods to count.
+     * @example
+     * // Count the number of AdmitionExamePeriods
+     * const count = await prisma.admitionExamePeriod.count({
+     *   where: {
+     *     // ... the filter for the AdmitionExamePeriods we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdmitionExamePeriodCountArgs>(
+      args?: Subset<T, AdmitionExamePeriodCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdmitionExamePeriodCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AdmitionExamePeriod.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePeriodAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdmitionExamePeriodAggregateArgs>(args: Subset<T, AdmitionExamePeriodAggregateArgs>): Prisma.PrismaPromise<GetAdmitionExamePeriodAggregateType<T>>
+
+    /**
+     * Group by AdmitionExamePeriod.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdmitionExamePeriodGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdmitionExamePeriodGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdmitionExamePeriodGroupByArgs['orderBy'] }
+        : { orderBy?: AdmitionExamePeriodGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdmitionExamePeriodGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdmitionExamePeriodGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AdmitionExamePeriod model
+   */
+  readonly fields: AdmitionExamePeriodFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AdmitionExamePeriod.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdmitionExamePeriodClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    academicFaculty<T extends AcademicFacultyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFacultyDefaultArgs<ExtArgs>>): Prisma__AcademicFacultyClient<$Result.GetResult<Prisma.$AcademicFacultyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AdmitionExamePeriod model
+   */
+  interface AdmitionExamePeriodFieldRefs {
+    readonly id: FieldRef<"AdmitionExamePeriod", 'String'>
+    readonly startDate: FieldRef<"AdmitionExamePeriod", 'DateTime'>
+    readonly endDate: FieldRef<"AdmitionExamePeriod", 'DateTime'>
+    readonly academicFacultyId: FieldRef<"AdmitionExamePeriod", 'String'>
+    readonly createdAt: FieldRef<"AdmitionExamePeriod", 'DateTime'>
+    readonly updatedAt: FieldRef<"AdmitionExamePeriod", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AdmitionExamePeriod findUnique
+   */
+  export type AdmitionExamePeriodFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePeriod to fetch.
+     */
+    where: AdmitionExamePeriodWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePeriod findUniqueOrThrow
+   */
+  export type AdmitionExamePeriodFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePeriod to fetch.
+     */
+    where: AdmitionExamePeriodWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePeriod findFirst
+   */
+  export type AdmitionExamePeriodFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePeriod to fetch.
+     */
+    where?: AdmitionExamePeriodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePeriods to fetch.
+     */
+    orderBy?: AdmitionExamePeriodOrderByWithRelationInput | AdmitionExamePeriodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmitionExamePeriods.
+     */
+    cursor?: AdmitionExamePeriodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePeriods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePeriods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmitionExamePeriods.
+     */
+    distinct?: AdmitionExamePeriodScalarFieldEnum | AdmitionExamePeriodScalarFieldEnum[]
+  }
+
+  /**
+   * AdmitionExamePeriod findFirstOrThrow
+   */
+  export type AdmitionExamePeriodFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePeriod to fetch.
+     */
+    where?: AdmitionExamePeriodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePeriods to fetch.
+     */
+    orderBy?: AdmitionExamePeriodOrderByWithRelationInput | AdmitionExamePeriodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdmitionExamePeriods.
+     */
+    cursor?: AdmitionExamePeriodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePeriods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePeriods.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdmitionExamePeriods.
+     */
+    distinct?: AdmitionExamePeriodScalarFieldEnum | AdmitionExamePeriodScalarFieldEnum[]
+  }
+
+  /**
+   * AdmitionExamePeriod findMany
+   */
+  export type AdmitionExamePeriodFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * Filter, which AdmitionExamePeriods to fetch.
+     */
+    where?: AdmitionExamePeriodWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdmitionExamePeriods to fetch.
+     */
+    orderBy?: AdmitionExamePeriodOrderByWithRelationInput | AdmitionExamePeriodOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AdmitionExamePeriods.
+     */
+    cursor?: AdmitionExamePeriodWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdmitionExamePeriods from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdmitionExamePeriods.
+     */
+    skip?: number
+    distinct?: AdmitionExamePeriodScalarFieldEnum | AdmitionExamePeriodScalarFieldEnum[]
+  }
+
+  /**
+   * AdmitionExamePeriod create
+   */
+  export type AdmitionExamePeriodCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AdmitionExamePeriod.
+     */
+    data: XOR<AdmitionExamePeriodCreateInput, AdmitionExamePeriodUncheckedCreateInput>
+  }
+
+  /**
+   * AdmitionExamePeriod createMany
+   */
+  export type AdmitionExamePeriodCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AdmitionExamePeriods.
+     */
+    data: AdmitionExamePeriodCreateManyInput | AdmitionExamePeriodCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AdmitionExamePeriod update
+   */
+  export type AdmitionExamePeriodUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AdmitionExamePeriod.
+     */
+    data: XOR<AdmitionExamePeriodUpdateInput, AdmitionExamePeriodUncheckedUpdateInput>
+    /**
+     * Choose, which AdmitionExamePeriod to update.
+     */
+    where: AdmitionExamePeriodWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePeriod updateMany
+   */
+  export type AdmitionExamePeriodUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AdmitionExamePeriods.
+     */
+    data: XOR<AdmitionExamePeriodUpdateManyMutationInput, AdmitionExamePeriodUncheckedUpdateManyInput>
+    /**
+     * Filter which AdmitionExamePeriods to update
+     */
+    where?: AdmitionExamePeriodWhereInput
+    /**
+     * Limit how many AdmitionExamePeriods to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdmitionExamePeriod upsert
+   */
+  export type AdmitionExamePeriodUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AdmitionExamePeriod to update in case it exists.
+     */
+    where: AdmitionExamePeriodWhereUniqueInput
+    /**
+     * In case the AdmitionExamePeriod found by the `where` argument doesn't exist, create a new AdmitionExamePeriod with this data.
+     */
+    create: XOR<AdmitionExamePeriodCreateInput, AdmitionExamePeriodUncheckedCreateInput>
+    /**
+     * In case the AdmitionExamePeriod was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdmitionExamePeriodUpdateInput, AdmitionExamePeriodUncheckedUpdateInput>
+  }
+
+  /**
+   * AdmitionExamePeriod delete
+   */
+  export type AdmitionExamePeriodDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+    /**
+     * Filter which AdmitionExamePeriod to delete.
+     */
+    where: AdmitionExamePeriodWhereUniqueInput
+  }
+
+  /**
+   * AdmitionExamePeriod deleteMany
+   */
+  export type AdmitionExamePeriodDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdmitionExamePeriods to delete
+     */
+    where?: AdmitionExamePeriodWhereInput
+    /**
+     * Limit how many AdmitionExamePeriods to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdmitionExamePeriod without action
+   */
+  export type AdmitionExamePeriodDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExamePeriod
+     */
+    select?: AdmitionExamePeriodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExamePeriod
+     */
+    omit?: AdmitionExamePeriodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExamePeriodInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ExameFase
+   */
+
+  export type AggregateExameFase = {
+    _count: ExameFaseCountAggregateOutputType | null
+    _avg: ExameFaseAvgAggregateOutputType | null
+    _sum: ExameFaseSumAggregateOutputType | null
+    _min: ExameFaseMinAggregateOutputType | null
+    _max: ExameFaseMaxAggregateOutputType | null
+  }
+
+  export type ExameFaseAvgAggregateOutputType = {
+    ordem: number | null
+  }
+
+  export type ExameFaseSumAggregateOutputType = {
+    ordem: number | null
+  }
+
+  export type ExameFaseMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    ordem: number | null
+    startDate: Date | null
+    endDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ExameFaseMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    ordem: number | null
+    startDate: Date | null
+    endDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ExameFaseCountAggregateOutputType = {
+    id: number
+    name: number
+    ordem: number
+    startDate: number
+    endDate: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ExameFaseAvgAggregateInputType = {
+    ordem?: true
+  }
+
+  export type ExameFaseSumAggregateInputType = {
+    ordem?: true
+  }
+
+  export type ExameFaseMinAggregateInputType = {
+    id?: true
+    name?: true
+    ordem?: true
+    startDate?: true
+    endDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ExameFaseMaxAggregateInputType = {
+    id?: true
+    name?: true
+    ordem?: true
+    startDate?: true
+    endDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ExameFaseCountAggregateInputType = {
+    id?: true
+    name?: true
+    ordem?: true
+    startDate?: true
+    endDate?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ExameFaseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ExameFase to aggregate.
+     */
+    where?: ExameFaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExameFases to fetch.
+     */
+    orderBy?: ExameFaseOrderByWithRelationInput | ExameFaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ExameFaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExameFases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExameFases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ExameFases
+    **/
+    _count?: true | ExameFaseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ExameFaseAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ExameFaseSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ExameFaseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ExameFaseMaxAggregateInputType
+  }
+
+  export type GetExameFaseAggregateType<T extends ExameFaseAggregateArgs> = {
+        [P in keyof T & keyof AggregateExameFase]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateExameFase[P]>
+      : GetScalarType<T[P], AggregateExameFase[P]>
+  }
+
+
+
+
+  export type ExameFaseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExameFaseWhereInput
+    orderBy?: ExameFaseOrderByWithAggregationInput | ExameFaseOrderByWithAggregationInput[]
+    by: ExameFaseScalarFieldEnum[] | ExameFaseScalarFieldEnum
+    having?: ExameFaseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ExameFaseCountAggregateInputType | true
+    _avg?: ExameFaseAvgAggregateInputType
+    _sum?: ExameFaseSumAggregateInputType
+    _min?: ExameFaseMinAggregateInputType
+    _max?: ExameFaseMaxAggregateInputType
+  }
+
+  export type ExameFaseGroupByOutputType = {
+    id: string
+    name: string
+    ordem: number
+    startDate: Date
+    endDate: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: ExameFaseCountAggregateOutputType | null
+    _avg: ExameFaseAvgAggregateOutputType | null
+    _sum: ExameFaseSumAggregateOutputType | null
+    _min: ExameFaseMinAggregateOutputType | null
+    _max: ExameFaseMaxAggregateOutputType | null
+  }
+
+  type GetExameFaseGroupByPayload<T extends ExameFaseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ExameFaseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ExameFaseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ExameFaseGroupByOutputType[P]>
+            : GetScalarType<T[P], ExameFaseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ExameFaseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    ordem?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    registrations?: boolean | ExameFase$registrationsArgs<ExtArgs>
+    _count?: boolean | ExameFaseCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["exameFase"]>
+
+
+
+  export type ExameFaseSelectScalar = {
+    id?: boolean
+    name?: boolean
+    ordem?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ExameFaseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "ordem" | "startDate" | "endDate" | "createdAt" | "updatedAt", ExtArgs["result"]["exameFase"]>
+  export type ExameFaseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registrations?: boolean | ExameFase$registrationsArgs<ExtArgs>
+    _count?: boolean | ExameFaseCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ExameFasePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ExameFase"
+    objects: {
+      registrations: Prisma.$AdmitionExameRegistrationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      ordem: number
+      startDate: Date
+      endDate: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["exameFase"]>
+    composites: {}
+  }
+
+  type ExameFaseGetPayload<S extends boolean | null | undefined | ExameFaseDefaultArgs> = $Result.GetResult<Prisma.$ExameFasePayload, S>
+
+  type ExameFaseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ExameFaseFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ExameFaseCountAggregateInputType | true
+    }
+
+  export interface ExameFaseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ExameFase'], meta: { name: 'ExameFase' } }
+    /**
+     * Find zero or one ExameFase that matches the filter.
+     * @param {ExameFaseFindUniqueArgs} args - Arguments to find a ExameFase
+     * @example
+     * // Get one ExameFase
+     * const exameFase = await prisma.exameFase.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ExameFaseFindUniqueArgs>(args: SelectSubset<T, ExameFaseFindUniqueArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ExameFase that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ExameFaseFindUniqueOrThrowArgs} args - Arguments to find a ExameFase
+     * @example
+     * // Get one ExameFase
+     * const exameFase = await prisma.exameFase.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ExameFaseFindUniqueOrThrowArgs>(args: SelectSubset<T, ExameFaseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ExameFase that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExameFaseFindFirstArgs} args - Arguments to find a ExameFase
+     * @example
+     * // Get one ExameFase
+     * const exameFase = await prisma.exameFase.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ExameFaseFindFirstArgs>(args?: SelectSubset<T, ExameFaseFindFirstArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ExameFase that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExameFaseFindFirstOrThrowArgs} args - Arguments to find a ExameFase
+     * @example
+     * // Get one ExameFase
+     * const exameFase = await prisma.exameFase.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ExameFaseFindFirstOrThrowArgs>(args?: SelectSubset<T, ExameFaseFindFirstOrThrowArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ExameFases that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExameFaseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ExameFases
+     * const exameFases = await prisma.exameFase.findMany()
+     * 
+     * // Get first 10 ExameFases
+     * const exameFases = await prisma.exameFase.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const exameFaseWithIdOnly = await prisma.exameFase.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ExameFaseFindManyArgs>(args?: SelectSubset<T, ExameFaseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ExameFase.
+     * @param {ExameFaseCreateArgs} args - Arguments to create a ExameFase.
+     * @example
+     * // Create one ExameFase
+     * const ExameFase = await prisma.exameFase.create({
+     *   data: {
+     *     // ... data to create a ExameFase
+     *   }
+     * })
+     * 
+     */
+    create<T extends ExameFaseCreateArgs>(args: SelectSubset<T, ExameFaseCreateArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ExameFases.
+     * @param {ExameFaseCreateManyArgs} args - Arguments to create many ExameFases.
+     * @example
+     * // Create many ExameFases
+     * const exameFase = await prisma.exameFase.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ExameFaseCreateManyArgs>(args?: SelectSubset<T, ExameFaseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ExameFase.
+     * @param {ExameFaseDeleteArgs} args - Arguments to delete one ExameFase.
+     * @example
+     * // Delete one ExameFase
+     * const ExameFase = await prisma.exameFase.delete({
+     *   where: {
+     *     // ... filter to delete one ExameFase
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ExameFaseDeleteArgs>(args: SelectSubset<T, ExameFaseDeleteArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ExameFase.
+     * @param {ExameFaseUpdateArgs} args - Arguments to update one ExameFase.
+     * @example
+     * // Update one ExameFase
+     * const exameFase = await prisma.exameFase.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ExameFaseUpdateArgs>(args: SelectSubset<T, ExameFaseUpdateArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ExameFases.
+     * @param {ExameFaseDeleteManyArgs} args - Arguments to filter ExameFases to delete.
+     * @example
+     * // Delete a few ExameFases
+     * const { count } = await prisma.exameFase.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ExameFaseDeleteManyArgs>(args?: SelectSubset<T, ExameFaseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ExameFases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExameFaseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ExameFases
+     * const exameFase = await prisma.exameFase.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ExameFaseUpdateManyArgs>(args: SelectSubset<T, ExameFaseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ExameFase.
+     * @param {ExameFaseUpsertArgs} args - Arguments to update or create a ExameFase.
+     * @example
+     * // Update or create a ExameFase
+     * const exameFase = await prisma.exameFase.upsert({
+     *   create: {
+     *     // ... data to create a ExameFase
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ExameFase we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ExameFaseUpsertArgs>(args: SelectSubset<T, ExameFaseUpsertArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ExameFases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExameFaseCountArgs} args - Arguments to filter ExameFases to count.
+     * @example
+     * // Count the number of ExameFases
+     * const count = await prisma.exameFase.count({
+     *   where: {
+     *     // ... the filter for the ExameFases we want to count
+     *   }
+     * })
+    **/
+    count<T extends ExameFaseCountArgs>(
+      args?: Subset<T, ExameFaseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ExameFaseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ExameFase.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExameFaseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ExameFaseAggregateArgs>(args: Subset<T, ExameFaseAggregateArgs>): Prisma.PrismaPromise<GetExameFaseAggregateType<T>>
+
+    /**
+     * Group by ExameFase.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExameFaseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ExameFaseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ExameFaseGroupByArgs['orderBy'] }
+        : { orderBy?: ExameFaseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ExameFaseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetExameFaseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ExameFase model
+   */
+  readonly fields: ExameFaseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ExameFase.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ExameFaseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registrations<T extends ExameFase$registrationsArgs<ExtArgs> = {}>(args?: Subset<T, ExameFase$registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExameRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ExameFase model
+   */
+  interface ExameFaseFieldRefs {
+    readonly id: FieldRef<"ExameFase", 'String'>
+    readonly name: FieldRef<"ExameFase", 'String'>
+    readonly ordem: FieldRef<"ExameFase", 'Int'>
+    readonly startDate: FieldRef<"ExameFase", 'DateTime'>
+    readonly endDate: FieldRef<"ExameFase", 'DateTime'>
+    readonly createdAt: FieldRef<"ExameFase", 'DateTime'>
+    readonly updatedAt: FieldRef<"ExameFase", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ExameFase findUnique
+   */
+  export type ExameFaseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * Filter, which ExameFase to fetch.
+     */
+    where: ExameFaseWhereUniqueInput
+  }
+
+  /**
+   * ExameFase findUniqueOrThrow
+   */
+  export type ExameFaseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * Filter, which ExameFase to fetch.
+     */
+    where: ExameFaseWhereUniqueInput
+  }
+
+  /**
+   * ExameFase findFirst
+   */
+  export type ExameFaseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * Filter, which ExameFase to fetch.
+     */
+    where?: ExameFaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExameFases to fetch.
+     */
+    orderBy?: ExameFaseOrderByWithRelationInput | ExameFaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ExameFases.
+     */
+    cursor?: ExameFaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExameFases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExameFases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ExameFases.
+     */
+    distinct?: ExameFaseScalarFieldEnum | ExameFaseScalarFieldEnum[]
+  }
+
+  /**
+   * ExameFase findFirstOrThrow
+   */
+  export type ExameFaseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * Filter, which ExameFase to fetch.
+     */
+    where?: ExameFaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExameFases to fetch.
+     */
+    orderBy?: ExameFaseOrderByWithRelationInput | ExameFaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ExameFases.
+     */
+    cursor?: ExameFaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExameFases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExameFases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ExameFases.
+     */
+    distinct?: ExameFaseScalarFieldEnum | ExameFaseScalarFieldEnum[]
+  }
+
+  /**
+   * ExameFase findMany
+   */
+  export type ExameFaseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * Filter, which ExameFases to fetch.
+     */
+    where?: ExameFaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExameFases to fetch.
+     */
+    orderBy?: ExameFaseOrderByWithRelationInput | ExameFaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ExameFases.
+     */
+    cursor?: ExameFaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExameFases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExameFases.
+     */
+    skip?: number
+    distinct?: ExameFaseScalarFieldEnum | ExameFaseScalarFieldEnum[]
+  }
+
+  /**
+   * ExameFase create
+   */
+  export type ExameFaseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ExameFase.
+     */
+    data: XOR<ExameFaseCreateInput, ExameFaseUncheckedCreateInput>
+  }
+
+  /**
+   * ExameFase createMany
+   */
+  export type ExameFaseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ExameFases.
+     */
+    data: ExameFaseCreateManyInput | ExameFaseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ExameFase update
+   */
+  export type ExameFaseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ExameFase.
+     */
+    data: XOR<ExameFaseUpdateInput, ExameFaseUncheckedUpdateInput>
+    /**
+     * Choose, which ExameFase to update.
+     */
+    where: ExameFaseWhereUniqueInput
+  }
+
+  /**
+   * ExameFase updateMany
+   */
+  export type ExameFaseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ExameFases.
+     */
+    data: XOR<ExameFaseUpdateManyMutationInput, ExameFaseUncheckedUpdateManyInput>
+    /**
+     * Filter which ExameFases to update
+     */
+    where?: ExameFaseWhereInput
+    /**
+     * Limit how many ExameFases to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ExameFase upsert
+   */
+  export type ExameFaseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ExameFase to update in case it exists.
+     */
+    where: ExameFaseWhereUniqueInput
+    /**
+     * In case the ExameFase found by the `where` argument doesn't exist, create a new ExameFase with this data.
+     */
+    create: XOR<ExameFaseCreateInput, ExameFaseUncheckedCreateInput>
+    /**
+     * In case the ExameFase was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ExameFaseUpdateInput, ExameFaseUncheckedUpdateInput>
+  }
+
+  /**
+   * ExameFase delete
+   */
+  export type ExameFaseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
+    /**
+     * Filter which ExameFase to delete.
+     */
+    where: ExameFaseWhereUniqueInput
+  }
+
+  /**
+   * ExameFase deleteMany
+   */
+  export type ExameFaseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ExameFases to delete
+     */
+    where?: ExameFaseWhereInput
+    /**
+     * Limit how many ExameFases to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ExameFase.registrations
+   */
+  export type ExameFase$registrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExameRegistration
+     */
+    select?: AdmitionExameRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExameRegistration
+     */
+    omit?: AdmitionExameRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExameRegistrationInclude<ExtArgs> | null
+    where?: AdmitionExameRegistrationWhereInput
+    orderBy?: AdmitionExameRegistrationOrderByWithRelationInput | AdmitionExameRegistrationOrderByWithRelationInput[]
+    cursor?: AdmitionExameRegistrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmitionExameRegistrationScalarFieldEnum | AdmitionExameRegistrationScalarFieldEnum[]
+  }
+
+  /**
+   * ExameFase without action
+   */
+  export type ExameFaseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExameFase
+     */
+    select?: ExameFaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExameFase
+     */
+    omit?: ExameFaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExameFaseInclude<ExtArgs> | null
   }
 
 
@@ -30776,6 +34132,7 @@ export namespace Prisma {
     gender: 'gender',
     isWoker: 'isWoker',
     shift: 'shift',
+    yearLevel: 'yearLevel',
     isActive: 'isActive',
     password: 'password',
     gradeDeclarationFile: 'gradeDeclarationFile',
@@ -30802,6 +34159,7 @@ export namespace Prisma {
     profileImage: 'profileImage',
     email: 'email',
     contactNo: 'contactNo',
+    shift: 'shift',
     gender: 'gender',
     designation: 'designation',
     password: 'password',
@@ -30841,8 +34199,9 @@ export namespace Prisma {
     title: 'title',
     code: 'code',
     durationInYears: 'durationInYears',
+    yearLevel: 'yearLevel',
+    shift: 'shift',
     academicDepartmentId: 'academicDepartmentId',
-    credits: 'credits',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -30883,19 +34242,59 @@ export namespace Prisma {
     id: 'id',
     applicantName: 'applicantName',
     paymentRecipt: 'paymentRecipt',
+    status: 'status',
     document: 'document',
     paymentAmoute: 'paymentAmoute',
     aprovePayment: 'aprovePayment',
     exameResults: 'exameResults',
     passed: 'passed',
-    fase: 'fase',
+    faseId: 'faseId',
     exameDate: 'exameDate',
+    rejectionReason: 'rejectionReason',
+    phoneNumber: 'phoneNumber',
+    email: 'email',
     createdAt: 'createdAt',
     updateAt: 'updateAt',
     departmentId: 'departmentId'
   };
 
   export type AdmitionExameRegistrationScalarFieldEnum = (typeof AdmitionExameRegistrationScalarFieldEnum)[keyof typeof AdmitionExameRegistrationScalarFieldEnum]
+
+
+  export const AdmitionExamePriceScalarFieldEnum: {
+    id: 'id',
+    academicFacultyId: 'academicFacultyId',
+    price: 'price',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AdmitionExamePriceScalarFieldEnum = (typeof AdmitionExamePriceScalarFieldEnum)[keyof typeof AdmitionExamePriceScalarFieldEnum]
+
+
+  export const AdmitionExamePeriodScalarFieldEnum: {
+    id: 'id',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    academicFacultyId: 'academicFacultyId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AdmitionExamePeriodScalarFieldEnum = (typeof AdmitionExamePeriodScalarFieldEnum)[keyof typeof AdmitionExamePeriodScalarFieldEnum]
+
+
+  export const ExameFaseScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    ordem: 'ordem',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ExameFaseScalarFieldEnum = (typeof ExameFaseScalarFieldEnum)[keyof typeof ExameFaseScalarFieldEnum]
 
 
   export const OfferedCourseScalarFieldEnum: {
@@ -31249,10 +34648,38 @@ export namespace Prisma {
     applicantName: 'applicantName',
     paymentRecipt: 'paymentRecipt',
     document: 'document',
+    faseId: 'faseId',
+    rejectionReason: 'rejectionReason',
+    phoneNumber: 'phoneNumber',
+    email: 'email',
     departmentId: 'departmentId'
   };
 
   export type AdmitionExameRegistrationOrderByRelevanceFieldEnum = (typeof AdmitionExameRegistrationOrderByRelevanceFieldEnum)[keyof typeof AdmitionExameRegistrationOrderByRelevanceFieldEnum]
+
+
+  export const AdmitionExamePriceOrderByRelevanceFieldEnum: {
+    id: 'id',
+    academicFacultyId: 'academicFacultyId'
+  };
+
+  export type AdmitionExamePriceOrderByRelevanceFieldEnum = (typeof AdmitionExamePriceOrderByRelevanceFieldEnum)[keyof typeof AdmitionExamePriceOrderByRelevanceFieldEnum]
+
+
+  export const AdmitionExamePeriodOrderByRelevanceFieldEnum: {
+    id: 'id',
+    academicFacultyId: 'academicFacultyId'
+  };
+
+  export type AdmitionExamePeriodOrderByRelevanceFieldEnum = (typeof AdmitionExamePeriodOrderByRelevanceFieldEnum)[keyof typeof AdmitionExamePeriodOrderByRelevanceFieldEnum]
+
+
+  export const ExameFaseOrderByRelevanceFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type ExameFaseOrderByRelevanceFieldEnum = (typeof ExameFaseOrderByRelevanceFieldEnum)[keyof typeof ExameFaseOrderByRelevanceFieldEnum]
 
 
   export const OfferedCourseOrderByRelevanceFieldEnum: {
@@ -31444,6 +34871,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'YearLevel'
+   */
+  export type EnumYearLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'YearLevel'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -31454,6 +34888,13 @@ export namespace Prisma {
    * Reference to a field of type 'SemesterRegistrationStatus'
    */
   export type EnumSemesterRegistrationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SemesterRegistrationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status'
+   */
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
     
 
 
@@ -31692,6 +35133,8 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentListRelationFilter
     faculties?: FacultyListRelationFilter
     students?: StudentListRelationFilter
+    AdmitionExamePrice?: AdmitionExamePriceListRelationFilter
+    AdmitionExamePeriod?: AdmitionExamePeriodListRelationFilter
   }
 
   export type AcademicFacultyOrderByWithRelationInput = {
@@ -31702,6 +35145,8 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentOrderByRelationAggregateInput
     faculties?: FacultyOrderByRelationAggregateInput
     students?: StudentOrderByRelationAggregateInput
+    AdmitionExamePrice?: AdmitionExamePriceOrderByRelationAggregateInput
+    AdmitionExamePeriod?: AdmitionExamePeriodOrderByRelationAggregateInput
     _relevance?: AcademicFacultyOrderByRelevanceInput
   }
 
@@ -31716,6 +35161,8 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentListRelationFilter
     faculties?: FacultyListRelationFilter
     students?: StudentListRelationFilter
+    AdmitionExamePrice?: AdmitionExamePriceListRelationFilter
+    AdmitionExamePeriod?: AdmitionExamePeriodListRelationFilter
   }, "id">
 
   export type AcademicFacultyOrderByWithAggregationInput = {
@@ -31835,6 +35282,7 @@ export namespace Prisma {
     gender?: StringFilter<"Student"> | string
     isWoker?: BoolFilter<"Student"> | boolean
     shift?: EnumShiftFilter<"Student"> | $Enums.Shift
+    yearLevel?: EnumYearLevelFilter<"Student"> | $Enums.YearLevel
     isActive?: BoolFilter<"Student"> | boolean
     password?: StringFilter<"Student"> | string
     gradeDeclarationFile?: StringFilter<"Student"> | string
@@ -31871,6 +35319,7 @@ export namespace Prisma {
     gender?: SortOrder
     isWoker?: SortOrder
     shift?: SortOrder
+    yearLevel?: SortOrder
     isActive?: SortOrder
     password?: SortOrder
     gradeDeclarationFile?: SortOrder
@@ -31912,6 +35361,7 @@ export namespace Prisma {
     gender?: StringFilter<"Student"> | string
     isWoker?: BoolFilter<"Student"> | boolean
     shift?: EnumShiftFilter<"Student"> | $Enums.Shift
+    yearLevel?: EnumYearLevelFilter<"Student"> | $Enums.YearLevel
     isActive?: BoolFilter<"Student"> | boolean
     password?: StringFilter<"Student"> | string
     gradeDeclarationFile?: StringFilter<"Student"> | string
@@ -31947,6 +35397,7 @@ export namespace Prisma {
     gender?: SortOrder
     isWoker?: SortOrder
     shift?: SortOrder
+    yearLevel?: SortOrder
     isActive?: SortOrder
     password?: SortOrder
     gradeDeclarationFile?: SortOrder
@@ -31979,6 +35430,7 @@ export namespace Prisma {
     gender?: StringWithAggregatesFilter<"Student"> | string
     isWoker?: BoolWithAggregatesFilter<"Student"> | boolean
     shift?: EnumShiftWithAggregatesFilter<"Student"> | $Enums.Shift
+    yearLevel?: EnumYearLevelWithAggregatesFilter<"Student"> | $Enums.YearLevel
     isActive?: BoolWithAggregatesFilter<"Student"> | boolean
     password?: StringWithAggregatesFilter<"Student"> | string
     gradeDeclarationFile?: StringWithAggregatesFilter<"Student"> | string
@@ -32005,6 +35457,7 @@ export namespace Prisma {
     profileImage?: StringNullableFilter<"Faculty"> | string | null
     email?: StringNullableFilter<"Faculty"> | string | null
     contactNo?: StringNullableFilter<"Faculty"> | string | null
+    shift?: EnumShiftFilter<"Faculty"> | $Enums.Shift
     gender?: StringFilter<"Faculty"> | string
     designation?: StringFilter<"Faculty"> | string
     password?: StringFilter<"Faculty"> | string
@@ -32027,6 +35480,7 @@ export namespace Prisma {
     profileImage?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     contactNo?: SortOrderInput | SortOrder
+    shift?: SortOrder
     gender?: SortOrder
     designation?: SortOrder
     password?: SortOrder
@@ -32055,6 +35509,7 @@ export namespace Prisma {
     profileImage?: StringNullableFilter<"Faculty"> | string | null
     email?: StringNullableFilter<"Faculty"> | string | null
     contactNo?: StringNullableFilter<"Faculty"> | string | null
+    shift?: EnumShiftFilter<"Faculty"> | $Enums.Shift
     gender?: StringFilter<"Faculty"> | string
     designation?: StringFilter<"Faculty"> | string
     password?: StringFilter<"Faculty"> | string
@@ -32075,6 +35530,7 @@ export namespace Prisma {
     profileImage?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     contactNo?: SortOrderInput | SortOrder
+    shift?: SortOrder
     gender?: SortOrder
     designation?: SortOrder
     password?: SortOrder
@@ -32099,6 +35555,7 @@ export namespace Prisma {
     profileImage?: StringNullableWithAggregatesFilter<"Faculty"> | string | null
     email?: StringNullableWithAggregatesFilter<"Faculty"> | string | null
     contactNo?: StringNullableWithAggregatesFilter<"Faculty"> | string | null
+    shift?: EnumShiftWithAggregatesFilter<"Faculty"> | $Enums.Shift
     gender?: StringWithAggregatesFilter<"Faculty"> | string
     designation?: StringWithAggregatesFilter<"Faculty"> | string
     password?: StringWithAggregatesFilter<"Faculty"> | string
@@ -32231,8 +35688,9 @@ export namespace Prisma {
     title?: StringFilter<"Course"> | string
     code?: StringFilter<"Course"> | string
     durationInYears?: IntFilter<"Course"> | number
+    yearLevel?: EnumYearLevelFilter<"Course"> | $Enums.YearLevel
+    shift?: EnumShiftFilter<"Course"> | $Enums.Shift
     academicDepartmentId?: StringFilter<"Course"> | string
-    credits?: IntFilter<"Course"> | number
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     courseDisciplines?: CourseDisciplineListRelationFilter
@@ -32250,8 +35708,9 @@ export namespace Prisma {
     title?: SortOrder
     code?: SortOrder
     durationInYears?: SortOrder
+    yearLevel?: SortOrder
+    shift?: SortOrder
     academicDepartmentId?: SortOrder
-    credits?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     courseDisciplines?: CourseDisciplineOrderByRelationAggregateInput
@@ -32273,8 +35732,9 @@ export namespace Prisma {
     title?: StringFilter<"Course"> | string
     code?: StringFilter<"Course"> | string
     durationInYears?: IntFilter<"Course"> | number
+    yearLevel?: EnumYearLevelFilter<"Course"> | $Enums.YearLevel
+    shift?: EnumShiftFilter<"Course"> | $Enums.Shift
     academicDepartmentId?: StringFilter<"Course"> | string
-    credits?: IntFilter<"Course"> | number
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     courseDisciplines?: CourseDisciplineListRelationFilter
@@ -32292,8 +35752,9 @@ export namespace Prisma {
     title?: SortOrder
     code?: SortOrder
     durationInYears?: SortOrder
+    yearLevel?: SortOrder
+    shift?: SortOrder
     academicDepartmentId?: SortOrder
-    credits?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CourseCountOrderByAggregateInput
@@ -32311,8 +35772,9 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Course"> | string
     code?: StringWithAggregatesFilter<"Course"> | string
     durationInYears?: IntWithAggregatesFilter<"Course"> | number
+    yearLevel?: EnumYearLevelWithAggregatesFilter<"Course"> | $Enums.YearLevel
+    shift?: EnumShiftWithAggregatesFilter<"Course"> | $Enums.Shift
     academicDepartmentId?: StringWithAggregatesFilter<"Course"> | string
-    credits?: IntWithAggregatesFilter<"Course"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
   }
@@ -32495,16 +35957,21 @@ export namespace Prisma {
     id?: StringFilter<"AdmitionExameRegistration"> | string
     applicantName?: StringFilter<"AdmitionExameRegistration"> | string
     paymentRecipt?: StringFilter<"AdmitionExameRegistration"> | string
+    status?: EnumStatusFilter<"AdmitionExameRegistration"> | $Enums.Status
     document?: StringFilter<"AdmitionExameRegistration"> | string
     paymentAmoute?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
     aprovePayment?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
     exameResults?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
     passed?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
-    fase?: IntFilter<"AdmitionExameRegistration"> | number
+    faseId?: StringFilter<"AdmitionExameRegistration"> | string
     exameDate?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
+    rejectionReason?: StringNullableFilter<"AdmitionExameRegistration"> | string | null
+    phoneNumber?: StringFilter<"AdmitionExameRegistration"> | string
+    email?: StringFilter<"AdmitionExameRegistration"> | string
     createdAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     updateAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     departmentId?: StringFilter<"AdmitionExameRegistration"> | string
+    fase?: XOR<ExameFaseScalarRelationFilter, ExameFaseWhereInput>
     department?: XOR<AcademicDepartmentScalarRelationFilter, AcademicDepartmentWhereInput>
     Student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
   }
@@ -32513,16 +35980,21 @@ export namespace Prisma {
     id?: SortOrder
     applicantName?: SortOrder
     paymentRecipt?: SortOrder
+    status?: SortOrder
     document?: SortOrder
     paymentAmoute?: SortOrderInput | SortOrder
     aprovePayment?: SortOrderInput | SortOrder
     exameResults?: SortOrderInput | SortOrder
     passed?: SortOrderInput | SortOrder
-    fase?: SortOrder
+    faseId?: SortOrder
     exameDate?: SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
     departmentId?: SortOrder
+    fase?: ExameFaseOrderByWithRelationInput
     department?: AcademicDepartmentOrderByWithRelationInput
     Student?: StudentOrderByWithRelationInput
     _relevance?: AdmitionExameRegistrationOrderByRelevanceInput
@@ -32535,16 +36007,21 @@ export namespace Prisma {
     OR?: AdmitionExameRegistrationWhereInput[]
     NOT?: AdmitionExameRegistrationWhereInput | AdmitionExameRegistrationWhereInput[]
     paymentRecipt?: StringFilter<"AdmitionExameRegistration"> | string
+    status?: EnumStatusFilter<"AdmitionExameRegistration"> | $Enums.Status
     document?: StringFilter<"AdmitionExameRegistration"> | string
     paymentAmoute?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
     aprovePayment?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
     exameResults?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
     passed?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
-    fase?: IntFilter<"AdmitionExameRegistration"> | number
+    faseId?: StringFilter<"AdmitionExameRegistration"> | string
     exameDate?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
+    rejectionReason?: StringNullableFilter<"AdmitionExameRegistration"> | string | null
+    phoneNumber?: StringFilter<"AdmitionExameRegistration"> | string
+    email?: StringFilter<"AdmitionExameRegistration"> | string
     createdAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     updateAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     departmentId?: StringFilter<"AdmitionExameRegistration"> | string
+    fase?: XOR<ExameFaseScalarRelationFilter, ExameFaseWhereInput>
     department?: XOR<AcademicDepartmentScalarRelationFilter, AcademicDepartmentWhereInput>
     Student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
   }, "id" | "applicantName">
@@ -32553,13 +36030,17 @@ export namespace Prisma {
     id?: SortOrder
     applicantName?: SortOrder
     paymentRecipt?: SortOrder
+    status?: SortOrder
     document?: SortOrder
     paymentAmoute?: SortOrderInput | SortOrder
     aprovePayment?: SortOrderInput | SortOrder
     exameResults?: SortOrderInput | SortOrder
     passed?: SortOrderInput | SortOrder
-    fase?: SortOrder
+    faseId?: SortOrder
     exameDate?: SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
     departmentId?: SortOrder
@@ -32577,16 +36058,207 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
     applicantName?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
     paymentRecipt?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
+    status?: EnumStatusWithAggregatesFilter<"AdmitionExameRegistration"> | $Enums.Status
     document?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
     paymentAmoute?: IntNullableWithAggregatesFilter<"AdmitionExameRegistration"> | number | null
     aprovePayment?: BoolNullableWithAggregatesFilter<"AdmitionExameRegistration"> | boolean | null
     exameResults?: IntNullableWithAggregatesFilter<"AdmitionExameRegistration"> | number | null
     passed?: BoolNullableWithAggregatesFilter<"AdmitionExameRegistration"> | boolean | null
-    fase?: IntWithAggregatesFilter<"AdmitionExameRegistration"> | number
+    faseId?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
     exameDate?: DateTimeWithAggregatesFilter<"AdmitionExameRegistration"> | Date | string
+    rejectionReason?: StringNullableWithAggregatesFilter<"AdmitionExameRegistration"> | string | null
+    phoneNumber?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
+    email?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
     createdAt?: DateTimeWithAggregatesFilter<"AdmitionExameRegistration"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"AdmitionExameRegistration"> | Date | string
     departmentId?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
+  }
+
+  export type AdmitionExamePriceWhereInput = {
+    AND?: AdmitionExamePriceWhereInput | AdmitionExamePriceWhereInput[]
+    OR?: AdmitionExamePriceWhereInput[]
+    NOT?: AdmitionExamePriceWhereInput | AdmitionExamePriceWhereInput[]
+    id?: StringFilter<"AdmitionExamePrice"> | string
+    academicFacultyId?: StringFilter<"AdmitionExamePrice"> | string
+    price?: IntFilter<"AdmitionExamePrice"> | number
+    createdAt?: DateTimeFilter<"AdmitionExamePrice"> | Date | string
+    updatedAt?: DateTimeFilter<"AdmitionExamePrice"> | Date | string
+    academicFaculty?: XOR<AcademicFacultyScalarRelationFilter, AcademicFacultyWhereInput>
+  }
+
+  export type AdmitionExamePriceOrderByWithRelationInput = {
+    id?: SortOrder
+    academicFacultyId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    academicFaculty?: AcademicFacultyOrderByWithRelationInput
+    _relevance?: AdmitionExamePriceOrderByRelevanceInput
+  }
+
+  export type AdmitionExamePriceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AdmitionExamePriceWhereInput | AdmitionExamePriceWhereInput[]
+    OR?: AdmitionExamePriceWhereInput[]
+    NOT?: AdmitionExamePriceWhereInput | AdmitionExamePriceWhereInput[]
+    academicFacultyId?: StringFilter<"AdmitionExamePrice"> | string
+    price?: IntFilter<"AdmitionExamePrice"> | number
+    createdAt?: DateTimeFilter<"AdmitionExamePrice"> | Date | string
+    updatedAt?: DateTimeFilter<"AdmitionExamePrice"> | Date | string
+    academicFaculty?: XOR<AcademicFacultyScalarRelationFilter, AcademicFacultyWhereInput>
+  }, "id">
+
+  export type AdmitionExamePriceOrderByWithAggregationInput = {
+    id?: SortOrder
+    academicFacultyId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AdmitionExamePriceCountOrderByAggregateInput
+    _avg?: AdmitionExamePriceAvgOrderByAggregateInput
+    _max?: AdmitionExamePriceMaxOrderByAggregateInput
+    _min?: AdmitionExamePriceMinOrderByAggregateInput
+    _sum?: AdmitionExamePriceSumOrderByAggregateInput
+  }
+
+  export type AdmitionExamePriceScalarWhereWithAggregatesInput = {
+    AND?: AdmitionExamePriceScalarWhereWithAggregatesInput | AdmitionExamePriceScalarWhereWithAggregatesInput[]
+    OR?: AdmitionExamePriceScalarWhereWithAggregatesInput[]
+    NOT?: AdmitionExamePriceScalarWhereWithAggregatesInput | AdmitionExamePriceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AdmitionExamePrice"> | string
+    academicFacultyId?: StringWithAggregatesFilter<"AdmitionExamePrice"> | string
+    price?: IntWithAggregatesFilter<"AdmitionExamePrice"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"AdmitionExamePrice"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AdmitionExamePrice"> | Date | string
+  }
+
+  export type AdmitionExamePeriodWhereInput = {
+    AND?: AdmitionExamePeriodWhereInput | AdmitionExamePeriodWhereInput[]
+    OR?: AdmitionExamePeriodWhereInput[]
+    NOT?: AdmitionExamePeriodWhereInput | AdmitionExamePeriodWhereInput[]
+    id?: StringFilter<"AdmitionExamePeriod"> | string
+    startDate?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    endDate?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    academicFacultyId?: StringFilter<"AdmitionExamePeriod"> | string
+    createdAt?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    updatedAt?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    academicFaculty?: XOR<AcademicFacultyScalarRelationFilter, AcademicFacultyWhereInput>
+  }
+
+  export type AdmitionExamePeriodOrderByWithRelationInput = {
+    id?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    academicFacultyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    academicFaculty?: AcademicFacultyOrderByWithRelationInput
+    _relevance?: AdmitionExamePeriodOrderByRelevanceInput
+  }
+
+  export type AdmitionExamePeriodWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AdmitionExamePeriodWhereInput | AdmitionExamePeriodWhereInput[]
+    OR?: AdmitionExamePeriodWhereInput[]
+    NOT?: AdmitionExamePeriodWhereInput | AdmitionExamePeriodWhereInput[]
+    startDate?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    endDate?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    academicFacultyId?: StringFilter<"AdmitionExamePeriod"> | string
+    createdAt?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    updatedAt?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    academicFaculty?: XOR<AcademicFacultyScalarRelationFilter, AcademicFacultyWhereInput>
+  }, "id">
+
+  export type AdmitionExamePeriodOrderByWithAggregationInput = {
+    id?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    academicFacultyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AdmitionExamePeriodCountOrderByAggregateInput
+    _max?: AdmitionExamePeriodMaxOrderByAggregateInput
+    _min?: AdmitionExamePeriodMinOrderByAggregateInput
+  }
+
+  export type AdmitionExamePeriodScalarWhereWithAggregatesInput = {
+    AND?: AdmitionExamePeriodScalarWhereWithAggregatesInput | AdmitionExamePeriodScalarWhereWithAggregatesInput[]
+    OR?: AdmitionExamePeriodScalarWhereWithAggregatesInput[]
+    NOT?: AdmitionExamePeriodScalarWhereWithAggregatesInput | AdmitionExamePeriodScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AdmitionExamePeriod"> | string
+    startDate?: DateTimeWithAggregatesFilter<"AdmitionExamePeriod"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"AdmitionExamePeriod"> | Date | string
+    academicFacultyId?: StringWithAggregatesFilter<"AdmitionExamePeriod"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AdmitionExamePeriod"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AdmitionExamePeriod"> | Date | string
+  }
+
+  export type ExameFaseWhereInput = {
+    AND?: ExameFaseWhereInput | ExameFaseWhereInput[]
+    OR?: ExameFaseWhereInput[]
+    NOT?: ExameFaseWhereInput | ExameFaseWhereInput[]
+    id?: StringFilter<"ExameFase"> | string
+    name?: StringFilter<"ExameFase"> | string
+    ordem?: IntFilter<"ExameFase"> | number
+    startDate?: DateTimeFilter<"ExameFase"> | Date | string
+    endDate?: DateTimeFilter<"ExameFase"> | Date | string
+    createdAt?: DateTimeFilter<"ExameFase"> | Date | string
+    updatedAt?: DateTimeFilter<"ExameFase"> | Date | string
+    registrations?: AdmitionExameRegistrationListRelationFilter
+  }
+
+  export type ExameFaseOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ordem?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    registrations?: AdmitionExameRegistrationOrderByRelationAggregateInput
+    _relevance?: ExameFaseOrderByRelevanceInput
+  }
+
+  export type ExameFaseWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ExameFaseWhereInput | ExameFaseWhereInput[]
+    OR?: ExameFaseWhereInput[]
+    NOT?: ExameFaseWhereInput | ExameFaseWhereInput[]
+    name?: StringFilter<"ExameFase"> | string
+    ordem?: IntFilter<"ExameFase"> | number
+    startDate?: DateTimeFilter<"ExameFase"> | Date | string
+    endDate?: DateTimeFilter<"ExameFase"> | Date | string
+    createdAt?: DateTimeFilter<"ExameFase"> | Date | string
+    updatedAt?: DateTimeFilter<"ExameFase"> | Date | string
+    registrations?: AdmitionExameRegistrationListRelationFilter
+  }, "id">
+
+  export type ExameFaseOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ordem?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ExameFaseCountOrderByAggregateInput
+    _avg?: ExameFaseAvgOrderByAggregateInput
+    _max?: ExameFaseMaxOrderByAggregateInput
+    _min?: ExameFaseMinOrderByAggregateInput
+    _sum?: ExameFaseSumOrderByAggregateInput
+  }
+
+  export type ExameFaseScalarWhereWithAggregatesInput = {
+    AND?: ExameFaseScalarWhereWithAggregatesInput | ExameFaseScalarWhereWithAggregatesInput[]
+    OR?: ExameFaseScalarWhereWithAggregatesInput[]
+    NOT?: ExameFaseScalarWhereWithAggregatesInput | ExameFaseScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ExameFase"> | string
+    name?: StringWithAggregatesFilter<"ExameFase"> | string
+    ordem?: IntWithAggregatesFilter<"ExameFase"> | number
+    startDate?: DateTimeWithAggregatesFilter<"ExameFase"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"ExameFase"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"ExameFase"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ExameFase"> | Date | string
   }
 
   export type OfferedCourseWhereInput = {
@@ -33823,6 +37495,8 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyUncheckedCreateInput = {
@@ -33833,6 +37507,8 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyUpdateInput = {
@@ -33843,6 +37519,8 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type AcademicFacultyUncheckedUpdateInput = {
@@ -33853,6 +37531,8 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type AcademicFacultyCreateManyInput = {
@@ -33973,6 +37653,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -34005,6 +37686,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -34037,6 +37719,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -34069,6 +37752,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -34101,6 +37785,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -34127,6 +37812,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -34149,6 +37835,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -34172,6 +37859,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -34192,6 +37880,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -34212,6 +37901,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -34232,6 +37922,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -34252,6 +37943,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -34270,6 +37962,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -34286,6 +37979,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -34419,7 +38113,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -34437,8 +38132,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -34455,7 +38151,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -34473,8 +38170,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -34491,8 +38189,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -34502,7 +38201,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34512,8 +38212,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34679,15 +38380,19 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
+    fase: ExameFaseCreateNestedOneWithoutRegistrationsInput
     department: AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput
     Student?: StudentCreateNestedOneWithoutAdmissionRegistrationInput
   }
@@ -34696,13 +38401,17 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
+    faseId: string
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
     departmentId: string
@@ -34713,15 +38422,19 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fase?: ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput
     department?: AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput
     Student?: StudentUpdateOneWithoutAdmissionRegistrationNestedInput
   }
@@ -34730,13 +38443,17 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
+    faseId?: StringFieldUpdateOperationsInput | string
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: StringFieldUpdateOperationsInput | string
@@ -34747,13 +38464,17 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
+    faseId: string
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
     departmentId: string
@@ -34763,13 +38484,16 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34778,16 +38502,211 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
+    faseId?: StringFieldUpdateOperationsInput | string
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AdmitionExamePriceCreateInput = {
+    id?: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    academicFaculty: AcademicFacultyCreateNestedOneWithoutAdmitionExamePriceInput
+  }
+
+  export type AdmitionExamePriceUncheckedCreateInput = {
+    id?: string
+    academicFacultyId: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePriceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicFaculty?: AcademicFacultyUpdateOneRequiredWithoutAdmitionExamePriceNestedInput
+  }
+
+  export type AdmitionExamePriceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    academicFacultyId?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePriceCreateManyInput = {
+    id?: string
+    academicFacultyId: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePriceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePriceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    academicFacultyId?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePeriodCreateInput = {
+    id?: string
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    academicFaculty: AcademicFacultyCreateNestedOneWithoutAdmitionExamePeriodInput
+  }
+
+  export type AdmitionExamePeriodUncheckedCreateInput = {
+    id?: string
+    startDate: Date | string
+    endDate: Date | string
+    academicFacultyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePeriodUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicFaculty?: AcademicFacultyUpdateOneRequiredWithoutAdmitionExamePeriodNestedInput
+  }
+
+  export type AdmitionExamePeriodUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicFacultyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePeriodCreateManyInput = {
+    id?: string
+    startDate: Date | string
+    endDate: Date | string
+    academicFacultyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePeriodUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePeriodUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicFacultyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExameFaseCreateInput = {
+    id?: string
+    name: string
+    ordem: number
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registrations?: AdmitionExameRegistrationCreateNestedManyWithoutFaseInput
+  }
+
+  export type ExameFaseUncheckedCreateInput = {
+    id?: string
+    name: string
+    ordem: number
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registrations?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutFaseInput
+  }
+
+  export type ExameFaseUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ordem?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registrations?: AdmitionExameRegistrationUpdateManyWithoutFaseNestedInput
+  }
+
+  export type ExameFaseUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ordem?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registrations?: AdmitionExameRegistrationUncheckedUpdateManyWithoutFaseNestedInput
+  }
+
+  export type ExameFaseCreateManyInput = {
+    id?: string
+    name: string
+    ordem: number
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExameFaseUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ordem?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExameFaseUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ordem?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OfferedCourseCreateInput = {
@@ -36110,7 +40029,27 @@ export namespace Prisma {
     none?: FacultyWhereInput
   }
 
+  export type AdmitionExamePriceListRelationFilter = {
+    every?: AdmitionExamePriceWhereInput
+    some?: AdmitionExamePriceWhereInput
+    none?: AdmitionExamePriceWhereInput
+  }
+
+  export type AdmitionExamePeriodListRelationFilter = {
+    every?: AdmitionExamePeriodWhereInput
+    some?: AdmitionExamePeriodWhereInput
+    none?: AdmitionExamePeriodWhereInput
+  }
+
   export type FacultyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AdmitionExamePriceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AdmitionExamePeriodOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -36231,6 +40170,13 @@ export namespace Prisma {
     not?: NestedEnumShiftFilter<$PrismaModel> | $Enums.Shift
   }
 
+  export type EnumYearLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.YearLevel | EnumYearLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.YearLevel[]
+    notIn?: $Enums.YearLevel[]
+    not?: NestedEnumYearLevelFilter<$PrismaModel> | $Enums.YearLevel
+  }
+
   export type AdmitionExameRegistrationNullableScalarRelationFilter = {
     is?: AdmitionExameRegistrationWhereInput | null
     isNot?: AdmitionExameRegistrationWhereInput | null
@@ -36294,6 +40240,7 @@ export namespace Prisma {
     gender?: SortOrder
     isWoker?: SortOrder
     shift?: SortOrder
+    yearLevel?: SortOrder
     isActive?: SortOrder
     password?: SortOrder
     gradeDeclarationFile?: SortOrder
@@ -36320,6 +40267,7 @@ export namespace Prisma {
     gender?: SortOrder
     isWoker?: SortOrder
     shift?: SortOrder
+    yearLevel?: SortOrder
     isActive?: SortOrder
     password?: SortOrder
     gradeDeclarationFile?: SortOrder
@@ -36346,6 +40294,7 @@ export namespace Prisma {
     gender?: SortOrder
     isWoker?: SortOrder
     shift?: SortOrder
+    yearLevel?: SortOrder
     isActive?: SortOrder
     password?: SortOrder
     gradeDeclarationFile?: SortOrder
@@ -36368,6 +40317,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumShiftFilter<$PrismaModel>
     _max?: NestedEnumShiftFilter<$PrismaModel>
+  }
+
+  export type EnumYearLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.YearLevel | EnumYearLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.YearLevel[]
+    notIn?: $Enums.YearLevel[]
+    not?: NestedEnumYearLevelWithAggregatesFilter<$PrismaModel> | $Enums.YearLevel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumYearLevelFilter<$PrismaModel>
+    _max?: NestedEnumYearLevelFilter<$PrismaModel>
   }
 
   export type CourseFacultyListRelationFilter = {
@@ -36405,6 +40364,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     email?: SortOrder
     contactNo?: SortOrder
+    shift?: SortOrder
     gender?: SortOrder
     designation?: SortOrder
     password?: SortOrder
@@ -36423,6 +40383,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     email?: SortOrder
     contactNo?: SortOrder
+    shift?: SortOrder
     gender?: SortOrder
     designation?: SortOrder
     password?: SortOrder
@@ -36441,6 +40402,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     email?: SortOrder
     contactNo?: SortOrder
+    shift?: SortOrder
     gender?: SortOrder
     designation?: SortOrder
     password?: SortOrder
@@ -36562,15 +40524,15 @@ export namespace Prisma {
     title?: SortOrder
     code?: SortOrder
     durationInYears?: SortOrder
+    yearLevel?: SortOrder
+    shift?: SortOrder
     academicDepartmentId?: SortOrder
-    credits?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type CourseAvgOrderByAggregateInput = {
     durationInYears?: SortOrder
-    credits?: SortOrder
   }
 
   export type CourseMaxOrderByAggregateInput = {
@@ -36578,8 +40540,9 @@ export namespace Prisma {
     title?: SortOrder
     code?: SortOrder
     durationInYears?: SortOrder
+    yearLevel?: SortOrder
+    shift?: SortOrder
     academicDepartmentId?: SortOrder
-    credits?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -36589,15 +40552,15 @@ export namespace Prisma {
     title?: SortOrder
     code?: SortOrder
     durationInYears?: SortOrder
+    yearLevel?: SortOrder
+    shift?: SortOrder
     academicDepartmentId?: SortOrder
-    credits?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type CourseSumOrderByAggregateInput = {
     durationInYears?: SortOrder
-    credits?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -36741,6 +40704,13 @@ export namespace Prisma {
     _max?: NestedEnumSemesterRegistrationStatusNullableFilter<$PrismaModel>
   }
 
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -36755,6 +40725,11 @@ export namespace Prisma {
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type ExameFaseScalarRelationFilter = {
+    is?: ExameFaseWhereInput
+    isNot?: ExameFaseWhereInput
   }
 
   export type StudentNullableScalarRelationFilter = {
@@ -36772,13 +40747,17 @@ export namespace Prisma {
     id?: SortOrder
     applicantName?: SortOrder
     paymentRecipt?: SortOrder
+    status?: SortOrder
     document?: SortOrder
     paymentAmoute?: SortOrder
     aprovePayment?: SortOrder
     exameResults?: SortOrder
     passed?: SortOrder
-    fase?: SortOrder
+    faseId?: SortOrder
     exameDate?: SortOrder
+    rejectionReason?: SortOrder
+    phoneNumber?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
     departmentId?: SortOrder
@@ -36787,20 +40766,23 @@ export namespace Prisma {
   export type AdmitionExameRegistrationAvgOrderByAggregateInput = {
     paymentAmoute?: SortOrder
     exameResults?: SortOrder
-    fase?: SortOrder
   }
 
   export type AdmitionExameRegistrationMaxOrderByAggregateInput = {
     id?: SortOrder
     applicantName?: SortOrder
     paymentRecipt?: SortOrder
+    status?: SortOrder
     document?: SortOrder
     paymentAmoute?: SortOrder
     aprovePayment?: SortOrder
     exameResults?: SortOrder
     passed?: SortOrder
-    fase?: SortOrder
+    faseId?: SortOrder
     exameDate?: SortOrder
+    rejectionReason?: SortOrder
+    phoneNumber?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
     departmentId?: SortOrder
@@ -36810,13 +40792,17 @@ export namespace Prisma {
     id?: SortOrder
     applicantName?: SortOrder
     paymentRecipt?: SortOrder
+    status?: SortOrder
     document?: SortOrder
     paymentAmoute?: SortOrder
     aprovePayment?: SortOrder
     exameResults?: SortOrder
     passed?: SortOrder
-    fase?: SortOrder
+    faseId?: SortOrder
     exameDate?: SortOrder
+    rejectionReason?: SortOrder
+    phoneNumber?: SortOrder
+    email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
     departmentId?: SortOrder
@@ -36825,7 +40811,16 @@ export namespace Prisma {
   export type AdmitionExameRegistrationSumOrderByAggregateInput = {
     paymentAmoute?: SortOrder
     exameResults?: SortOrder
-    fase?: SortOrder
+  }
+
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -36850,6 +40845,121 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBoolNullableFilter<$PrismaModel>
     _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type AdmitionExamePriceOrderByRelevanceInput = {
+    fields: AdmitionExamePriceOrderByRelevanceFieldEnum | AdmitionExamePriceOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type AdmitionExamePriceCountOrderByAggregateInput = {
+    id?: SortOrder
+    academicFacultyId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmitionExamePriceAvgOrderByAggregateInput = {
+    price?: SortOrder
+  }
+
+  export type AdmitionExamePriceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    academicFacultyId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmitionExamePriceMinOrderByAggregateInput = {
+    id?: SortOrder
+    academicFacultyId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmitionExamePriceSumOrderByAggregateInput = {
+    price?: SortOrder
+  }
+
+  export type AdmitionExamePeriodOrderByRelevanceInput = {
+    fields: AdmitionExamePeriodOrderByRelevanceFieldEnum | AdmitionExamePeriodOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type AdmitionExamePeriodCountOrderByAggregateInput = {
+    id?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    academicFacultyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmitionExamePeriodMaxOrderByAggregateInput = {
+    id?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    academicFacultyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdmitionExamePeriodMinOrderByAggregateInput = {
+    id?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    academicFacultyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExameFaseOrderByRelevanceInput = {
+    fields: ExameFaseOrderByRelevanceFieldEnum | ExameFaseOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ExameFaseCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ordem?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExameFaseAvgOrderByAggregateInput = {
+    ordem?: SortOrder
+  }
+
+  export type ExameFaseMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ordem?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExameFaseMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ordem?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExameFaseSumOrderByAggregateInput = {
+    ordem?: SortOrder
   }
 
   export type SemesterRegistrationScalarRelationFilter = {
@@ -38078,6 +42188,20 @@ export namespace Prisma {
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
   }
 
+  export type AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput = {
+    create?: XOR<AdmitionExamePriceCreateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePriceCreateWithoutAcademicFacultyInput[] | AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePriceCreateManyAcademicFacultyInputEnvelope
+    connect?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+  }
+
+  export type AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput = {
+    create?: XOR<AdmitionExamePeriodCreateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePeriodCreateWithoutAcademicFacultyInput[] | AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePeriodCreateManyAcademicFacultyInputEnvelope
+    connect?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+  }
+
   export type AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput = {
     create?: XOR<AcademicDepartmentCreateWithoutAcademicFacultyInput, AcademicDepartmentUncheckedCreateWithoutAcademicFacultyInput> | AcademicDepartmentCreateWithoutAcademicFacultyInput[] | AcademicDepartmentUncheckedCreateWithoutAcademicFacultyInput[]
     connectOrCreate?: AcademicDepartmentCreateOrConnectWithoutAcademicFacultyInput | AcademicDepartmentCreateOrConnectWithoutAcademicFacultyInput[]
@@ -38097,6 +42221,20 @@ export namespace Prisma {
     connectOrCreate?: StudentCreateOrConnectWithoutAcademicFacultyInput | StudentCreateOrConnectWithoutAcademicFacultyInput[]
     createMany?: StudentCreateManyAcademicFacultyInputEnvelope
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+  }
+
+  export type AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput = {
+    create?: XOR<AdmitionExamePriceCreateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePriceCreateWithoutAcademicFacultyInput[] | AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePriceCreateManyAcademicFacultyInputEnvelope
+    connect?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+  }
+
+  export type AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput = {
+    create?: XOR<AdmitionExamePeriodCreateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePeriodCreateWithoutAcademicFacultyInput[] | AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePeriodCreateManyAcademicFacultyInputEnvelope
+    connect?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
   }
 
   export type AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput = {
@@ -38141,6 +42279,34 @@ export namespace Prisma {
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
+  export type AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput = {
+    create?: XOR<AdmitionExamePriceCreateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePriceCreateWithoutAcademicFacultyInput[] | AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput[]
+    upsert?: AdmitionExamePriceUpsertWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePriceUpsertWithWhereUniqueWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePriceCreateManyAcademicFacultyInputEnvelope
+    set?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    disconnect?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    delete?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    connect?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    update?: AdmitionExamePriceUpdateWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePriceUpdateWithWhereUniqueWithoutAcademicFacultyInput[]
+    updateMany?: AdmitionExamePriceUpdateManyWithWhereWithoutAcademicFacultyInput | AdmitionExamePriceUpdateManyWithWhereWithoutAcademicFacultyInput[]
+    deleteMany?: AdmitionExamePriceScalarWhereInput | AdmitionExamePriceScalarWhereInput[]
+  }
+
+  export type AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput = {
+    create?: XOR<AdmitionExamePeriodCreateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePeriodCreateWithoutAcademicFacultyInput[] | AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput[]
+    upsert?: AdmitionExamePeriodUpsertWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePeriodUpsertWithWhereUniqueWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePeriodCreateManyAcademicFacultyInputEnvelope
+    set?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    disconnect?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    delete?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    connect?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    update?: AdmitionExamePeriodUpdateWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePeriodUpdateWithWhereUniqueWithoutAcademicFacultyInput[]
+    updateMany?: AdmitionExamePeriodUpdateManyWithWhereWithoutAcademicFacultyInput | AdmitionExamePeriodUpdateManyWithWhereWithoutAcademicFacultyInput[]
+    deleteMany?: AdmitionExamePeriodScalarWhereInput | AdmitionExamePeriodScalarWhereInput[]
+  }
+
   export type AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput = {
     create?: XOR<AcademicDepartmentCreateWithoutAcademicFacultyInput, AcademicDepartmentUncheckedCreateWithoutAcademicFacultyInput> | AcademicDepartmentCreateWithoutAcademicFacultyInput[] | AcademicDepartmentUncheckedCreateWithoutAcademicFacultyInput[]
     connectOrCreate?: AcademicDepartmentCreateOrConnectWithoutAcademicFacultyInput | AcademicDepartmentCreateOrConnectWithoutAcademicFacultyInput[]
@@ -38181,6 +42347,34 @@ export namespace Prisma {
     update?: StudentUpdateWithWhereUniqueWithoutAcademicFacultyInput | StudentUpdateWithWhereUniqueWithoutAcademicFacultyInput[]
     updateMany?: StudentUpdateManyWithWhereWithoutAcademicFacultyInput | StudentUpdateManyWithWhereWithoutAcademicFacultyInput[]
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
+  }
+
+  export type AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput = {
+    create?: XOR<AdmitionExamePriceCreateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePriceCreateWithoutAcademicFacultyInput[] | AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput[]
+    upsert?: AdmitionExamePriceUpsertWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePriceUpsertWithWhereUniqueWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePriceCreateManyAcademicFacultyInputEnvelope
+    set?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    disconnect?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    delete?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    connect?: AdmitionExamePriceWhereUniqueInput | AdmitionExamePriceWhereUniqueInput[]
+    update?: AdmitionExamePriceUpdateWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePriceUpdateWithWhereUniqueWithoutAcademicFacultyInput[]
+    updateMany?: AdmitionExamePriceUpdateManyWithWhereWithoutAcademicFacultyInput | AdmitionExamePriceUpdateManyWithWhereWithoutAcademicFacultyInput[]
+    deleteMany?: AdmitionExamePriceScalarWhereInput | AdmitionExamePriceScalarWhereInput[]
+  }
+
+  export type AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput = {
+    create?: XOR<AdmitionExamePeriodCreateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePeriodCreateWithoutAcademicFacultyInput[] | AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput[]
+    connectOrCreate?: AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput[]
+    upsert?: AdmitionExamePeriodUpsertWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePeriodUpsertWithWhereUniqueWithoutAcademicFacultyInput[]
+    createMany?: AdmitionExamePeriodCreateManyAcademicFacultyInputEnvelope
+    set?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    disconnect?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    delete?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    connect?: AdmitionExamePeriodWhereUniqueInput | AdmitionExamePeriodWhereUniqueInput[]
+    update?: AdmitionExamePeriodUpdateWithWhereUniqueWithoutAcademicFacultyInput | AdmitionExamePeriodUpdateWithWhereUniqueWithoutAcademicFacultyInput[]
+    updateMany?: AdmitionExamePeriodUpdateManyWithWhereWithoutAcademicFacultyInput | AdmitionExamePeriodUpdateManyWithWhereWithoutAcademicFacultyInput[]
+    deleteMany?: AdmitionExamePeriodScalarWhereInput | AdmitionExamePeriodScalarWhereInput[]
   }
 
   export type AcademicFacultyCreateNestedOneWithoutAcademicDepartmentsInput = {
@@ -38571,6 +42765,10 @@ export namespace Prisma {
 
   export type EnumShiftFieldUpdateOperationsInput = {
     set?: $Enums.Shift
+  }
+
+  export type EnumYearLevelFieldUpdateOperationsInput = {
+    set?: $Enums.YearLevel
   }
 
   export type AcademicFacultyUpdateOneRequiredWithoutStudentsNestedInput = {
@@ -39575,6 +43773,12 @@ export namespace Prisma {
     deleteMany?: StudentSemesterRegistrationCourseScalarWhereInput | StudentSemesterRegistrationCourseScalarWhereInput[]
   }
 
+  export type ExameFaseCreateNestedOneWithoutRegistrationsInput = {
+    create?: XOR<ExameFaseCreateWithoutRegistrationsInput, ExameFaseUncheckedCreateWithoutRegistrationsInput>
+    connectOrCreate?: ExameFaseCreateOrConnectWithoutRegistrationsInput
+    connect?: ExameFaseWhereUniqueInput
+  }
+
   export type AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput = {
     create?: XOR<AcademicDepartmentCreateWithoutAdmitionExameInput, AcademicDepartmentUncheckedCreateWithoutAdmitionExameInput>
     connectOrCreate?: AcademicDepartmentCreateOrConnectWithoutAdmitionExameInput
@@ -39593,6 +43797,10 @@ export namespace Prisma {
     connect?: StudentWhereUniqueInput
   }
 
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -39603,6 +43811,14 @@ export namespace Prisma {
 
   export type NullableBoolFieldUpdateOperationsInput = {
     set?: boolean | null
+  }
+
+  export type ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput = {
+    create?: XOR<ExameFaseCreateWithoutRegistrationsInput, ExameFaseUncheckedCreateWithoutRegistrationsInput>
+    connectOrCreate?: ExameFaseCreateOrConnectWithoutRegistrationsInput
+    upsert?: ExameFaseUpsertWithoutRegistrationsInput
+    connect?: ExameFaseWhereUniqueInput
+    update?: XOR<XOR<ExameFaseUpdateToOneWithWhereWithoutRegistrationsInput, ExameFaseUpdateWithoutRegistrationsInput>, ExameFaseUncheckedUpdateWithoutRegistrationsInput>
   }
 
   export type AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput = {
@@ -39631,6 +43847,76 @@ export namespace Prisma {
     delete?: StudentWhereInput | boolean
     connect?: StudentWhereUniqueInput
     update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutAdmissionRegistrationInput, StudentUpdateWithoutAdmissionRegistrationInput>, StudentUncheckedUpdateWithoutAdmissionRegistrationInput>
+  }
+
+  export type AcademicFacultyCreateNestedOneWithoutAdmitionExamePriceInput = {
+    create?: XOR<AcademicFacultyCreateWithoutAdmitionExamePriceInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePriceInput>
+    connectOrCreate?: AcademicFacultyCreateOrConnectWithoutAdmitionExamePriceInput
+    connect?: AcademicFacultyWhereUniqueInput
+  }
+
+  export type AcademicFacultyUpdateOneRequiredWithoutAdmitionExamePriceNestedInput = {
+    create?: XOR<AcademicFacultyCreateWithoutAdmitionExamePriceInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePriceInput>
+    connectOrCreate?: AcademicFacultyCreateOrConnectWithoutAdmitionExamePriceInput
+    upsert?: AcademicFacultyUpsertWithoutAdmitionExamePriceInput
+    connect?: AcademicFacultyWhereUniqueInput
+    update?: XOR<XOR<AcademicFacultyUpdateToOneWithWhereWithoutAdmitionExamePriceInput, AcademicFacultyUpdateWithoutAdmitionExamePriceInput>, AcademicFacultyUncheckedUpdateWithoutAdmitionExamePriceInput>
+  }
+
+  export type AcademicFacultyCreateNestedOneWithoutAdmitionExamePeriodInput = {
+    create?: XOR<AcademicFacultyCreateWithoutAdmitionExamePeriodInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePeriodInput>
+    connectOrCreate?: AcademicFacultyCreateOrConnectWithoutAdmitionExamePeriodInput
+    connect?: AcademicFacultyWhereUniqueInput
+  }
+
+  export type AcademicFacultyUpdateOneRequiredWithoutAdmitionExamePeriodNestedInput = {
+    create?: XOR<AcademicFacultyCreateWithoutAdmitionExamePeriodInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePeriodInput>
+    connectOrCreate?: AcademicFacultyCreateOrConnectWithoutAdmitionExamePeriodInput
+    upsert?: AcademicFacultyUpsertWithoutAdmitionExamePeriodInput
+    connect?: AcademicFacultyWhereUniqueInput
+    update?: XOR<XOR<AcademicFacultyUpdateToOneWithWhereWithoutAdmitionExamePeriodInput, AcademicFacultyUpdateWithoutAdmitionExamePeriodInput>, AcademicFacultyUncheckedUpdateWithoutAdmitionExamePeriodInput>
+  }
+
+  export type AdmitionExameRegistrationCreateNestedManyWithoutFaseInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutFaseInput, AdmitionExameRegistrationUncheckedCreateWithoutFaseInput> | AdmitionExameRegistrationCreateWithoutFaseInput[] | AdmitionExameRegistrationUncheckedCreateWithoutFaseInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutFaseInput | AdmitionExameRegistrationCreateOrConnectWithoutFaseInput[]
+    createMany?: AdmitionExameRegistrationCreateManyFaseInputEnvelope
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+  }
+
+  export type AdmitionExameRegistrationUncheckedCreateNestedManyWithoutFaseInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutFaseInput, AdmitionExameRegistrationUncheckedCreateWithoutFaseInput> | AdmitionExameRegistrationCreateWithoutFaseInput[] | AdmitionExameRegistrationUncheckedCreateWithoutFaseInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutFaseInput | AdmitionExameRegistrationCreateOrConnectWithoutFaseInput[]
+    createMany?: AdmitionExameRegistrationCreateManyFaseInputEnvelope
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+  }
+
+  export type AdmitionExameRegistrationUpdateManyWithoutFaseNestedInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutFaseInput, AdmitionExameRegistrationUncheckedCreateWithoutFaseInput> | AdmitionExameRegistrationCreateWithoutFaseInput[] | AdmitionExameRegistrationUncheckedCreateWithoutFaseInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutFaseInput | AdmitionExameRegistrationCreateOrConnectWithoutFaseInput[]
+    upsert?: AdmitionExameRegistrationUpsertWithWhereUniqueWithoutFaseInput | AdmitionExameRegistrationUpsertWithWhereUniqueWithoutFaseInput[]
+    createMany?: AdmitionExameRegistrationCreateManyFaseInputEnvelope
+    set?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    disconnect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    delete?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    update?: AdmitionExameRegistrationUpdateWithWhereUniqueWithoutFaseInput | AdmitionExameRegistrationUpdateWithWhereUniqueWithoutFaseInput[]
+    updateMany?: AdmitionExameRegistrationUpdateManyWithWhereWithoutFaseInput | AdmitionExameRegistrationUpdateManyWithWhereWithoutFaseInput[]
+    deleteMany?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
+  }
+
+  export type AdmitionExameRegistrationUncheckedUpdateManyWithoutFaseNestedInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutFaseInput, AdmitionExameRegistrationUncheckedCreateWithoutFaseInput> | AdmitionExameRegistrationCreateWithoutFaseInput[] | AdmitionExameRegistrationUncheckedCreateWithoutFaseInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutFaseInput | AdmitionExameRegistrationCreateOrConnectWithoutFaseInput[]
+    upsert?: AdmitionExameRegistrationUpsertWithWhereUniqueWithoutFaseInput | AdmitionExameRegistrationUpsertWithWhereUniqueWithoutFaseInput[]
+    createMany?: AdmitionExameRegistrationCreateManyFaseInputEnvelope
+    set?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    disconnect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    delete?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    update?: AdmitionExameRegistrationUpdateWithWhereUniqueWithoutFaseInput | AdmitionExameRegistrationUpdateWithWhereUniqueWithoutFaseInput[]
+    updateMany?: AdmitionExameRegistrationUpdateManyWithWhereWithoutFaseInput | AdmitionExameRegistrationUpdateManyWithWhereWithoutFaseInput[]
+    deleteMany?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
   }
 
   export type AcademicDepartmentCreateNestedOneWithoutOfferedCoursesInput = {
@@ -40463,6 +44749,13 @@ export namespace Prisma {
     not?: NestedEnumShiftFilter<$PrismaModel> | $Enums.Shift
   }
 
+  export type NestedEnumYearLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.YearLevel | EnumYearLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.YearLevel[]
+    notIn?: $Enums.YearLevel[]
+    not?: NestedEnumYearLevelFilter<$PrismaModel> | $Enums.YearLevel
+  }
+
   export type NestedEnumShiftWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Shift | EnumShiftFieldRefInput<$PrismaModel>
     in?: $Enums.Shift[]
@@ -40471,6 +44764,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumShiftFilter<$PrismaModel>
     _max?: NestedEnumShiftFilter<$PrismaModel>
+  }
+
+  export type NestedEnumYearLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.YearLevel | EnumYearLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.YearLevel[]
+    notIn?: $Enums.YearLevel[]
+    not?: NestedEnumYearLevelWithAggregatesFilter<$PrismaModel> | $Enums.YearLevel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumYearLevelFilter<$PrismaModel>
+    _max?: NestedEnumYearLevelFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -40517,9 +44820,26 @@ export namespace Prisma {
     _max?: NestedEnumSemesterRegistrationStatusNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -40904,6 +45224,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -40935,6 +45256,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -41173,6 +45495,7 @@ export namespace Prisma {
     gender?: StringFilter<"Student"> | string
     isWoker?: BoolFilter<"Student"> | boolean
     shift?: EnumShiftFilter<"Student"> | $Enums.Shift
+    yearLevel?: EnumYearLevelFilter<"Student"> | $Enums.YearLevel
     isActive?: BoolFilter<"Student"> | boolean
     password?: StringFilter<"Student"> | string
     gradeDeclarationFile?: StringFilter<"Student"> | string
@@ -41339,6 +45662,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -41358,6 +45682,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -41390,6 +45715,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -41421,6 +45747,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -41447,6 +45774,56 @@ export namespace Prisma {
 
   export type StudentCreateManyAcademicFacultyInputEnvelope = {
     data: StudentCreateManyAcademicFacultyInput | StudentCreateManyAcademicFacultyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdmitionExamePriceCreateWithoutAcademicFacultyInput = {
+    id?: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput = {
+    id?: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput = {
+    where: AdmitionExamePriceWhereUniqueInput
+    create: XOR<AdmitionExamePriceCreateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePriceCreateManyAcademicFacultyInputEnvelope = {
+    data: AdmitionExamePriceCreateManyAcademicFacultyInput | AdmitionExamePriceCreateManyAcademicFacultyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdmitionExamePeriodCreateWithoutAcademicFacultyInput = {
+    id?: string
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput = {
+    id?: string
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePeriodCreateOrConnectWithoutAcademicFacultyInput = {
+    where: AdmitionExamePeriodWhereUniqueInput
+    create: XOR<AdmitionExamePeriodCreateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePeriodCreateManyAcademicFacultyInputEnvelope = {
+    data: AdmitionExamePeriodCreateManyAcademicFacultyInput | AdmitionExamePeriodCreateManyAcademicFacultyInput[]
     skipDuplicates?: boolean
   }
 
@@ -41494,6 +45871,7 @@ export namespace Prisma {
     profileImage?: StringNullableFilter<"Faculty"> | string | null
     email?: StringNullableFilter<"Faculty"> | string | null
     contactNo?: StringNullableFilter<"Faculty"> | string | null
+    shift?: EnumShiftFilter<"Faculty"> | $Enums.Shift
     gender?: StringFilter<"Faculty"> | string
     designation?: StringFilter<"Faculty"> | string
     password?: StringFilter<"Faculty"> | string
@@ -41519,6 +45897,61 @@ export namespace Prisma {
     data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyWithoutAcademicFacultyInput>
   }
 
+  export type AdmitionExamePriceUpsertWithWhereUniqueWithoutAcademicFacultyInput = {
+    where: AdmitionExamePriceWhereUniqueInput
+    update: XOR<AdmitionExamePriceUpdateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedUpdateWithoutAcademicFacultyInput>
+    create: XOR<AdmitionExamePriceCreateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePriceUpdateWithWhereUniqueWithoutAcademicFacultyInput = {
+    where: AdmitionExamePriceWhereUniqueInput
+    data: XOR<AdmitionExamePriceUpdateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedUpdateWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePriceUpdateManyWithWhereWithoutAcademicFacultyInput = {
+    where: AdmitionExamePriceScalarWhereInput
+    data: XOR<AdmitionExamePriceUpdateManyMutationInput, AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePriceScalarWhereInput = {
+    AND?: AdmitionExamePriceScalarWhereInput | AdmitionExamePriceScalarWhereInput[]
+    OR?: AdmitionExamePriceScalarWhereInput[]
+    NOT?: AdmitionExamePriceScalarWhereInput | AdmitionExamePriceScalarWhereInput[]
+    id?: StringFilter<"AdmitionExamePrice"> | string
+    academicFacultyId?: StringFilter<"AdmitionExamePrice"> | string
+    price?: IntFilter<"AdmitionExamePrice"> | number
+    createdAt?: DateTimeFilter<"AdmitionExamePrice"> | Date | string
+    updatedAt?: DateTimeFilter<"AdmitionExamePrice"> | Date | string
+  }
+
+  export type AdmitionExamePeriodUpsertWithWhereUniqueWithoutAcademicFacultyInput = {
+    where: AdmitionExamePeriodWhereUniqueInput
+    update: XOR<AdmitionExamePeriodUpdateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedUpdateWithoutAcademicFacultyInput>
+    create: XOR<AdmitionExamePeriodCreateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedCreateWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePeriodUpdateWithWhereUniqueWithoutAcademicFacultyInput = {
+    where: AdmitionExamePeriodWhereUniqueInput
+    data: XOR<AdmitionExamePeriodUpdateWithoutAcademicFacultyInput, AdmitionExamePeriodUncheckedUpdateWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePeriodUpdateManyWithWhereWithoutAcademicFacultyInput = {
+    where: AdmitionExamePeriodScalarWhereInput
+    data: XOR<AdmitionExamePeriodUpdateManyMutationInput, AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyInput>
+  }
+
+  export type AdmitionExamePeriodScalarWhereInput = {
+    AND?: AdmitionExamePeriodScalarWhereInput | AdmitionExamePeriodScalarWhereInput[]
+    OR?: AdmitionExamePeriodScalarWhereInput[]
+    NOT?: AdmitionExamePeriodScalarWhereInput | AdmitionExamePeriodScalarWhereInput[]
+    id?: StringFilter<"AdmitionExamePeriod"> | string
+    startDate?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    endDate?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    academicFacultyId?: StringFilter<"AdmitionExamePeriod"> | string
+    createdAt?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+    updatedAt?: DateTimeFilter<"AdmitionExamePeriod"> | Date | string
+  }
+
   export type AcademicFacultyCreateWithoutAcademicDepartmentsInput = {
     id?: string
     title: string
@@ -41526,6 +45959,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyUncheckedCreateWithoutAcademicDepartmentsInput = {
@@ -41535,6 +45970,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyCreateOrConnectWithoutAcademicDepartmentsInput = {
@@ -41551,6 +45988,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -41570,6 +46008,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -41595,7 +46034,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -41612,7 +46052,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -41646,6 +46087,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -41677,6 +46119,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -41768,15 +46211,19 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
+    fase: ExameFaseCreateNestedOneWithoutRegistrationsInput
     Student?: StudentCreateNestedOneWithoutAdmissionRegistrationInput
   }
 
@@ -41784,13 +46231,17 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
+    faseId: string
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
     Student?: StudentUncheckedCreateNestedOneWithoutAdmissionRegistrationInput
@@ -41852,6 +46303,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type AcademicFacultyUncheckedUpdateWithoutAcademicDepartmentsInput = {
@@ -41861,6 +46314,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type FacultyUpsertWithWhereUniqueWithoutAcademicDepartmentInput = {
@@ -41903,8 +46358,9 @@ export namespace Prisma {
     title?: StringFilter<"Course"> | string
     code?: StringFilter<"Course"> | string
     durationInYears?: IntFilter<"Course"> | number
+    yearLevel?: EnumYearLevelFilter<"Course"> | $Enums.YearLevel
+    shift?: EnumShiftFilter<"Course"> | $Enums.Shift
     academicDepartmentId?: StringFilter<"Course"> | string
-    credits?: IntFilter<"Course"> | number
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
   }
@@ -42013,13 +46469,17 @@ export namespace Prisma {
     id?: StringFilter<"AdmitionExameRegistration"> | string
     applicantName?: StringFilter<"AdmitionExameRegistration"> | string
     paymentRecipt?: StringFilter<"AdmitionExameRegistration"> | string
+    status?: EnumStatusFilter<"AdmitionExameRegistration"> | $Enums.Status
     document?: StringFilter<"AdmitionExameRegistration"> | string
     paymentAmoute?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
     aprovePayment?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
     exameResults?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
     passed?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
-    fase?: IntFilter<"AdmitionExameRegistration"> | number
+    faseId?: StringFilter<"AdmitionExameRegistration"> | string
     exameDate?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
+    rejectionReason?: StringNullableFilter<"AdmitionExameRegistration"> | string | null
+    phoneNumber?: StringFilter<"AdmitionExameRegistration"> | string
+    email?: StringFilter<"AdmitionExameRegistration"> | string
     createdAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     updateAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     departmentId?: StringFilter<"AdmitionExameRegistration"> | string
@@ -42059,6 +46519,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyUncheckedCreateWithoutStudentsInput = {
@@ -42068,6 +46530,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyCreateOrConnectWithoutStudentsInput = {
@@ -42079,15 +46543,19 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
+    fase: ExameFaseCreateNestedOneWithoutRegistrationsInput
     department: AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput
   }
 
@@ -42095,13 +46563,17 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
+    faseId: string
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
     departmentId: string
@@ -42406,6 +46878,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type AcademicFacultyUncheckedUpdateWithoutStudentsInput = {
@@ -42415,6 +46889,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type AdmitionExameRegistrationUpsertWithoutStudentInput = {
@@ -42432,15 +46908,19 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fase?: ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput
     department?: AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput
   }
 
@@ -42448,13 +46928,17 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
+    faseId?: StringFieldUpdateOperationsInput | string
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     departmentId?: StringFieldUpdateOperationsInput | string
@@ -42736,6 +47220,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyUncheckedCreateWithoutFacultiesInput = {
@@ -42745,6 +47231,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
 
   export type AcademicFacultyCreateOrConnectWithoutFacultiesInput = {
@@ -42867,6 +47355,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type AcademicFacultyUncheckedUpdateWithoutFacultiesInput = {
@@ -42876,6 +47366,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type OfferedCourseClassScheduleUpsertWithWhereUniqueWithoutFacultyInput = {
@@ -43427,7 +47919,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -43444,8 +47937,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -43466,7 +47960,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -43483,8 +47978,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -43516,7 +48012,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -43533,8 +48030,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -43561,7 +48059,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -43578,8 +48077,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -43595,7 +48095,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -43612,8 +48113,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -43638,6 +48140,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -43657,6 +48160,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -43688,7 +48192,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -43705,8 +48210,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -43737,6 +48243,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -43756,6 +48263,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -44096,6 +48604,31 @@ export namespace Prisma {
     data: XOR<StudentSemesterRegistrationCourseUpdateManyMutationInput, StudentSemesterRegistrationCourseUncheckedUpdateManyWithoutSemesterRegistrationInput>
   }
 
+  export type ExameFaseCreateWithoutRegistrationsInput = {
+    id?: string
+    name: string
+    ordem: number
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExameFaseUncheckedCreateWithoutRegistrationsInput = {
+    id?: string
+    name: string
+    ordem: number
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExameFaseCreateOrConnectWithoutRegistrationsInput = {
+    where: ExameFaseWhereUniqueInput
+    create: XOR<ExameFaseCreateWithoutRegistrationsInput, ExameFaseUncheckedCreateWithoutRegistrationsInput>
+  }
+
   export type AcademicDepartmentCreateWithoutAdmitionExameInput = {
     id?: string
     title: string
@@ -44141,6 +48674,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -44172,6 +48706,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -44194,6 +48729,37 @@ export namespace Prisma {
   export type StudentCreateOrConnectWithoutAdmissionRegistrationInput = {
     where: StudentWhereUniqueInput
     create: XOR<StudentCreateWithoutAdmissionRegistrationInput, StudentUncheckedCreateWithoutAdmissionRegistrationInput>
+  }
+
+  export type ExameFaseUpsertWithoutRegistrationsInput = {
+    update: XOR<ExameFaseUpdateWithoutRegistrationsInput, ExameFaseUncheckedUpdateWithoutRegistrationsInput>
+    create: XOR<ExameFaseCreateWithoutRegistrationsInput, ExameFaseUncheckedCreateWithoutRegistrationsInput>
+    where?: ExameFaseWhereInput
+  }
+
+  export type ExameFaseUpdateToOneWithWhereWithoutRegistrationsInput = {
+    where?: ExameFaseWhereInput
+    data: XOR<ExameFaseUpdateWithoutRegistrationsInput, ExameFaseUncheckedUpdateWithoutRegistrationsInput>
+  }
+
+  export type ExameFaseUpdateWithoutRegistrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ordem?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExameFaseUncheckedUpdateWithoutRegistrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ordem?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AcademicDepartmentUpsertWithoutAdmitionExameInput = {
@@ -44258,6 +48824,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -44289,6 +48856,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -44306,6 +48874,192 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type AcademicFacultyCreateWithoutAdmitionExamePriceInput = {
+    id?: string
+    title: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
+    faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
+    students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
+  }
+
+  export type AcademicFacultyUncheckedCreateWithoutAdmitionExamePriceInput = {
+    id?: string
+    title: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
+  }
+
+  export type AcademicFacultyCreateOrConnectWithoutAdmitionExamePriceInput = {
+    where: AcademicFacultyWhereUniqueInput
+    create: XOR<AcademicFacultyCreateWithoutAdmitionExamePriceInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePriceInput>
+  }
+
+  export type AcademicFacultyUpsertWithoutAdmitionExamePriceInput = {
+    update: XOR<AcademicFacultyUpdateWithoutAdmitionExamePriceInput, AcademicFacultyUncheckedUpdateWithoutAdmitionExamePriceInput>
+    create: XOR<AcademicFacultyCreateWithoutAdmitionExamePriceInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePriceInput>
+    where?: AcademicFacultyWhereInput
+  }
+
+  export type AcademicFacultyUpdateToOneWithWhereWithoutAdmitionExamePriceInput = {
+    where?: AcademicFacultyWhereInput
+    data: XOR<AcademicFacultyUpdateWithoutAdmitionExamePriceInput, AcademicFacultyUncheckedUpdateWithoutAdmitionExamePriceInput>
+  }
+
+  export type AcademicFacultyUpdateWithoutAdmitionExamePriceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
+    faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
+    students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
+  }
+
+  export type AcademicFacultyUncheckedUpdateWithoutAdmitionExamePriceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+  }
+
+  export type AcademicFacultyCreateWithoutAdmitionExamePeriodInput = {
+    id?: string
+    title: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
+    faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
+    students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
+  }
+
+  export type AcademicFacultyUncheckedCreateWithoutAdmitionExamePeriodInput = {
+    id?: string
+    title: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
+  }
+
+  export type AcademicFacultyCreateOrConnectWithoutAdmitionExamePeriodInput = {
+    where: AcademicFacultyWhereUniqueInput
+    create: XOR<AcademicFacultyCreateWithoutAdmitionExamePeriodInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePeriodInput>
+  }
+
+  export type AcademicFacultyUpsertWithoutAdmitionExamePeriodInput = {
+    update: XOR<AcademicFacultyUpdateWithoutAdmitionExamePeriodInput, AcademicFacultyUncheckedUpdateWithoutAdmitionExamePeriodInput>
+    create: XOR<AcademicFacultyCreateWithoutAdmitionExamePeriodInput, AcademicFacultyUncheckedCreateWithoutAdmitionExamePeriodInput>
+    where?: AcademicFacultyWhereInput
+  }
+
+  export type AcademicFacultyUpdateToOneWithWhereWithoutAdmitionExamePeriodInput = {
+    where?: AcademicFacultyWhereInput
+    data: XOR<AcademicFacultyUpdateWithoutAdmitionExamePeriodInput, AcademicFacultyUncheckedUpdateWithoutAdmitionExamePeriodInput>
+  }
+
+  export type AcademicFacultyUpdateWithoutAdmitionExamePeriodInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
+    faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
+    students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
+  }
+
+  export type AcademicFacultyUncheckedUpdateWithoutAdmitionExamePeriodInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+  }
+
+  export type AdmitionExameRegistrationCreateWithoutFaseInput = {
+    id?: string
+    applicantName: string
+    paymentRecipt: string
+    status?: $Enums.Status
+    document: string
+    paymentAmoute?: number | null
+    aprovePayment?: boolean | null
+    exameResults?: number | null
+    passed?: boolean | null
+    exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
+    createdAt?: Date | string
+    updateAt?: Date | string
+    department: AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput
+    Student?: StudentCreateNestedOneWithoutAdmissionRegistrationInput
+  }
+
+  export type AdmitionExameRegistrationUncheckedCreateWithoutFaseInput = {
+    id?: string
+    applicantName: string
+    paymentRecipt: string
+    status?: $Enums.Status
+    document: string
+    paymentAmoute?: number | null
+    aprovePayment?: boolean | null
+    exameResults?: number | null
+    passed?: boolean | null
+    exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
+    createdAt?: Date | string
+    updateAt?: Date | string
+    departmentId: string
+    Student?: StudentUncheckedCreateNestedOneWithoutAdmissionRegistrationInput
+  }
+
+  export type AdmitionExameRegistrationCreateOrConnectWithoutFaseInput = {
+    where: AdmitionExameRegistrationWhereUniqueInput
+    create: XOR<AdmitionExameRegistrationCreateWithoutFaseInput, AdmitionExameRegistrationUncheckedCreateWithoutFaseInput>
+  }
+
+  export type AdmitionExameRegistrationCreateManyFaseInputEnvelope = {
+    data: AdmitionExameRegistrationCreateManyFaseInput | AdmitionExameRegistrationCreateManyFaseInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdmitionExameRegistrationUpsertWithWhereUniqueWithoutFaseInput = {
+    where: AdmitionExameRegistrationWhereUniqueInput
+    update: XOR<AdmitionExameRegistrationUpdateWithoutFaseInput, AdmitionExameRegistrationUncheckedUpdateWithoutFaseInput>
+    create: XOR<AdmitionExameRegistrationCreateWithoutFaseInput, AdmitionExameRegistrationUncheckedCreateWithoutFaseInput>
+  }
+
+  export type AdmitionExameRegistrationUpdateWithWhereUniqueWithoutFaseInput = {
+    where: AdmitionExameRegistrationWhereUniqueInput
+    data: XOR<AdmitionExameRegistrationUpdateWithoutFaseInput, AdmitionExameRegistrationUncheckedUpdateWithoutFaseInput>
+  }
+
+  export type AdmitionExameRegistrationUpdateManyWithWhereWithoutFaseInput = {
+    where: AdmitionExameRegistrationScalarWhereInput
+    data: XOR<AdmitionExameRegistrationUpdateManyMutationInput, AdmitionExameRegistrationUncheckedUpdateManyWithoutFaseInput>
   }
 
   export type AcademicDepartmentCreateWithoutOfferedCoursesInput = {
@@ -44379,7 +49133,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -44396,8 +49151,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -44567,7 +49323,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -44584,8 +49341,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -44938,6 +49696,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -44957,6 +49716,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -45095,6 +49855,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -45114,6 +49875,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -45136,6 +49898,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -45167,6 +49930,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -45247,6 +50011,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -45278,6 +50043,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -45381,6 +50147,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -45412,6 +50179,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -45550,6 +50318,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -45581,6 +50350,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -45676,6 +50446,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -45707,6 +50478,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -45736,7 +50508,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -45753,8 +50526,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -45876,6 +50650,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -45907,6 +50682,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -45942,7 +50718,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -45959,8 +50736,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -46044,6 +50822,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -46075,6 +50854,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -46192,6 +50972,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -46223,6 +51004,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -46329,7 +51111,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     coursePricing?: CoursePricingCreateNestedOneWithoutCourseInput
@@ -46346,8 +51129,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     coursePricing?: CoursePricingUncheckedCreateNestedOneWithoutCourseInput
@@ -46445,7 +51229,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     coursePricing?: CoursePricingUpdateOneWithoutCourseNestedInput
@@ -46462,8 +51247,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     coursePricing?: CoursePricingUncheckedUpdateOneWithoutCourseNestedInput
@@ -46557,7 +51343,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutCourseInput
@@ -46574,8 +51361,9 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     academicDepartmentId: string
-    credits?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutCourseInput
@@ -46607,7 +51395,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -46624,8 +51413,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     academicDepartmentId?: StringFieldUpdateOperationsInput | string
-    credits?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -46688,6 +51478,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -46719,6 +51510,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -46805,6 +51597,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -46836,6 +51629,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -46912,6 +51706,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -46943,6 +51738,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -46990,6 +51786,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47021,6 +51818,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47105,6 +51903,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -47233,6 +52032,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47264,6 +52064,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47295,6 +52096,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47462,6 +52264,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -47482,6 +52285,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -47491,6 +52295,21 @@ export namespace Prisma {
     academicSemesterId: string
     academicDepartmentId: string
     admissionRegistrationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePriceCreateManyAcademicFacultyInput = {
+    id?: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdmitionExamePeriodCreateManyAcademicFacultyInput = {
+    id?: string
+    startDate: Date | string
+    endDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47540,6 +52359,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -47559,6 +52379,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -47578,6 +52399,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -47598,6 +52420,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47629,6 +52452,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47660,6 +52484,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47673,6 +52498,51 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AdmitionExamePriceUpdateWithoutAcademicFacultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePriceUncheckedUpdateWithoutAcademicFacultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePeriodUpdateWithoutAcademicFacultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePeriodUncheckedUpdateWithoutAcademicFacultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type FacultyCreateManyAcademicDepartmentInput = {
     id?: string
     facultyId: string
@@ -47682,6 +52552,7 @@ export namespace Prisma {
     profileImage?: string | null
     email?: string | null
     contactNo?: string | null
+    shift?: $Enums.Shift
     gender: string
     designation: string
     password: string
@@ -47695,7 +52566,8 @@ export namespace Prisma {
     title: string
     code: string
     durationInYears: number
-    credits?: number
+    yearLevel?: $Enums.YearLevel
+    shift?: $Enums.Shift
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47712,6 +52584,7 @@ export namespace Prisma {
     gender: string
     isWoker?: boolean
     shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
     isActive?: boolean
     password: string
     gradeDeclarationFile: string
@@ -47729,13 +52602,17 @@ export namespace Prisma {
     id?: string
     applicantName: string
     paymentRecipt: string
+    status?: $Enums.Status
     document: string
     paymentAmoute?: number | null
     aprovePayment?: boolean | null
     exameResults?: number | null
     passed?: boolean | null
-    fase?: number
+    faseId: string
     exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
     createdAt?: Date | string
     updateAt?: Date | string
   }
@@ -47756,6 +52633,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -47775,6 +52653,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -47794,6 +52673,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     gender?: StringFieldUpdateOperationsInput | string
     designation?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -47807,7 +52687,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutCourseNestedInput
@@ -47824,7 +52705,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutCourseNestedInput
@@ -47841,7 +52723,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     code?: StringFieldUpdateOperationsInput | string
     durationInYears?: IntFieldUpdateOperationsInput | number
-    credits?: IntFieldUpdateOperationsInput | number
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47858,6 +52741,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47889,6 +52773,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47920,6 +52805,7 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     isWoker?: BoolFieldUpdateOperationsInput | boolean
     shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
     isActive?: BoolFieldUpdateOperationsInput | boolean
     password?: StringFieldUpdateOperationsInput | string
     gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
@@ -47972,15 +52858,19 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fase?: ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput
     Student?: StudentUpdateOneWithoutAdmissionRegistrationNestedInput
   }
 
@@ -47988,13 +52878,17 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
+    faseId?: StringFieldUpdateOperationsInput | string
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Student?: StudentUncheckedUpdateOneWithoutAdmissionRegistrationNestedInput
@@ -48004,13 +52898,17 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     applicantName?: StringFieldUpdateOperationsInput | string
     paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     document?: StringFieldUpdateOperationsInput | string
     paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
     aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
     exameResults?: NullableIntFieldUpdateOperationsInput | number | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    fase?: IntFieldUpdateOperationsInput | number
+    faseId?: StringFieldUpdateOperationsInput | string
     exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48824,6 +53722,84 @@ export namespace Prisma {
     offeredCourseSectionId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExameRegistrationCreateManyFaseInput = {
+    id?: string
+    applicantName: string
+    paymentRecipt: string
+    status?: $Enums.Status
+    document: string
+    paymentAmoute?: number | null
+    aprovePayment?: boolean | null
+    exameResults?: number | null
+    passed?: boolean | null
+    exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
+    createdAt?: Date | string
+    updateAt?: Date | string
+    departmentId: string
+  }
+
+  export type AdmitionExameRegistrationUpdateWithoutFaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicantName?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    document?: StringFieldUpdateOperationsInput | string
+    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
+    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    department?: AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput
+    Student?: StudentUpdateOneWithoutAdmissionRegistrationNestedInput
+  }
+
+  export type AdmitionExameRegistrationUncheckedUpdateWithoutFaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicantName?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    document?: StringFieldUpdateOperationsInput | string
+    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
+    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    departmentId?: StringFieldUpdateOperationsInput | string
+    Student?: StudentUncheckedUpdateOneWithoutAdmissionRegistrationNestedInput
+  }
+
+  export type AdmitionExameRegistrationUncheckedUpdateManyWithoutFaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicantName?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    document?: StringFieldUpdateOperationsInput | string
+    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
+    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    departmentId?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferedCourseSectionCreateManyOfferedCourseInput = {

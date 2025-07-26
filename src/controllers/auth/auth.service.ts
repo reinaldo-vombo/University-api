@@ -136,4 +136,41 @@ export const AuthService = {
       },
     };
   },
+  async recoverPassword(email: string) {
+    const user = await prisma.users.findUnique({
+      where: { email },
+    });
+
+    if (!user) throw new Error('Não existe nenhum útilizador com esté email');
+    const resetToken = jwt.sign(
+      { id: user.id, purpose: 'reset-password' },
+      config.JWT_SECRET!,
+      { expiresIn: '15m' }
+    );
+
+    return user;
+  },
+  async resetPassword(info: { token: string; password: string }) {
+    const { token, password } = info;
+    try {
+      const decoded = jwt.verify(token, config.JWT_SECRET!) as {
+        id: string;
+        purpose: string;
+      };
+
+      if (decoded.purpose !== 'reset-password') {
+        throw new Error('Token invalido');
+      }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await prisma.users.update({
+        where: { id: decoded.id },
+        data: { password: hashedPassword },
+      });
+      return {
+        message: 'Senha redefinida',
+      };
+    } catch (error) {
+      throw new Error('Token invalido ou expirado');
+    }
+  },
 };

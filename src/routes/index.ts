@@ -18,15 +18,17 @@ import { RoomRoutes } from '../controllers/room/room.route';
 import { DisciplineRoutes } from '../controllers/discipline/discipline.routes';
 import { EventsRoutes } from '../controllers/events/event.routes';
 import { CoursePricingRoutes } from '../controllers/coursePricing/coursePricing.routes';
+import { FacultyRoutes } from '../controllers/faculty/faculty.route';
+import { NotificationsRoutes } from '../controllers/notification/notifications.route';
 
 const router = express.Router();
 
 const moduleRoutes = [
-   {
+  {
     path: '/users',
     routes: UsersRoutes,
   },
-    {
+  {
     path: '/academic-faculty',
     routes: AcademicFacultyRoutes,
   },
@@ -58,10 +60,10 @@ const moduleRoutes = [
     path: '/auth',
     routes: AuthRoutes,
   },
-  // {
-  //   path: '/faculty',
-  //   routes: FacultyRoutes,
-  // },
+  {
+    path: '/faculty',
+    routes: FacultyRoutes,
+  },
   {
     path: '/student',
     routes: StudentRoutes,
@@ -101,6 +103,10 @@ const moduleRoutes = [
   {
     path: '/events',
     routes: EventsRoutes,
+  },
+  {
+    path: '/notify',
+    routes: NotificationsRoutes,
   },
 ];
 

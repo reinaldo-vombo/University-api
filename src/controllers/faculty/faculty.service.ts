@@ -44,6 +44,14 @@ const getSingleFacultyService = async (
     where: {
       facultyId,
     },
+    include: {
+      courses: true,
+      academicDepartment: {
+        select: {
+          title: true
+        }
+      }
+    }
   });
 
   return result;

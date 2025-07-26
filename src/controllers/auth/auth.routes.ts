@@ -10,6 +10,8 @@ router.post("/register",
    AuthController.register
 );
 router.post("/login", AuthController.login);
+router.post("/recover-password", AuthController.recoverPassword)
+router.post("/reset-password", AuthController.resetPassword)
 router.get("/me", AuthController.getMyProfile); // optional, if token is provided
 
 export const AuthRoutes = router;
