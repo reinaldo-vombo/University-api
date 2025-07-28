@@ -27,4 +27,6 @@ export default {
   APP_NAME: process.env.APP_NAME,
   APP_EMAIL: process.env.APP_EMAIL,
   MAI_FROM: process.env.MAI_FROM,
+  UTRA_MSG_INSTANCE_ID: process.env.UTRA_MSG_INSTANCE_ID,
+  UTRA_MSG_TOKEN: process.env.UTRA_MSG_TOKEN,
 };
