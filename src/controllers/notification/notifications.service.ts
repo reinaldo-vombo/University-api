@@ -33,7 +33,7 @@ const sendMessage = async (info: TProps) => {
 
     return registration;
   } catch (error) {
-    return;
+    throw new Error(`Sender-error: ${error}`);
   }
 };
 

@@ -9,6 +9,9 @@ export const createadmitionExameZodSchema = z.object({
     email: z.string().email(),
     documentUrl: z.string().url().optional(),
     paymentReciptUrl: z.string().url().optional(),
+    academicFalcultyId: z.string({
+      required_error: 'Unidade academica é obrigatorio',
+    }),
     exameDate: z.preprocess(
       (val) =>
         typeof val === 'string' || val instanceof Date

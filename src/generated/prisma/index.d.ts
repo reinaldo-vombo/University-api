@@ -134,6 +134,11 @@ export type StudentEnrolledCourseMark = $Result.DefaultSelection<Prisma.$Student
  */
 export type CourseDiscipline = $Result.DefaultSelection<Prisma.$CourseDisciplinePayload>
 /**
+ * Model StudentCarriedCourse
+ * 
+ */
+export type StudentCarriedCourse = $Result.DefaultSelection<Prisma.$StudentCarriedCoursePayload>
+/**
  * Model CoursePricing
  * 
  */
@@ -158,6 +163,16 @@ export type StudentAcademicInfo = $Result.DefaultSelection<Prisma.$StudentAcadem
  * 
  */
 export type Events = $Result.DefaultSelection<Prisma.$EventsPayload>
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
+/**
+ * Model PaymentReference
+ * 
+ */
+export type PaymentReference = $Result.DefaultSelection<Prisma.$PaymentReferencePayload>
 
 /**
  * Enums
@@ -179,6 +194,15 @@ export const Shift: {
 };
 
 export type Shift = (typeof Shift)[keyof typeof Shift]
+
+
+export const StudentType: {
+  NORMAL: 'NORMAL',
+  CADEIRANTE: 'CADEIRANTE',
+  BOLSEIRO: 'BOLSEIRO'
+};
+
+export type StudentType = (typeof StudentType)[keyof typeof StudentType]
 
 
 export const Status: {
@@ -203,6 +227,15 @@ export const WeekDays: {
 export type WeekDays = (typeof WeekDays)[keyof typeof WeekDays]
 
 
+export const CarriedCourseStatus: {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  DROPPED: 'DROPPED'
+};
+
+export type CarriedCourseStatus = (typeof CarriedCourseStatus)[keyof typeof CarriedCourseStatus]
+
+
 export const StudentEnrolledCourseStatus: {
   ONGOING: 'ONGOING',
   COMPLETED: 'COMPLETED',
@@ -220,13 +253,13 @@ export const ExamType: {
 export type ExamType = (typeof ExamType)[keyof typeof ExamType]
 
 
-export const PaymentStatus: {
+export const PAYMENTSTATUS: {
   PENDING: 'PENDING',
   NOT_PAID: 'NOT_PAID',
-  FULL_PAID: 'FULL_PAID'
+  PAID: 'PAID'
 };
 
-export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+export type PAYMENTSTATUS = (typeof PAYMENTSTATUS)[keyof typeof PAYMENTSTATUS]
 
 
 export const YearLevel: {
@@ -255,11 +288,19 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
 export const PAYMENTTYPE: {
-  RECIPT: 'RECIPT',
-  EXPRESS: 'EXPRESS'
+  RECEIPT: 'RECEIPT',
+  REFERENCE: 'REFERENCE'
 };
 
 export type PAYMENTTYPE = (typeof PAYMENTTYPE)[keyof typeof PAYMENTTYPE]
+
+
+export const PAYMENTMETHOD: {
+  INVOICE: 'INVOICE',
+  EXPRESS: 'EXPRESS'
+};
+
+export type PAYMENTMETHOD = (typeof PAYMENTMETHOD)[keyof typeof PAYMENTMETHOD]
 
 }
 
@@ -271,6 +312,10 @@ export type Shift = $Enums.Shift
 
 export const Shift: typeof $Enums.Shift
 
+export type StudentType = $Enums.StudentType
+
+export const StudentType: typeof $Enums.StudentType
+
 export type Status = $Enums.Status
 
 export const Status: typeof $Enums.Status
@@ -278,6 +323,10 @@ export const Status: typeof $Enums.Status
 export type WeekDays = $Enums.WeekDays
 
 export const WeekDays: typeof $Enums.WeekDays
+
+export type CarriedCourseStatus = $Enums.CarriedCourseStatus
+
+export const CarriedCourseStatus: typeof $Enums.CarriedCourseStatus
 
 export type StudentEnrolledCourseStatus = $Enums.StudentEnrolledCourseStatus
 
@@ -287,9 +336,9 @@ export type ExamType = $Enums.ExamType
 
 export const ExamType: typeof $Enums.ExamType
 
-export type PaymentStatus = $Enums.PaymentStatus
+export type PAYMENTSTATUS = $Enums.PAYMENTSTATUS
 
-export const PaymentStatus: typeof $Enums.PaymentStatus
+export const PAYMENTSTATUS: typeof $Enums.PAYMENTSTATUS
 
 export type YearLevel = $Enums.YearLevel
 
@@ -302,6 +351,10 @@ export const UserRole: typeof $Enums.UserRole
 export type PAYMENTTYPE = $Enums.PAYMENTTYPE
 
 export const PAYMENTTYPE: typeof $Enums.PAYMENTTYPE
+
+export type PAYMENTMETHOD = $Enums.PAYMENTMETHOD
+
+export const PAYMENTMETHOD: typeof $Enums.PAYMENTMETHOD
 
 /**
  * ##  Prisma Client ʲˢ
@@ -669,6 +722,16 @@ export class PrismaClient<
   get courseDiscipline(): Prisma.CourseDisciplineDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.studentCarriedCourse`: Exposes CRUD operations for the **StudentCarriedCourse** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StudentCarriedCourses
+    * const studentCarriedCourses = await prisma.studentCarriedCourse.findMany()
+    * ```
+    */
+  get studentCarriedCourse(): Prisma.StudentCarriedCourseDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.coursePricing`: Exposes CRUD operations for the **CoursePricing** model.
     * Example usage:
     * ```ts
@@ -717,6 +780,26 @@ export class PrismaClient<
     * ```
     */
   get events(): Prisma.EventsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Payments
+    * const payments = await prisma.payment.findMany()
+    * ```
+    */
+  get payment(): Prisma.PaymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.paymentReference`: Exposes CRUD operations for the **PaymentReference** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PaymentReferences
+    * const paymentReferences = await prisma.paymentReference.findMany()
+    * ```
+    */
+  get paymentReference(): Prisma.PaymentReferenceDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1181,11 +1264,14 @@ export namespace Prisma {
     StudentEnrolledCourse: 'StudentEnrolledCourse',
     StudentEnrolledCourseMark: 'StudentEnrolledCourseMark',
     CourseDiscipline: 'CourseDiscipline',
+    StudentCarriedCourse: 'StudentCarriedCourse',
     CoursePricing: 'CoursePricing',
     Discipline: 'Discipline',
     StudentSemesterPayment: 'StudentSemesterPayment',
     StudentAcademicInfo: 'StudentAcademicInfo',
-    Events: 'Events'
+    Events: 'Events',
+    Payment: 'Payment',
+    PaymentReference: 'PaymentReference'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1204,7 +1290,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "users" | "academicSemester" | "academicFaculty" | "academicDepartment" | "student" | "faculty" | "building" | "room" | "course" | "courseToPreRequisite" | "courseFaculty" | "semesterRegistration" | "admitionExameRegistration" | "admitionExamePrice" | "admitionExamePeriod" | "exameFase" | "offeredCourse" | "offeredCourseSection" | "offeredCourseClassSchedule" | "studentSemesterRegistration" | "studentSemesterRegistrationCourse" | "studentEnrolledCourse" | "studentEnrolledCourseMark" | "courseDiscipline" | "coursePricing" | "discipline" | "studentSemesterPayment" | "studentAcademicInfo" | "events"
+      modelProps: "users" | "academicSemester" | "academicFaculty" | "academicDepartment" | "student" | "faculty" | "building" | "room" | "course" | "courseToPreRequisite" | "courseFaculty" | "semesterRegistration" | "admitionExameRegistration" | "admitionExamePrice" | "admitionExamePeriod" | "exameFase" | "offeredCourse" | "offeredCourseSection" | "offeredCourseClassSchedule" | "studentSemesterRegistration" | "studentSemesterRegistrationCourse" | "studentEnrolledCourse" | "studentEnrolledCourseMark" | "courseDiscipline" | "studentCarriedCourse" | "coursePricing" | "discipline" | "studentSemesterPayment" | "studentAcademicInfo" | "events" | "payment" | "paymentReference"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2792,6 +2878,72 @@ export namespace Prisma {
           }
         }
       }
+      StudentCarriedCourse: {
+        payload: Prisma.$StudentCarriedCoursePayload<ExtArgs>
+        fields: Prisma.StudentCarriedCourseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StudentCarriedCourseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StudentCarriedCourseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload>
+          }
+          findFirst: {
+            args: Prisma.StudentCarriedCourseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StudentCarriedCourseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload>
+          }
+          findMany: {
+            args: Prisma.StudentCarriedCourseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload>[]
+          }
+          create: {
+            args: Prisma.StudentCarriedCourseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload>
+          }
+          createMany: {
+            args: Prisma.StudentCarriedCourseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.StudentCarriedCourseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload>
+          }
+          update: {
+            args: Prisma.StudentCarriedCourseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload>
+          }
+          deleteMany: {
+            args: Prisma.StudentCarriedCourseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StudentCarriedCourseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.StudentCarriedCourseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentCarriedCoursePayload>
+          }
+          aggregate: {
+            args: Prisma.StudentCarriedCourseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStudentCarriedCourse>
+          }
+          groupBy: {
+            args: Prisma.StudentCarriedCourseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StudentCarriedCourseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StudentCarriedCourseCountArgs<ExtArgs>
+            result: $Utils.Optional<StudentCarriedCourseCountAggregateOutputType> | number
+          }
+        }
+      }
       CoursePricing: {
         payload: Prisma.$CoursePricingPayload<ExtArgs>
         fields: Prisma.CoursePricingFieldRefs
@@ -3122,6 +3274,138 @@ export namespace Prisma {
           }
         }
       }
+      Payment: {
+        payload: Prisma.$PaymentPayload<ExtArgs>
+        fields: Prisma.PaymentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaymentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaymentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          findFirst: {
+            args: Prisma.PaymentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaymentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          findMany: {
+            args: Prisma.PaymentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+          }
+          create: {
+            args: Prisma.PaymentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          createMany: {
+            args: Prisma.PaymentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.PaymentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          update: {
+            args: Prisma.PaymentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          deleteMany: {
+            args: Prisma.PaymentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaymentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PaymentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          aggregate: {
+            args: Prisma.PaymentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePayment>
+          }
+          groupBy: {
+            args: Prisma.PaymentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaymentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaymentCountArgs<ExtArgs>
+            result: $Utils.Optional<PaymentCountAggregateOutputType> | number
+          }
+        }
+      }
+      PaymentReference: {
+        payload: Prisma.$PaymentReferencePayload<ExtArgs>
+        fields: Prisma.PaymentReferenceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaymentReferenceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaymentReferenceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload>
+          }
+          findFirst: {
+            args: Prisma.PaymentReferenceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaymentReferenceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload>
+          }
+          findMany: {
+            args: Prisma.PaymentReferenceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload>[]
+          }
+          create: {
+            args: Prisma.PaymentReferenceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload>
+          }
+          createMany: {
+            args: Prisma.PaymentReferenceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.PaymentReferenceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload>
+          }
+          update: {
+            args: Prisma.PaymentReferenceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload>
+          }
+          deleteMany: {
+            args: Prisma.PaymentReferenceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaymentReferenceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PaymentReferenceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentReferencePayload>
+          }
+          aggregate: {
+            args: Prisma.PaymentReferenceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePaymentReference>
+          }
+          groupBy: {
+            args: Prisma.PaymentReferenceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaymentReferenceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaymentReferenceCountArgs<ExtArgs>
+            result: $Utils.Optional<PaymentReferenceCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3230,11 +3514,14 @@ export namespace Prisma {
     studentEnrolledCourse?: StudentEnrolledCourseOmit
     studentEnrolledCourseMark?: StudentEnrolledCourseMarkOmit
     courseDiscipline?: CourseDisciplineOmit
+    studentCarriedCourse?: StudentCarriedCourseOmit
     coursePricing?: CoursePricingOmit
     discipline?: DisciplineOmit
     studentSemesterPayment?: StudentSemesterPaymentOmit
     studentAcademicInfo?: StudentAcademicInfoOmit
     events?: EventsOmit
+    payment?: PaymentOmit
+    paymentReference?: PaymentReferenceOmit
   }
 
   /* Types for Logging */
@@ -3366,6 +3653,7 @@ export namespace Prisma {
     studentEnrolledCourses: number
     studentEnrolledCourseMarks: number
     studentSemesterPayments: number
+    StudentCarriedCourse: number
   }
 
   export type AcademicSemesterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3375,6 +3663,7 @@ export namespace Prisma {
     studentEnrolledCourses?: boolean | AcademicSemesterCountOutputTypeCountStudentEnrolledCoursesArgs
     studentEnrolledCourseMarks?: boolean | AcademicSemesterCountOutputTypeCountStudentEnrolledCourseMarksArgs
     studentSemesterPayments?: boolean | AcademicSemesterCountOutputTypeCountStudentSemesterPaymentsArgs
+    StudentCarriedCourse?: boolean | AcademicSemesterCountOutputTypeCountStudentCarriedCourseArgs
   }
 
   // Custom InputTypes
@@ -3430,6 +3719,13 @@ export namespace Prisma {
     where?: StudentSemesterPaymentWhereInput
   }
 
+  /**
+   * AcademicSemesterCountOutputType without action
+   */
+  export type AcademicSemesterCountOutputTypeCountStudentCarriedCourseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentCarriedCourseWhereInput
+  }
+
 
   /**
    * Count Type AcademicFacultyCountOutputType
@@ -3439,6 +3735,7 @@ export namespace Prisma {
     academicDepartments: number
     faculties: number
     students: number
+    admitionExame: number
     AdmitionExamePrice: number
     AdmitionExamePeriod: number
   }
@@ -3447,6 +3744,7 @@ export namespace Prisma {
     academicDepartments?: boolean | AcademicFacultyCountOutputTypeCountAcademicDepartmentsArgs
     faculties?: boolean | AcademicFacultyCountOutputTypeCountFacultiesArgs
     students?: boolean | AcademicFacultyCountOutputTypeCountStudentsArgs
+    admitionExame?: boolean | AcademicFacultyCountOutputTypeCountAdmitionExameArgs
     AdmitionExamePrice?: boolean | AcademicFacultyCountOutputTypeCountAdmitionExamePriceArgs
     AdmitionExamePeriod?: boolean | AcademicFacultyCountOutputTypeCountAdmitionExamePeriodArgs
   }
@@ -3486,6 +3784,13 @@ export namespace Prisma {
   /**
    * AcademicFacultyCountOutputType without action
    */
+  export type AcademicFacultyCountOutputTypeCountAdmitionExameArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmitionExameRegistrationWhereInput
+  }
+
+  /**
+   * AcademicFacultyCountOutputType without action
+   */
   export type AcademicFacultyCountOutputTypeCountAdmitionExamePriceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AdmitionExamePriceWhereInput
   }
@@ -3507,7 +3812,6 @@ export namespace Prisma {
     courses: number
     students: number
     staffMembers: number
-    admitionExame: number
     offeredCourses: number
   }
 
@@ -3516,7 +3820,6 @@ export namespace Prisma {
     courses?: boolean | AcademicDepartmentCountOutputTypeCountCoursesArgs
     students?: boolean | AcademicDepartmentCountOutputTypeCountStudentsArgs
     staffMembers?: boolean | AcademicDepartmentCountOutputTypeCountStaffMembersArgs
-    admitionExame?: boolean | AcademicDepartmentCountOutputTypeCountAdmitionExameArgs
     offeredCourses?: boolean | AcademicDepartmentCountOutputTypeCountOfferedCoursesArgs
   }
 
@@ -3562,13 +3865,6 @@ export namespace Prisma {
   /**
    * AcademicDepartmentCountOutputType without action
    */
-  export type AcademicDepartmentCountOutputTypeCountAdmitionExameArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AdmitionExameRegistrationWhereInput
-  }
-
-  /**
-   * AcademicDepartmentCountOutputType without action
-   */
   export type AcademicDepartmentCountOutputTypeCountOfferedCoursesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OfferedCourseWhereInput
   }
@@ -3585,6 +3881,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks: number
     studentSemesterPayments: number
     studentAcademicInfos: number
+    StudentCarriedCourse: number
   }
 
   export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3594,6 +3891,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: boolean | StudentCountOutputTypeCountStudentEnrolledCourseMarksArgs
     studentSemesterPayments?: boolean | StudentCountOutputTypeCountStudentSemesterPaymentsArgs
     studentAcademicInfos?: boolean | StudentCountOutputTypeCountStudentAcademicInfosArgs
+    StudentCarriedCourse?: boolean | StudentCountOutputTypeCountStudentCarriedCourseArgs
   }
 
   // Custom InputTypes
@@ -3647,6 +3945,13 @@ export namespace Prisma {
    */
   export type StudentCountOutputTypeCountStudentAcademicInfosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StudentAcademicInfoWhereInput
+  }
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeCountStudentCarriedCourseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentCarriedCourseWhereInput
   }
 
 
@@ -4043,10 +4348,12 @@ export namespace Prisma {
 
   export type DisciplineCountOutputType = {
     courseDisciplines: number
+    StudentCarriedCourse: number
   }
 
   export type DisciplineCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     courseDisciplines?: boolean | DisciplineCountOutputTypeCountCourseDisciplinesArgs
+    StudentCarriedCourse?: boolean | DisciplineCountOutputTypeCountStudentCarriedCourseArgs
   }
 
   // Custom InputTypes
@@ -4065,6 +4372,53 @@ export namespace Prisma {
    */
   export type DisciplineCountOutputTypeCountCourseDisciplinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CourseDisciplineWhereInput
+  }
+
+  /**
+   * DisciplineCountOutputType without action
+   */
+  export type DisciplineCountOutputTypeCountStudentCarriedCourseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentCarriedCourseWhereInput
+  }
+
+
+  /**
+   * Count Type PaymentCountOutputType
+   */
+
+  export type PaymentCountOutputType = {
+    StudentSemesterPayment: number
+    PaymentReference: number
+  }
+
+  export type PaymentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    StudentSemesterPayment?: boolean | PaymentCountOutputTypeCountStudentSemesterPaymentArgs
+    PaymentReference?: boolean | PaymentCountOutputTypeCountPaymentReferenceArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PaymentCountOutputType without action
+   */
+  export type PaymentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentCountOutputType
+     */
+    select?: PaymentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PaymentCountOutputType without action
+   */
+  export type PaymentCountOutputTypeCountStudentSemesterPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentSemesterPaymentWhereInput
+  }
+
+  /**
+   * PaymentCountOutputType without action
+   */
+  export type PaymentCountOutputTypeCountPaymentReferenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentReferenceWhereInput
   }
 
 
@@ -5285,6 +5639,7 @@ export namespace Prisma {
     studentEnrolledCourses?: boolean | AcademicSemester$studentEnrolledCoursesArgs<ExtArgs>
     studentEnrolledCourseMarks?: boolean | AcademicSemester$studentEnrolledCourseMarksArgs<ExtArgs>
     studentSemesterPayments?: boolean | AcademicSemester$studentSemesterPaymentsArgs<ExtArgs>
+    StudentCarriedCourse?: boolean | AcademicSemester$StudentCarriedCourseArgs<ExtArgs>
     _count?: boolean | AcademicSemesterCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["academicSemester"]>
 
@@ -5310,6 +5665,7 @@ export namespace Prisma {
     studentEnrolledCourses?: boolean | AcademicSemester$studentEnrolledCoursesArgs<ExtArgs>
     studentEnrolledCourseMarks?: boolean | AcademicSemester$studentEnrolledCourseMarksArgs<ExtArgs>
     studentSemesterPayments?: boolean | AcademicSemester$studentSemesterPaymentsArgs<ExtArgs>
+    StudentCarriedCourse?: boolean | AcademicSemester$StudentCarriedCourseArgs<ExtArgs>
     _count?: boolean | AcademicSemesterCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5322,6 +5678,7 @@ export namespace Prisma {
       studentEnrolledCourses: Prisma.$StudentEnrolledCoursePayload<ExtArgs>[]
       studentEnrolledCourseMarks: Prisma.$StudentEnrolledCourseMarkPayload<ExtArgs>[]
       studentSemesterPayments: Prisma.$StudentSemesterPaymentPayload<ExtArgs>[]
+      StudentCarriedCourse: Prisma.$StudentCarriedCoursePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5679,6 +6036,7 @@ export namespace Prisma {
     studentEnrolledCourses<T extends AcademicSemester$studentEnrolledCoursesArgs<ExtArgs> = {}>(args?: Subset<T, AcademicSemester$studentEnrolledCoursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentEnrolledCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentEnrolledCourseMarks<T extends AcademicSemester$studentEnrolledCourseMarksArgs<ExtArgs> = {}>(args?: Subset<T, AcademicSemester$studentEnrolledCourseMarksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentEnrolledCourseMarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentSemesterPayments<T extends AcademicSemester$studentSemesterPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, AcademicSemester$studentSemesterPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentSemesterPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    StudentCarriedCourse<T extends AcademicSemester$StudentCarriedCourseArgs<ExtArgs> = {}>(args?: Subset<T, AcademicSemester$StudentCarriedCourseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6204,6 +6562,30 @@ export namespace Prisma {
   }
 
   /**
+   * AcademicSemester.StudentCarriedCourse
+   */
+  export type AcademicSemester$StudentCarriedCourseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    where?: StudentCarriedCourseWhereInput
+    orderBy?: StudentCarriedCourseOrderByWithRelationInput | StudentCarriedCourseOrderByWithRelationInput[]
+    cursor?: StudentCarriedCourseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentCarriedCourseScalarFieldEnum | StudentCarriedCourseScalarFieldEnum[]
+  }
+
+  /**
    * AcademicSemester without action
    */
   export type AcademicSemesterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6381,6 +6763,7 @@ export namespace Prisma {
     academicDepartments?: boolean | AcademicFaculty$academicDepartmentsArgs<ExtArgs>
     faculties?: boolean | AcademicFaculty$facultiesArgs<ExtArgs>
     students?: boolean | AcademicFaculty$studentsArgs<ExtArgs>
+    admitionExame?: boolean | AcademicFaculty$admitionExameArgs<ExtArgs>
     AdmitionExamePrice?: boolean | AcademicFaculty$AdmitionExamePriceArgs<ExtArgs>
     AdmitionExamePeriod?: boolean | AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs>
     _count?: boolean | AcademicFacultyCountOutputTypeDefaultArgs<ExtArgs>
@@ -6400,6 +6783,7 @@ export namespace Prisma {
     academicDepartments?: boolean | AcademicFaculty$academicDepartmentsArgs<ExtArgs>
     faculties?: boolean | AcademicFaculty$facultiesArgs<ExtArgs>
     students?: boolean | AcademicFaculty$studentsArgs<ExtArgs>
+    admitionExame?: boolean | AcademicFaculty$admitionExameArgs<ExtArgs>
     AdmitionExamePrice?: boolean | AcademicFaculty$AdmitionExamePriceArgs<ExtArgs>
     AdmitionExamePeriod?: boolean | AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs>
     _count?: boolean | AcademicFacultyCountOutputTypeDefaultArgs<ExtArgs>
@@ -6411,6 +6795,7 @@ export namespace Prisma {
       academicDepartments: Prisma.$AcademicDepartmentPayload<ExtArgs>[]
       faculties: Prisma.$FacultyPayload<ExtArgs>[]
       students: Prisma.$StudentPayload<ExtArgs>[]
+      admitionExame: Prisma.$AdmitionExameRegistrationPayload<ExtArgs>[]
       AdmitionExamePrice: Prisma.$AdmitionExamePricePayload<ExtArgs>[]
       AdmitionExamePeriod: Prisma.$AdmitionExamePeriodPayload<ExtArgs>[]
     }
@@ -6762,6 +7147,7 @@ export namespace Prisma {
     academicDepartments<T extends AcademicFaculty$academicDepartmentsArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$academicDepartmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicDepartmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     faculties<T extends AcademicFaculty$facultiesArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$facultiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FacultyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     students<T extends AcademicFaculty$studentsArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$studentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    admitionExame<T extends AcademicFaculty$admitionExameArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$admitionExameArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExameRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     AdmitionExamePrice<T extends AcademicFaculty$AdmitionExamePriceArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$AdmitionExamePriceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExamePricePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     AdmitionExamePeriod<T extends AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFaculty$AdmitionExamePeriodArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExamePeriodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -7212,6 +7598,30 @@ export namespace Prisma {
   }
 
   /**
+   * AcademicFaculty.admitionExame
+   */
+  export type AcademicFaculty$admitionExameArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdmitionExameRegistration
+     */
+    select?: AdmitionExameRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdmitionExameRegistration
+     */
+    omit?: AdmitionExameRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmitionExameRegistrationInclude<ExtArgs> | null
+    where?: AdmitionExameRegistrationWhereInput
+    orderBy?: AdmitionExameRegistrationOrderByWithRelationInput | AdmitionExameRegistrationOrderByWithRelationInput[]
+    cursor?: AdmitionExameRegistrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmitionExameRegistrationScalarFieldEnum | AdmitionExameRegistrationScalarFieldEnum[]
+  }
+
+  /**
    * AcademicFaculty.AdmitionExamePrice
    */
   export type AcademicFaculty$AdmitionExamePriceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7456,7 +7866,6 @@ export namespace Prisma {
     students?: boolean | AcademicDepartment$studentsArgs<ExtArgs>
     departmentHead?: boolean | AcademicDepartment$departmentHeadArgs<ExtArgs>
     staffMembers?: boolean | AcademicDepartment$staffMembersArgs<ExtArgs>
-    admitionExame?: boolean | AcademicDepartment$admitionExameArgs<ExtArgs>
     offeredCourses?: boolean | AcademicDepartment$offeredCoursesArgs<ExtArgs>
     _count?: boolean | AcademicDepartmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["academicDepartment"]>
@@ -7480,7 +7889,6 @@ export namespace Prisma {
     students?: boolean | AcademicDepartment$studentsArgs<ExtArgs>
     departmentHead?: boolean | AcademicDepartment$departmentHeadArgs<ExtArgs>
     staffMembers?: boolean | AcademicDepartment$staffMembersArgs<ExtArgs>
-    admitionExame?: boolean | AcademicDepartment$admitionExameArgs<ExtArgs>
     offeredCourses?: boolean | AcademicDepartment$offeredCoursesArgs<ExtArgs>
     _count?: boolean | AcademicDepartmentCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -7494,7 +7902,6 @@ export namespace Prisma {
       students: Prisma.$StudentPayload<ExtArgs>[]
       departmentHead: Prisma.$UsersPayload<ExtArgs> | null
       staffMembers: Prisma.$UsersPayload<ExtArgs>[]
-      admitionExame: Prisma.$AdmitionExameRegistrationPayload<ExtArgs>[]
       offeredCourses: Prisma.$OfferedCoursePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -7850,7 +8257,6 @@ export namespace Prisma {
     students<T extends AcademicDepartment$studentsArgs<ExtArgs> = {}>(args?: Subset<T, AcademicDepartment$studentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     departmentHead<T extends AcademicDepartment$departmentHeadArgs<ExtArgs> = {}>(args?: Subset<T, AcademicDepartment$departmentHeadArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     staffMembers<T extends AcademicDepartment$staffMembersArgs<ExtArgs> = {}>(args?: Subset<T, AcademicDepartment$staffMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    admitionExame<T extends AcademicDepartment$admitionExameArgs<ExtArgs> = {}>(args?: Subset<T, AcademicDepartment$admitionExameArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmitionExameRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     offeredCourses<T extends AcademicDepartment$offeredCoursesArgs<ExtArgs> = {}>(args?: Subset<T, AcademicDepartment$offeredCoursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferedCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -8345,30 +8751,6 @@ export namespace Prisma {
   }
 
   /**
-   * AcademicDepartment.admitionExame
-   */
-  export type AcademicDepartment$admitionExameArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AdmitionExameRegistration
-     */
-    select?: AdmitionExameRegistrationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AdmitionExameRegistration
-     */
-    omit?: AdmitionExameRegistrationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AdmitionExameRegistrationInclude<ExtArgs> | null
-    where?: AdmitionExameRegistrationWhereInput
-    orderBy?: AdmitionExameRegistrationOrderByWithRelationInput | AdmitionExameRegistrationOrderByWithRelationInput[]
-    cursor?: AdmitionExameRegistrationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AdmitionExameRegistrationScalarFieldEnum | AdmitionExameRegistrationScalarFieldEnum[]
-  }
-
-  /**
    * AcademicDepartment.offeredCourses
    */
   export type AcademicDepartment$offeredCoursesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8424,6 +8806,7 @@ export namespace Prisma {
   export type StudentMinAggregateOutputType = {
     id: string | null
     studentId: string | null
+    studentType: $Enums.StudentType | null
     firstName: string | null
     middleName: string | null
     lastName: string | null
@@ -8451,6 +8834,7 @@ export namespace Prisma {
   export type StudentMaxAggregateOutputType = {
     id: string | null
     studentId: string | null
+    studentType: $Enums.StudentType | null
     firstName: string | null
     middleName: string | null
     lastName: string | null
@@ -8478,6 +8862,7 @@ export namespace Prisma {
   export type StudentCountAggregateOutputType = {
     id: number
     studentId: number
+    studentType: number
     firstName: number
     middleName: number
     lastName: number
@@ -8507,6 +8892,7 @@ export namespace Prisma {
   export type StudentMinAggregateInputType = {
     id?: true
     studentId?: true
+    studentType?: true
     firstName?: true
     middleName?: true
     lastName?: true
@@ -8534,6 +8920,7 @@ export namespace Prisma {
   export type StudentMaxAggregateInputType = {
     id?: true
     studentId?: true
+    studentType?: true
     firstName?: true
     middleName?: true
     lastName?: true
@@ -8561,6 +8948,7 @@ export namespace Prisma {
   export type StudentCountAggregateInputType = {
     id?: true
     studentId?: true
+    studentType?: true
     firstName?: true
     middleName?: true
     lastName?: true
@@ -8661,6 +9049,7 @@ export namespace Prisma {
   export type StudentGroupByOutputType = {
     id: string
     studentId: string
+    studentType: $Enums.StudentType
     firstName: string
     middleName: string | null
     lastName: string
@@ -8705,6 +9094,7 @@ export namespace Prisma {
   export type StudentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     studentId?: boolean
+    studentType?: boolean
     firstName?: boolean
     middleName?: boolean
     lastName?: boolean
@@ -8737,6 +9127,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: boolean | Student$studentEnrolledCourseMarksArgs<ExtArgs>
     studentSemesterPayments?: boolean | Student$studentSemesterPaymentsArgs<ExtArgs>
     studentAcademicInfos?: boolean | Student$studentAcademicInfosArgs<ExtArgs>
+    StudentCarriedCourse?: boolean | Student$StudentCarriedCourseArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["student"]>
 
@@ -8745,6 +9136,7 @@ export namespace Prisma {
   export type StudentSelectScalar = {
     id?: boolean
     studentId?: boolean
+    studentType?: boolean
     firstName?: boolean
     middleName?: boolean
     lastName?: boolean
@@ -8769,7 +9161,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "firstName" | "middleName" | "lastName" | "profileImage" | "email" | "contactNo" | "gender" | "isWoker" | "shift" | "yearLevel" | "isActive" | "password" | "gradeDeclarationFile" | "biFile" | "presentAddress" | "permanentAddress" | "academicSemesterId" | "academicFacultyId" | "academicDepartmentId" | "admissionRegistrationId" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
+  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "studentType" | "firstName" | "middleName" | "lastName" | "profileImage" | "email" | "contactNo" | "gender" | "isWoker" | "shift" | "yearLevel" | "isActive" | "password" | "gradeDeclarationFile" | "biFile" | "presentAddress" | "permanentAddress" | "academicSemesterId" | "academicFacultyId" | "academicDepartmentId" | "admissionRegistrationId" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
   export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     academicFaculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
     admissionRegistration?: boolean | Student$admissionRegistrationArgs<ExtArgs>
@@ -8781,6 +9173,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: boolean | Student$studentEnrolledCourseMarksArgs<ExtArgs>
     studentSemesterPayments?: boolean | Student$studentSemesterPaymentsArgs<ExtArgs>
     studentAcademicInfos?: boolean | Student$studentAcademicInfosArgs<ExtArgs>
+    StudentCarriedCourse?: boolean | Student$StudentCarriedCourseArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -8797,10 +9190,12 @@ export namespace Prisma {
       studentEnrolledCourseMarks: Prisma.$StudentEnrolledCourseMarkPayload<ExtArgs>[]
       studentSemesterPayments: Prisma.$StudentSemesterPaymentPayload<ExtArgs>[]
       studentAcademicInfos: Prisma.$StudentAcademicInfoPayload<ExtArgs>[]
+      StudentCarriedCourse: Prisma.$StudentCarriedCoursePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       studentId: string
+      studentType: $Enums.StudentType
       firstName: string
       middleName: string | null
       lastName: string
@@ -9173,6 +9568,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks<T extends Student$studentEnrolledCourseMarksArgs<ExtArgs> = {}>(args?: Subset<T, Student$studentEnrolledCourseMarksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentEnrolledCourseMarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentSemesterPayments<T extends Student$studentSemesterPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, Student$studentSemesterPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentSemesterPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentAcademicInfos<T extends Student$studentAcademicInfosArgs<ExtArgs> = {}>(args?: Subset<T, Student$studentAcademicInfosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentAcademicInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    StudentCarriedCourse<T extends Student$StudentCarriedCourseArgs<ExtArgs> = {}>(args?: Subset<T, Student$StudentCarriedCourseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9204,6 +9600,7 @@ export namespace Prisma {
   interface StudentFieldRefs {
     readonly id: FieldRef<"Student", 'String'>
     readonly studentId: FieldRef<"Student", 'String'>
+    readonly studentType: FieldRef<"Student", 'StudentType'>
     readonly firstName: FieldRef<"Student", 'String'>
     readonly middleName: FieldRef<"Student", 'String'>
     readonly lastName: FieldRef<"Student", 'String'>
@@ -9729,6 +10126,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StudentAcademicInfoScalarFieldEnum | StudentAcademicInfoScalarFieldEnum[]
+  }
+
+  /**
+   * Student.StudentCarriedCourse
+   */
+  export type Student$StudentCarriedCourseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    where?: StudentCarriedCourseWhereInput
+    orderBy?: StudentCarriedCourseOrderByWithRelationInput | StudentCarriedCourseOrderByWithRelationInput[]
+    cursor?: StudentCarriedCourseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentCarriedCourseScalarFieldEnum | StudentCarriedCourseScalarFieldEnum[]
   }
 
   /**
@@ -16908,7 +17329,7 @@ export namespace Prisma {
     email: string | null
     createdAt: Date | null
     updateAt: Date | null
-    departmentId: string | null
+    academicFalcultyId: string | null
   }
 
   export type AdmitionExameRegistrationMaxAggregateOutputType = {
@@ -16928,7 +17349,7 @@ export namespace Prisma {
     email: string | null
     createdAt: Date | null
     updateAt: Date | null
-    departmentId: string | null
+    academicFalcultyId: string | null
   }
 
   export type AdmitionExameRegistrationCountAggregateOutputType = {
@@ -16948,7 +17369,7 @@ export namespace Prisma {
     email: number
     createdAt: number
     updateAt: number
-    departmentId: number
+    academicFalcultyId: number
     _all: number
   }
 
@@ -16980,7 +17401,7 @@ export namespace Prisma {
     email?: true
     createdAt?: true
     updateAt?: true
-    departmentId?: true
+    academicFalcultyId?: true
   }
 
   export type AdmitionExameRegistrationMaxAggregateInputType = {
@@ -17000,7 +17421,7 @@ export namespace Prisma {
     email?: true
     createdAt?: true
     updateAt?: true
-    departmentId?: true
+    academicFalcultyId?: true
   }
 
   export type AdmitionExameRegistrationCountAggregateInputType = {
@@ -17020,7 +17441,7 @@ export namespace Prisma {
     email?: true
     createdAt?: true
     updateAt?: true
-    departmentId?: true
+    academicFalcultyId?: true
     _all?: true
   }
 
@@ -17127,7 +17548,7 @@ export namespace Prisma {
     email: string
     createdAt: Date
     updateAt: Date
-    departmentId: string
+    academicFalcultyId: string
     _count: AdmitionExameRegistrationCountAggregateOutputType | null
     _avg: AdmitionExameRegistrationAvgAggregateOutputType | null
     _sum: AdmitionExameRegistrationSumAggregateOutputType | null
@@ -17166,9 +17587,9 @@ export namespace Prisma {
     email?: boolean
     createdAt?: boolean
     updateAt?: boolean
-    departmentId?: boolean
+    academicFalcultyId?: boolean
     fase?: boolean | ExameFaseDefaultArgs<ExtArgs>
-    department?: boolean | AcademicDepartmentDefaultArgs<ExtArgs>
+    academicFalculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
     Student?: boolean | AdmitionExameRegistration$StudentArgs<ExtArgs>
   }, ExtArgs["result"]["admitionExameRegistration"]>
 
@@ -17191,13 +17612,13 @@ export namespace Prisma {
     email?: boolean
     createdAt?: boolean
     updateAt?: boolean
-    departmentId?: boolean
+    academicFalcultyId?: boolean
   }
 
-  export type AdmitionExameRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicantName" | "paymentRecipt" | "status" | "document" | "paymentAmoute" | "aprovePayment" | "exameResults" | "passed" | "faseId" | "exameDate" | "rejectionReason" | "phoneNumber" | "email" | "createdAt" | "updateAt" | "departmentId", ExtArgs["result"]["admitionExameRegistration"]>
+  export type AdmitionExameRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicantName" | "paymentRecipt" | "status" | "document" | "paymentAmoute" | "aprovePayment" | "exameResults" | "passed" | "faseId" | "exameDate" | "rejectionReason" | "phoneNumber" | "email" | "createdAt" | "updateAt" | "academicFalcultyId", ExtArgs["result"]["admitionExameRegistration"]>
   export type AdmitionExameRegistrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     fase?: boolean | ExameFaseDefaultArgs<ExtArgs>
-    department?: boolean | AcademicDepartmentDefaultArgs<ExtArgs>
+    academicFalculty?: boolean | AcademicFacultyDefaultArgs<ExtArgs>
     Student?: boolean | AdmitionExameRegistration$StudentArgs<ExtArgs>
   }
 
@@ -17205,7 +17626,7 @@ export namespace Prisma {
     name: "AdmitionExameRegistration"
     objects: {
       fase: Prisma.$ExameFasePayload<ExtArgs>
-      department: Prisma.$AcademicDepartmentPayload<ExtArgs>
+      academicFalculty: Prisma.$AcademicFacultyPayload<ExtArgs>
       Student: Prisma.$StudentPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -17225,7 +17646,7 @@ export namespace Prisma {
       email: string
       createdAt: Date
       updateAt: Date
-      departmentId: string
+      academicFalcultyId: string
     }, ExtArgs["result"]["admitionExameRegistration"]>
     composites: {}
   }
@@ -17567,7 +17988,7 @@ export namespace Prisma {
   export interface Prisma__AdmitionExameRegistrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     fase<T extends ExameFaseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ExameFaseDefaultArgs<ExtArgs>>): Prisma__ExameFaseClient<$Result.GetResult<Prisma.$ExameFasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    department<T extends AcademicDepartmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicDepartmentDefaultArgs<ExtArgs>>): Prisma__AcademicDepartmentClient<$Result.GetResult<Prisma.$AcademicDepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    academicFalculty<T extends AcademicFacultyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicFacultyDefaultArgs<ExtArgs>>): Prisma__AcademicFacultyClient<$Result.GetResult<Prisma.$AcademicFacultyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Student<T extends AdmitionExameRegistration$StudentArgs<ExtArgs> = {}>(args?: Subset<T, AdmitionExameRegistration$StudentArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -17614,7 +18035,7 @@ export namespace Prisma {
     readonly email: FieldRef<"AdmitionExameRegistration", 'String'>
     readonly createdAt: FieldRef<"AdmitionExameRegistration", 'DateTime'>
     readonly updateAt: FieldRef<"AdmitionExameRegistration", 'DateTime'>
-    readonly departmentId: FieldRef<"AdmitionExameRegistration", 'String'>
+    readonly academicFalcultyId: FieldRef<"AdmitionExameRegistration", 'String'>
   }
     
 
@@ -29081,6 +29502,1010 @@ export namespace Prisma {
 
 
   /**
+   * Model StudentCarriedCourse
+   */
+
+  export type AggregateStudentCarriedCourse = {
+    _count: StudentCarriedCourseCountAggregateOutputType | null
+    _avg: StudentCarriedCourseAvgAggregateOutputType | null
+    _sum: StudentCarriedCourseSumAggregateOutputType | null
+    _min: StudentCarriedCourseMinAggregateOutputType | null
+    _max: StudentCarriedCourseMaxAggregateOutputType | null
+  }
+
+  export type StudentCarriedCourseAvgAggregateOutputType = {
+    price: number | null
+  }
+
+  export type StudentCarriedCourseSumAggregateOutputType = {
+    price: number | null
+  }
+
+  export type StudentCarriedCourseMinAggregateOutputType = {
+    id: string | null
+    studentId: string | null
+    disciplineId: string | null
+    semesterId: string | null
+    shift: $Enums.Shift | null
+    price: number | null
+    status: $Enums.CarriedCourseStatus | null
+    createdAt: Date | null
+  }
+
+  export type StudentCarriedCourseMaxAggregateOutputType = {
+    id: string | null
+    studentId: string | null
+    disciplineId: string | null
+    semesterId: string | null
+    shift: $Enums.Shift | null
+    price: number | null
+    status: $Enums.CarriedCourseStatus | null
+    createdAt: Date | null
+  }
+
+  export type StudentCarriedCourseCountAggregateOutputType = {
+    id: number
+    studentId: number
+    disciplineId: number
+    semesterId: number
+    shift: number
+    price: number
+    status: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type StudentCarriedCourseAvgAggregateInputType = {
+    price?: true
+  }
+
+  export type StudentCarriedCourseSumAggregateInputType = {
+    price?: true
+  }
+
+  export type StudentCarriedCourseMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    disciplineId?: true
+    semesterId?: true
+    shift?: true
+    price?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type StudentCarriedCourseMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    disciplineId?: true
+    semesterId?: true
+    shift?: true
+    price?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type StudentCarriedCourseCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    disciplineId?: true
+    semesterId?: true
+    shift?: true
+    price?: true
+    status?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type StudentCarriedCourseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudentCarriedCourse to aggregate.
+     */
+    where?: StudentCarriedCourseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentCarriedCourses to fetch.
+     */
+    orderBy?: StudentCarriedCourseOrderByWithRelationInput | StudentCarriedCourseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudentCarriedCourseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentCarriedCourses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentCarriedCourses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StudentCarriedCourses
+    **/
+    _count?: true | StudentCarriedCourseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StudentCarriedCourseAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StudentCarriedCourseSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudentCarriedCourseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudentCarriedCourseMaxAggregateInputType
+  }
+
+  export type GetStudentCarriedCourseAggregateType<T extends StudentCarriedCourseAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudentCarriedCourse]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudentCarriedCourse[P]>
+      : GetScalarType<T[P], AggregateStudentCarriedCourse[P]>
+  }
+
+
+
+
+  export type StudentCarriedCourseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentCarriedCourseWhereInput
+    orderBy?: StudentCarriedCourseOrderByWithAggregationInput | StudentCarriedCourseOrderByWithAggregationInput[]
+    by: StudentCarriedCourseScalarFieldEnum[] | StudentCarriedCourseScalarFieldEnum
+    having?: StudentCarriedCourseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudentCarriedCourseCountAggregateInputType | true
+    _avg?: StudentCarriedCourseAvgAggregateInputType
+    _sum?: StudentCarriedCourseSumAggregateInputType
+    _min?: StudentCarriedCourseMinAggregateInputType
+    _max?: StudentCarriedCourseMaxAggregateInputType
+  }
+
+  export type StudentCarriedCourseGroupByOutputType = {
+    id: string
+    studentId: string
+    disciplineId: string
+    semesterId: string
+    shift: $Enums.Shift
+    price: number
+    status: $Enums.CarriedCourseStatus
+    createdAt: Date
+    _count: StudentCarriedCourseCountAggregateOutputType | null
+    _avg: StudentCarriedCourseAvgAggregateOutputType | null
+    _sum: StudentCarriedCourseSumAggregateOutputType | null
+    _min: StudentCarriedCourseMinAggregateOutputType | null
+    _max: StudentCarriedCourseMaxAggregateOutputType | null
+  }
+
+  type GetStudentCarriedCourseGroupByPayload<T extends StudentCarriedCourseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StudentCarriedCourseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudentCarriedCourseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudentCarriedCourseGroupByOutputType[P]>
+            : GetScalarType<T[P], StudentCarriedCourseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudentCarriedCourseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    disciplineId?: boolean
+    semesterId?: boolean
+    shift?: boolean
+    price?: boolean
+    status?: boolean
+    createdAt?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
+    semester?: boolean | AcademicSemesterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["studentCarriedCourse"]>
+
+
+
+  export type StudentCarriedCourseSelectScalar = {
+    id?: boolean
+    studentId?: boolean
+    disciplineId?: boolean
+    semesterId?: boolean
+    shift?: boolean
+    price?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }
+
+  export type StudentCarriedCourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "disciplineId" | "semesterId" | "shift" | "price" | "status" | "createdAt", ExtArgs["result"]["studentCarriedCourse"]>
+  export type StudentCarriedCourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
+    semester?: boolean | AcademicSemesterDefaultArgs<ExtArgs>
+  }
+
+  export type $StudentCarriedCoursePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StudentCarriedCourse"
+    objects: {
+      student: Prisma.$StudentPayload<ExtArgs>
+      discipline: Prisma.$DisciplinePayload<ExtArgs>
+      semester: Prisma.$AcademicSemesterPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      studentId: string
+      disciplineId: string
+      semesterId: string
+      shift: $Enums.Shift
+      price: number
+      status: $Enums.CarriedCourseStatus
+      createdAt: Date
+    }, ExtArgs["result"]["studentCarriedCourse"]>
+    composites: {}
+  }
+
+  type StudentCarriedCourseGetPayload<S extends boolean | null | undefined | StudentCarriedCourseDefaultArgs> = $Result.GetResult<Prisma.$StudentCarriedCoursePayload, S>
+
+  type StudentCarriedCourseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StudentCarriedCourseFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StudentCarriedCourseCountAggregateInputType | true
+    }
+
+  export interface StudentCarriedCourseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StudentCarriedCourse'], meta: { name: 'StudentCarriedCourse' } }
+    /**
+     * Find zero or one StudentCarriedCourse that matches the filter.
+     * @param {StudentCarriedCourseFindUniqueArgs} args - Arguments to find a StudentCarriedCourse
+     * @example
+     * // Get one StudentCarriedCourse
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StudentCarriedCourseFindUniqueArgs>(args: SelectSubset<T, StudentCarriedCourseFindUniqueArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StudentCarriedCourse that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StudentCarriedCourseFindUniqueOrThrowArgs} args - Arguments to find a StudentCarriedCourse
+     * @example
+     * // Get one StudentCarriedCourse
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StudentCarriedCourseFindUniqueOrThrowArgs>(args: SelectSubset<T, StudentCarriedCourseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudentCarriedCourse that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCarriedCourseFindFirstArgs} args - Arguments to find a StudentCarriedCourse
+     * @example
+     * // Get one StudentCarriedCourse
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StudentCarriedCourseFindFirstArgs>(args?: SelectSubset<T, StudentCarriedCourseFindFirstArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudentCarriedCourse that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCarriedCourseFindFirstOrThrowArgs} args - Arguments to find a StudentCarriedCourse
+     * @example
+     * // Get one StudentCarriedCourse
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StudentCarriedCourseFindFirstOrThrowArgs>(args?: SelectSubset<T, StudentCarriedCourseFindFirstOrThrowArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StudentCarriedCourses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCarriedCourseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StudentCarriedCourses
+     * const studentCarriedCourses = await prisma.studentCarriedCourse.findMany()
+     * 
+     * // Get first 10 StudentCarriedCourses
+     * const studentCarriedCourses = await prisma.studentCarriedCourse.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const studentCarriedCourseWithIdOnly = await prisma.studentCarriedCourse.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StudentCarriedCourseFindManyArgs>(args?: SelectSubset<T, StudentCarriedCourseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StudentCarriedCourse.
+     * @param {StudentCarriedCourseCreateArgs} args - Arguments to create a StudentCarriedCourse.
+     * @example
+     * // Create one StudentCarriedCourse
+     * const StudentCarriedCourse = await prisma.studentCarriedCourse.create({
+     *   data: {
+     *     // ... data to create a StudentCarriedCourse
+     *   }
+     * })
+     * 
+     */
+    create<T extends StudentCarriedCourseCreateArgs>(args: SelectSubset<T, StudentCarriedCourseCreateArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StudentCarriedCourses.
+     * @param {StudentCarriedCourseCreateManyArgs} args - Arguments to create many StudentCarriedCourses.
+     * @example
+     * // Create many StudentCarriedCourses
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StudentCarriedCourseCreateManyArgs>(args?: SelectSubset<T, StudentCarriedCourseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a StudentCarriedCourse.
+     * @param {StudentCarriedCourseDeleteArgs} args - Arguments to delete one StudentCarriedCourse.
+     * @example
+     * // Delete one StudentCarriedCourse
+     * const StudentCarriedCourse = await prisma.studentCarriedCourse.delete({
+     *   where: {
+     *     // ... filter to delete one StudentCarriedCourse
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StudentCarriedCourseDeleteArgs>(args: SelectSubset<T, StudentCarriedCourseDeleteArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StudentCarriedCourse.
+     * @param {StudentCarriedCourseUpdateArgs} args - Arguments to update one StudentCarriedCourse.
+     * @example
+     * // Update one StudentCarriedCourse
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StudentCarriedCourseUpdateArgs>(args: SelectSubset<T, StudentCarriedCourseUpdateArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StudentCarriedCourses.
+     * @param {StudentCarriedCourseDeleteManyArgs} args - Arguments to filter StudentCarriedCourses to delete.
+     * @example
+     * // Delete a few StudentCarriedCourses
+     * const { count } = await prisma.studentCarriedCourse.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StudentCarriedCourseDeleteManyArgs>(args?: SelectSubset<T, StudentCarriedCourseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudentCarriedCourses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCarriedCourseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StudentCarriedCourses
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StudentCarriedCourseUpdateManyArgs>(args: SelectSubset<T, StudentCarriedCourseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one StudentCarriedCourse.
+     * @param {StudentCarriedCourseUpsertArgs} args - Arguments to update or create a StudentCarriedCourse.
+     * @example
+     * // Update or create a StudentCarriedCourse
+     * const studentCarriedCourse = await prisma.studentCarriedCourse.upsert({
+     *   create: {
+     *     // ... data to create a StudentCarriedCourse
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StudentCarriedCourse we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StudentCarriedCourseUpsertArgs>(args: SelectSubset<T, StudentCarriedCourseUpsertArgs<ExtArgs>>): Prisma__StudentCarriedCourseClient<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StudentCarriedCourses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCarriedCourseCountArgs} args - Arguments to filter StudentCarriedCourses to count.
+     * @example
+     * // Count the number of StudentCarriedCourses
+     * const count = await prisma.studentCarriedCourse.count({
+     *   where: {
+     *     // ... the filter for the StudentCarriedCourses we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudentCarriedCourseCountArgs>(
+      args?: Subset<T, StudentCarriedCourseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudentCarriedCourseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StudentCarriedCourse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCarriedCourseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudentCarriedCourseAggregateArgs>(args: Subset<T, StudentCarriedCourseAggregateArgs>): Prisma.PrismaPromise<GetStudentCarriedCourseAggregateType<T>>
+
+    /**
+     * Group by StudentCarriedCourse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCarriedCourseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudentCarriedCourseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudentCarriedCourseGroupByArgs['orderBy'] }
+        : { orderBy?: StudentCarriedCourseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudentCarriedCourseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudentCarriedCourseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StudentCarriedCourse model
+   */
+  readonly fields: StudentCarriedCourseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StudentCarriedCourse.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StudentCarriedCourseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    discipline<T extends DisciplineDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DisciplineDefaultArgs<ExtArgs>>): Prisma__DisciplineClient<$Result.GetResult<Prisma.$DisciplinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    semester<T extends AcademicSemesterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicSemesterDefaultArgs<ExtArgs>>): Prisma__AcademicSemesterClient<$Result.GetResult<Prisma.$AcademicSemesterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StudentCarriedCourse model
+   */
+  interface StudentCarriedCourseFieldRefs {
+    readonly id: FieldRef<"StudentCarriedCourse", 'String'>
+    readonly studentId: FieldRef<"StudentCarriedCourse", 'String'>
+    readonly disciplineId: FieldRef<"StudentCarriedCourse", 'String'>
+    readonly semesterId: FieldRef<"StudentCarriedCourse", 'String'>
+    readonly shift: FieldRef<"StudentCarriedCourse", 'Shift'>
+    readonly price: FieldRef<"StudentCarriedCourse", 'Int'>
+    readonly status: FieldRef<"StudentCarriedCourse", 'CarriedCourseStatus'>
+    readonly createdAt: FieldRef<"StudentCarriedCourse", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StudentCarriedCourse findUnique
+   */
+  export type StudentCarriedCourseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentCarriedCourse to fetch.
+     */
+    where: StudentCarriedCourseWhereUniqueInput
+  }
+
+  /**
+   * StudentCarriedCourse findUniqueOrThrow
+   */
+  export type StudentCarriedCourseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentCarriedCourse to fetch.
+     */
+    where: StudentCarriedCourseWhereUniqueInput
+  }
+
+  /**
+   * StudentCarriedCourse findFirst
+   */
+  export type StudentCarriedCourseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentCarriedCourse to fetch.
+     */
+    where?: StudentCarriedCourseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentCarriedCourses to fetch.
+     */
+    orderBy?: StudentCarriedCourseOrderByWithRelationInput | StudentCarriedCourseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudentCarriedCourses.
+     */
+    cursor?: StudentCarriedCourseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentCarriedCourses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentCarriedCourses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudentCarriedCourses.
+     */
+    distinct?: StudentCarriedCourseScalarFieldEnum | StudentCarriedCourseScalarFieldEnum[]
+  }
+
+  /**
+   * StudentCarriedCourse findFirstOrThrow
+   */
+  export type StudentCarriedCourseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentCarriedCourse to fetch.
+     */
+    where?: StudentCarriedCourseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentCarriedCourses to fetch.
+     */
+    orderBy?: StudentCarriedCourseOrderByWithRelationInput | StudentCarriedCourseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudentCarriedCourses.
+     */
+    cursor?: StudentCarriedCourseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentCarriedCourses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentCarriedCourses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudentCarriedCourses.
+     */
+    distinct?: StudentCarriedCourseScalarFieldEnum | StudentCarriedCourseScalarFieldEnum[]
+  }
+
+  /**
+   * StudentCarriedCourse findMany
+   */
+  export type StudentCarriedCourseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentCarriedCourses to fetch.
+     */
+    where?: StudentCarriedCourseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentCarriedCourses to fetch.
+     */
+    orderBy?: StudentCarriedCourseOrderByWithRelationInput | StudentCarriedCourseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StudentCarriedCourses.
+     */
+    cursor?: StudentCarriedCourseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentCarriedCourses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentCarriedCourses.
+     */
+    skip?: number
+    distinct?: StudentCarriedCourseScalarFieldEnum | StudentCarriedCourseScalarFieldEnum[]
+  }
+
+  /**
+   * StudentCarriedCourse create
+   */
+  export type StudentCarriedCourseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StudentCarriedCourse.
+     */
+    data: XOR<StudentCarriedCourseCreateInput, StudentCarriedCourseUncheckedCreateInput>
+  }
+
+  /**
+   * StudentCarriedCourse createMany
+   */
+  export type StudentCarriedCourseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StudentCarriedCourses.
+     */
+    data: StudentCarriedCourseCreateManyInput | StudentCarriedCourseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudentCarriedCourse update
+   */
+  export type StudentCarriedCourseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StudentCarriedCourse.
+     */
+    data: XOR<StudentCarriedCourseUpdateInput, StudentCarriedCourseUncheckedUpdateInput>
+    /**
+     * Choose, which StudentCarriedCourse to update.
+     */
+    where: StudentCarriedCourseWhereUniqueInput
+  }
+
+  /**
+   * StudentCarriedCourse updateMany
+   */
+  export type StudentCarriedCourseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StudentCarriedCourses.
+     */
+    data: XOR<StudentCarriedCourseUpdateManyMutationInput, StudentCarriedCourseUncheckedUpdateManyInput>
+    /**
+     * Filter which StudentCarriedCourses to update
+     */
+    where?: StudentCarriedCourseWhereInput
+    /**
+     * Limit how many StudentCarriedCourses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudentCarriedCourse upsert
+   */
+  export type StudentCarriedCourseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StudentCarriedCourse to update in case it exists.
+     */
+    where: StudentCarriedCourseWhereUniqueInput
+    /**
+     * In case the StudentCarriedCourse found by the `where` argument doesn't exist, create a new StudentCarriedCourse with this data.
+     */
+    create: XOR<StudentCarriedCourseCreateInput, StudentCarriedCourseUncheckedCreateInput>
+    /**
+     * In case the StudentCarriedCourse was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudentCarriedCourseUpdateInput, StudentCarriedCourseUncheckedUpdateInput>
+  }
+
+  /**
+   * StudentCarriedCourse delete
+   */
+  export type StudentCarriedCourseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    /**
+     * Filter which StudentCarriedCourse to delete.
+     */
+    where: StudentCarriedCourseWhereUniqueInput
+  }
+
+  /**
+   * StudentCarriedCourse deleteMany
+   */
+  export type StudentCarriedCourseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudentCarriedCourses to delete
+     */
+    where?: StudentCarriedCourseWhereInput
+    /**
+     * Limit how many StudentCarriedCourses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudentCarriedCourse without action
+   */
+  export type StudentCarriedCourseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model CoursePricing
    */
 
@@ -30270,6 +31695,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     courseDisciplines?: boolean | Discipline$courseDisciplinesArgs<ExtArgs>
+    StudentCarriedCourse?: boolean | Discipline$StudentCarriedCourseArgs<ExtArgs>
     _count?: boolean | DisciplineCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["discipline"]>
 
@@ -30289,6 +31715,7 @@ export namespace Prisma {
   export type DisciplineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "code" | "description" | "credits" | "minimumGradeToDismiss" | "createdAt" | "updatedAt", ExtArgs["result"]["discipline"]>
   export type DisciplineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     courseDisciplines?: boolean | Discipline$courseDisciplinesArgs<ExtArgs>
+    StudentCarriedCourse?: boolean | Discipline$StudentCarriedCourseArgs<ExtArgs>
     _count?: boolean | DisciplineCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -30296,6 +31723,7 @@ export namespace Prisma {
     name: "Discipline"
     objects: {
       courseDisciplines: Prisma.$CourseDisciplinePayload<ExtArgs>[]
+      StudentCarriedCourse: Prisma.$StudentCarriedCoursePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -30647,6 +32075,7 @@ export namespace Prisma {
   export interface Prisma__DisciplineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     courseDisciplines<T extends Discipline$courseDisciplinesArgs<ExtArgs> = {}>(args?: Subset<T, Discipline$courseDisciplinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourseDisciplinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    StudentCarriedCourse<T extends Discipline$StudentCarriedCourseArgs<ExtArgs> = {}>(args?: Subset<T, Discipline$StudentCarriedCourseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentCarriedCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31051,6 +32480,30 @@ export namespace Prisma {
   }
 
   /**
+   * Discipline.StudentCarriedCourse
+   */
+  export type Discipline$StudentCarriedCourseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCarriedCourse
+     */
+    select?: StudentCarriedCourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentCarriedCourse
+     */
+    omit?: StudentCarriedCourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentCarriedCourseInclude<ExtArgs> | null
+    where?: StudentCarriedCourseWhereInput
+    orderBy?: StudentCarriedCourseOrderByWithRelationInput | StudentCarriedCourseOrderByWithRelationInput[]
+    cursor?: StudentCarriedCourseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentCarriedCourseScalarFieldEnum | StudentCarriedCourseScalarFieldEnum[]
+  }
+
+  /**
    * Discipline without action
    */
   export type DisciplineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -31099,13 +32552,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentMinAggregateOutputType = {
     id: string | null
-    paymentRecipt: string | null
+    paymentId: string | null
     totalPayment: number | null
     baseAmount: number | null
     lateFee: number | null
-    aprovedPayment: boolean | null
-    paymentType: $Enums.PAYMENTTYPE | null
-    paymentStatus: $Enums.PaymentStatus | null
     paymentMonth: number | null
     paymentYear: number | null
     createdAt: Date | null
@@ -31116,13 +32566,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentMaxAggregateOutputType = {
     id: string | null
-    paymentRecipt: string | null
+    paymentId: string | null
     totalPayment: number | null
     baseAmount: number | null
     lateFee: number | null
-    aprovedPayment: boolean | null
-    paymentType: $Enums.PAYMENTTYPE | null
-    paymentStatus: $Enums.PaymentStatus | null
     paymentMonth: number | null
     paymentYear: number | null
     createdAt: Date | null
@@ -31133,13 +32580,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCountAggregateOutputType = {
     id: number
-    paymentRecipt: number
+    paymentId: number
     totalPayment: number
     baseAmount: number
     lateFee: number
-    aprovedPayment: number
-    paymentType: number
-    paymentStatus: number
     paymentMonth: number
     paymentYear: number
     createdAt: number
@@ -31168,13 +32612,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentMinAggregateInputType = {
     id?: true
-    paymentRecipt?: true
+    paymentId?: true
     totalPayment?: true
     baseAmount?: true
     lateFee?: true
-    aprovedPayment?: true
-    paymentType?: true
-    paymentStatus?: true
     paymentMonth?: true
     paymentYear?: true
     createdAt?: true
@@ -31185,13 +32626,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentMaxAggregateInputType = {
     id?: true
-    paymentRecipt?: true
+    paymentId?: true
     totalPayment?: true
     baseAmount?: true
     lateFee?: true
-    aprovedPayment?: true
-    paymentType?: true
-    paymentStatus?: true
     paymentMonth?: true
     paymentYear?: true
     createdAt?: true
@@ -31202,13 +32640,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCountAggregateInputType = {
     id?: true
-    paymentRecipt?: true
+    paymentId?: true
     totalPayment?: true
     baseAmount?: true
     lateFee?: true
-    aprovedPayment?: true
-    paymentType?: true
-    paymentStatus?: true
     paymentMonth?: true
     paymentYear?: true
     createdAt?: true
@@ -31306,13 +32741,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentGroupByOutputType = {
     id: string
-    paymentRecipt: string | null
+    paymentId: string
     totalPayment: number
     baseAmount: number
     lateFee: number
-    aprovedPayment: boolean
-    paymentType: $Enums.PAYMENTTYPE
-    paymentStatus: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt: Date
@@ -31342,19 +32774,17 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    paymentRecipt?: boolean
+    paymentId?: boolean
     totalPayment?: boolean
     baseAmount?: boolean
     lateFee?: boolean
-    aprovedPayment?: boolean
-    paymentType?: boolean
-    paymentStatus?: boolean
     paymentMonth?: boolean
     paymentYear?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     studentId?: boolean
     academicSemesterId?: boolean
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
     academicSemester?: boolean | AcademicSemesterDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["studentSemesterPayment"]>
@@ -31363,13 +32793,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentSelectScalar = {
     id?: boolean
-    paymentRecipt?: boolean
+    paymentId?: boolean
     totalPayment?: boolean
     baseAmount?: boolean
     lateFee?: boolean
-    aprovedPayment?: boolean
-    paymentType?: boolean
-    paymentStatus?: boolean
     paymentMonth?: boolean
     paymentYear?: boolean
     createdAt?: boolean
@@ -31378,8 +32805,9 @@ export namespace Prisma {
     academicSemesterId?: boolean
   }
 
-  export type StudentSemesterPaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "paymentRecipt" | "totalPayment" | "baseAmount" | "lateFee" | "aprovedPayment" | "paymentType" | "paymentStatus" | "paymentMonth" | "paymentYear" | "createdAt" | "updatedAt" | "studentId" | "academicSemesterId", ExtArgs["result"]["studentSemesterPayment"]>
+  export type StudentSemesterPaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "paymentId" | "totalPayment" | "baseAmount" | "lateFee" | "paymentMonth" | "paymentYear" | "createdAt" | "updatedAt" | "studentId" | "academicSemesterId", ExtArgs["result"]["studentSemesterPayment"]>
   export type StudentSemesterPaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
     academicSemester?: boolean | AcademicSemesterDefaultArgs<ExtArgs>
   }
@@ -31387,18 +32815,16 @@ export namespace Prisma {
   export type $StudentSemesterPaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "StudentSemesterPayment"
     objects: {
+      payment: Prisma.$PaymentPayload<ExtArgs>
       student: Prisma.$StudentPayload<ExtArgs>
       academicSemester: Prisma.$AcademicSemesterPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      paymentRecipt: string | null
+      paymentId: string
       totalPayment: number
       baseAmount: number
       lateFee: number
-      aprovedPayment: boolean
-      paymentType: $Enums.PAYMENTTYPE
-      paymentStatus: $Enums.PaymentStatus | null
       paymentMonth: number
       paymentYear: number
       createdAt: Date
@@ -31745,6 +33171,7 @@ export namespace Prisma {
    */
   export interface Prisma__StudentSemesterPaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    payment<T extends PaymentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PaymentDefaultArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     academicSemester<T extends AcademicSemesterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicSemesterDefaultArgs<ExtArgs>>): Prisma__AcademicSemesterClient<$Result.GetResult<Prisma.$AcademicSemesterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -31777,13 +33204,10 @@ export namespace Prisma {
    */
   interface StudentSemesterPaymentFieldRefs {
     readonly id: FieldRef<"StudentSemesterPayment", 'String'>
-    readonly paymentRecipt: FieldRef<"StudentSemesterPayment", 'String'>
+    readonly paymentId: FieldRef<"StudentSemesterPayment", 'String'>
     readonly totalPayment: FieldRef<"StudentSemesterPayment", 'Int'>
     readonly baseAmount: FieldRef<"StudentSemesterPayment", 'Int'>
     readonly lateFee: FieldRef<"StudentSemesterPayment", 'Int'>
-    readonly aprovedPayment: FieldRef<"StudentSemesterPayment", 'Boolean'>
-    readonly paymentType: FieldRef<"StudentSemesterPayment", 'PAYMENTTYPE'>
-    readonly paymentStatus: FieldRef<"StudentSemesterPayment", 'PaymentStatus'>
     readonly paymentMonth: FieldRef<"StudentSemesterPayment", 'Int'>
     readonly paymentYear: FieldRef<"StudentSemesterPayment", 'Int'>
     readonly createdAt: FieldRef<"StudentSemesterPayment", 'DateTime'>
@@ -34056,6 +35480,2052 @@ export namespace Prisma {
 
 
   /**
+   * Model Payment
+   */
+
+  export type AggregatePayment = {
+    _count: PaymentCountAggregateOutputType | null
+    _avg: PaymentAvgAggregateOutputType | null
+    _sum: PaymentSumAggregateOutputType | null
+    _min: PaymentMinAggregateOutputType | null
+    _max: PaymentMaxAggregateOutputType | null
+  }
+
+  export type PaymentAvgAggregateOutputType = {
+    totalAmount: number | null
+  }
+
+  export type PaymentSumAggregateOutputType = {
+    totalAmount: number | null
+  }
+
+  export type PaymentMinAggregateOutputType = {
+    id: string | null
+    paymentRecipt: string | null
+    totalAmount: number | null
+    approved: boolean | null
+    paymentType: $Enums.PAYMENTTYPE | null
+    status: $Enums.PAYMENTSTATUS | null
+    method: $Enums.PAYMENTMETHOD | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentMaxAggregateOutputType = {
+    id: string | null
+    paymentRecipt: string | null
+    totalAmount: number | null
+    approved: boolean | null
+    paymentType: $Enums.PAYMENTTYPE | null
+    status: $Enums.PAYMENTSTATUS | null
+    method: $Enums.PAYMENTMETHOD | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentCountAggregateOutputType = {
+    id: number
+    paymentRecipt: number
+    totalAmount: number
+    approved: number
+    paymentType: number
+    status: number
+    method: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PaymentAvgAggregateInputType = {
+    totalAmount?: true
+  }
+
+  export type PaymentSumAggregateInputType = {
+    totalAmount?: true
+  }
+
+  export type PaymentMinAggregateInputType = {
+    id?: true
+    paymentRecipt?: true
+    totalAmount?: true
+    approved?: true
+    paymentType?: true
+    status?: true
+    method?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentMaxAggregateInputType = {
+    id?: true
+    paymentRecipt?: true
+    totalAmount?: true
+    approved?: true
+    paymentType?: true
+    status?: true
+    method?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentCountAggregateInputType = {
+    id?: true
+    paymentRecipt?: true
+    totalAmount?: true
+    approved?: true
+    paymentType?: true
+    status?: true
+    method?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PaymentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Payment to aggregate.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Payments
+    **/
+    _count?: true | PaymentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PaymentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PaymentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaymentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaymentMaxAggregateInputType
+  }
+
+  export type GetPaymentAggregateType<T extends PaymentAggregateArgs> = {
+        [P in keyof T & keyof AggregatePayment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePayment[P]>
+      : GetScalarType<T[P], AggregatePayment[P]>
+  }
+
+
+
+
+  export type PaymentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithAggregationInput | PaymentOrderByWithAggregationInput[]
+    by: PaymentScalarFieldEnum[] | PaymentScalarFieldEnum
+    having?: PaymentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaymentCountAggregateInputType | true
+    _avg?: PaymentAvgAggregateInputType
+    _sum?: PaymentSumAggregateInputType
+    _min?: PaymentMinAggregateInputType
+    _max?: PaymentMaxAggregateInputType
+  }
+
+  export type PaymentGroupByOutputType = {
+    id: string
+    paymentRecipt: string | null
+    totalAmount: number
+    approved: boolean
+    paymentType: $Enums.PAYMENTTYPE
+    status: $Enums.PAYMENTSTATUS
+    method: $Enums.PAYMENTMETHOD
+    createdAt: Date
+    updatedAt: Date
+    _count: PaymentCountAggregateOutputType | null
+    _avg: PaymentAvgAggregateOutputType | null
+    _sum: PaymentSumAggregateOutputType | null
+    _min: PaymentMinAggregateOutputType | null
+    _max: PaymentMaxAggregateOutputType | null
+  }
+
+  type GetPaymentGroupByPayload<T extends PaymentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaymentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaymentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaymentGroupByOutputType[P]>
+            : GetScalarType<T[P], PaymentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    paymentRecipt?: boolean
+    totalAmount?: boolean
+    approved?: boolean
+    paymentType?: boolean
+    status?: boolean
+    method?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    StudentSemesterPayment?: boolean | Payment$StudentSemesterPaymentArgs<ExtArgs>
+    PaymentReference?: boolean | Payment$PaymentReferenceArgs<ExtArgs>
+    _count?: boolean | PaymentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["payment"]>
+
+
+
+  export type PaymentSelectScalar = {
+    id?: boolean
+    paymentRecipt?: boolean
+    totalAmount?: boolean
+    approved?: boolean
+    paymentType?: boolean
+    status?: boolean
+    method?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "paymentRecipt" | "totalAmount" | "approved" | "paymentType" | "status" | "method" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+  export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    StudentSemesterPayment?: boolean | Payment$StudentSemesterPaymentArgs<ExtArgs>
+    PaymentReference?: boolean | Payment$PaymentReferenceArgs<ExtArgs>
+    _count?: boolean | PaymentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $PaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Payment"
+    objects: {
+      StudentSemesterPayment: Prisma.$StudentSemesterPaymentPayload<ExtArgs>[]
+      PaymentReference: Prisma.$PaymentReferencePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      paymentRecipt: string | null
+      totalAmount: number
+      approved: boolean
+      paymentType: $Enums.PAYMENTTYPE
+      status: $Enums.PAYMENTSTATUS
+      method: $Enums.PAYMENTMETHOD
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["payment"]>
+    composites: {}
+  }
+
+  type PaymentGetPayload<S extends boolean | null | undefined | PaymentDefaultArgs> = $Result.GetResult<Prisma.$PaymentPayload, S>
+
+  type PaymentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PaymentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PaymentCountAggregateInputType | true
+    }
+
+  export interface PaymentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Payment'], meta: { name: 'Payment' } }
+    /**
+     * Find zero or one Payment that matches the filter.
+     * @param {PaymentFindUniqueArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaymentFindUniqueArgs>(args: SelectSubset<T, PaymentFindUniqueArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Payment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PaymentFindUniqueOrThrowArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaymentFindUniqueOrThrowArgs>(args: SelectSubset<T, PaymentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Payment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentFindFirstArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaymentFindFirstArgs>(args?: SelectSubset<T, PaymentFindFirstArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Payment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentFindFirstOrThrowArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaymentFindFirstOrThrowArgs>(args?: SelectSubset<T, PaymentFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Payments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Payments
+     * const payments = await prisma.payment.findMany()
+     * 
+     * // Get first 10 Payments
+     * const payments = await prisma.payment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paymentWithIdOnly = await prisma.payment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaymentFindManyArgs>(args?: SelectSubset<T, PaymentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Payment.
+     * @param {PaymentCreateArgs} args - Arguments to create a Payment.
+     * @example
+     * // Create one Payment
+     * const Payment = await prisma.payment.create({
+     *   data: {
+     *     // ... data to create a Payment
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaymentCreateArgs>(args: SelectSubset<T, PaymentCreateArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Payments.
+     * @param {PaymentCreateManyArgs} args - Arguments to create many Payments.
+     * @example
+     * // Create many Payments
+     * const payment = await prisma.payment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaymentCreateManyArgs>(args?: SelectSubset<T, PaymentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Payment.
+     * @param {PaymentDeleteArgs} args - Arguments to delete one Payment.
+     * @example
+     * // Delete one Payment
+     * const Payment = await prisma.payment.delete({
+     *   where: {
+     *     // ... filter to delete one Payment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaymentDeleteArgs>(args: SelectSubset<T, PaymentDeleteArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Payment.
+     * @param {PaymentUpdateArgs} args - Arguments to update one Payment.
+     * @example
+     * // Update one Payment
+     * const payment = await prisma.payment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaymentUpdateArgs>(args: SelectSubset<T, PaymentUpdateArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Payments.
+     * @param {PaymentDeleteManyArgs} args - Arguments to filter Payments to delete.
+     * @example
+     * // Delete a few Payments
+     * const { count } = await prisma.payment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaymentDeleteManyArgs>(args?: SelectSubset<T, PaymentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Payments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Payments
+     * const payment = await prisma.payment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaymentUpdateManyArgs>(args: SelectSubset<T, PaymentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Payment.
+     * @param {PaymentUpsertArgs} args - Arguments to update or create a Payment.
+     * @example
+     * // Update or create a Payment
+     * const payment = await prisma.payment.upsert({
+     *   create: {
+     *     // ... data to create a Payment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Payment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaymentUpsertArgs>(args: SelectSubset<T, PaymentUpsertArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Payments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentCountArgs} args - Arguments to filter Payments to count.
+     * @example
+     * // Count the number of Payments
+     * const count = await prisma.payment.count({
+     *   where: {
+     *     // ... the filter for the Payments we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaymentCountArgs>(
+      args?: Subset<T, PaymentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaymentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Payment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaymentAggregateArgs>(args: Subset<T, PaymentAggregateArgs>): Prisma.PrismaPromise<GetPaymentAggregateType<T>>
+
+    /**
+     * Group by Payment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaymentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaymentGroupByArgs['orderBy'] }
+        : { orderBy?: PaymentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaymentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaymentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Payment model
+   */
+  readonly fields: PaymentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Payment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    StudentSemesterPayment<T extends Payment$StudentSemesterPaymentArgs<ExtArgs> = {}>(args?: Subset<T, Payment$StudentSemesterPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentSemesterPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    PaymentReference<T extends Payment$PaymentReferenceArgs<ExtArgs> = {}>(args?: Subset<T, Payment$PaymentReferenceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Payment model
+   */
+  interface PaymentFieldRefs {
+    readonly id: FieldRef<"Payment", 'String'>
+    readonly paymentRecipt: FieldRef<"Payment", 'String'>
+    readonly totalAmount: FieldRef<"Payment", 'Int'>
+    readonly approved: FieldRef<"Payment", 'Boolean'>
+    readonly paymentType: FieldRef<"Payment", 'PAYMENTTYPE'>
+    readonly status: FieldRef<"Payment", 'PAYMENTSTATUS'>
+    readonly method: FieldRef<"Payment", 'PAYMENTMETHOD'>
+    readonly createdAt: FieldRef<"Payment", 'DateTime'>
+    readonly updatedAt: FieldRef<"Payment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Payment findUnique
+   */
+  export type PaymentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment findUniqueOrThrow
+   */
+  export type PaymentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment findFirst
+   */
+  export type PaymentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Payments.
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Payments.
+     */
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment findFirstOrThrow
+   */
+  export type PaymentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Payments.
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Payments.
+     */
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment findMany
+   */
+  export type PaymentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payments to fetch.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Payments.
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment create
+   */
+  export type PaymentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Payment.
+     */
+    data: XOR<PaymentCreateInput, PaymentUncheckedCreateInput>
+  }
+
+  /**
+   * Payment createMany
+   */
+  export type PaymentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Payments.
+     */
+    data: PaymentCreateManyInput | PaymentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Payment update
+   */
+  export type PaymentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Payment.
+     */
+    data: XOR<PaymentUpdateInput, PaymentUncheckedUpdateInput>
+    /**
+     * Choose, which Payment to update.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment updateMany
+   */
+  export type PaymentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Payments.
+     */
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyInput>
+    /**
+     * Filter which Payments to update
+     */
+    where?: PaymentWhereInput
+    /**
+     * Limit how many Payments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Payment upsert
+   */
+  export type PaymentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Payment to update in case it exists.
+     */
+    where: PaymentWhereUniqueInput
+    /**
+     * In case the Payment found by the `where` argument doesn't exist, create a new Payment with this data.
+     */
+    create: XOR<PaymentCreateInput, PaymentUncheckedCreateInput>
+    /**
+     * In case the Payment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaymentUpdateInput, PaymentUncheckedUpdateInput>
+  }
+
+  /**
+   * Payment delete
+   */
+  export type PaymentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter which Payment to delete.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment deleteMany
+   */
+  export type PaymentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Payments to delete
+     */
+    where?: PaymentWhereInput
+    /**
+     * Limit how many Payments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Payment.StudentSemesterPayment
+   */
+  export type Payment$StudentSemesterPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentSemesterPayment
+     */
+    select?: StudentSemesterPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentSemesterPayment
+     */
+    omit?: StudentSemesterPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentSemesterPaymentInclude<ExtArgs> | null
+    where?: StudentSemesterPaymentWhereInput
+    orderBy?: StudentSemesterPaymentOrderByWithRelationInput | StudentSemesterPaymentOrderByWithRelationInput[]
+    cursor?: StudentSemesterPaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentSemesterPaymentScalarFieldEnum | StudentSemesterPaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment.PaymentReference
+   */
+  export type Payment$PaymentReferenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    where?: PaymentReferenceWhereInput
+    orderBy?: PaymentReferenceOrderByWithRelationInput | PaymentReferenceOrderByWithRelationInput[]
+    cursor?: PaymentReferenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentReferenceScalarFieldEnum | PaymentReferenceScalarFieldEnum[]
+  }
+
+  /**
+   * Payment without action
+   */
+  export type PaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PaymentReference
+   */
+
+  export type AggregatePaymentReference = {
+    _count: PaymentReferenceCountAggregateOutputType | null
+    _avg: PaymentReferenceAvgAggregateOutputType | null
+    _sum: PaymentReferenceSumAggregateOutputType | null
+    _min: PaymentReferenceMinAggregateOutputType | null
+    _max: PaymentReferenceMaxAggregateOutputType | null
+  }
+
+  export type PaymentReferenceAvgAggregateOutputType = {
+    code: number | null
+  }
+
+  export type PaymentReferenceSumAggregateOutputType = {
+    code: number | null
+  }
+
+  export type PaymentReferenceMinAggregateOutputType = {
+    id: string | null
+    reference: string | null
+    code: number | null
+    message: string | null
+    paymentId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentReferenceMaxAggregateOutputType = {
+    id: string | null
+    reference: string | null
+    code: number | null
+    message: string | null
+    paymentId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentReferenceCountAggregateOutputType = {
+    id: number
+    reference: number
+    code: number
+    message: number
+    paymentId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PaymentReferenceAvgAggregateInputType = {
+    code?: true
+  }
+
+  export type PaymentReferenceSumAggregateInputType = {
+    code?: true
+  }
+
+  export type PaymentReferenceMinAggregateInputType = {
+    id?: true
+    reference?: true
+    code?: true
+    message?: true
+    paymentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentReferenceMaxAggregateInputType = {
+    id?: true
+    reference?: true
+    code?: true
+    message?: true
+    paymentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentReferenceCountAggregateInputType = {
+    id?: true
+    reference?: true
+    code?: true
+    message?: true
+    paymentId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PaymentReferenceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentReference to aggregate.
+     */
+    where?: PaymentReferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentReferences to fetch.
+     */
+    orderBy?: PaymentReferenceOrderByWithRelationInput | PaymentReferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaymentReferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentReferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentReferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PaymentReferences
+    **/
+    _count?: true | PaymentReferenceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PaymentReferenceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PaymentReferenceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaymentReferenceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaymentReferenceMaxAggregateInputType
+  }
+
+  export type GetPaymentReferenceAggregateType<T extends PaymentReferenceAggregateArgs> = {
+        [P in keyof T & keyof AggregatePaymentReference]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePaymentReference[P]>
+      : GetScalarType<T[P], AggregatePaymentReference[P]>
+  }
+
+
+
+
+  export type PaymentReferenceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentReferenceWhereInput
+    orderBy?: PaymentReferenceOrderByWithAggregationInput | PaymentReferenceOrderByWithAggregationInput[]
+    by: PaymentReferenceScalarFieldEnum[] | PaymentReferenceScalarFieldEnum
+    having?: PaymentReferenceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaymentReferenceCountAggregateInputType | true
+    _avg?: PaymentReferenceAvgAggregateInputType
+    _sum?: PaymentReferenceSumAggregateInputType
+    _min?: PaymentReferenceMinAggregateInputType
+    _max?: PaymentReferenceMaxAggregateInputType
+  }
+
+  export type PaymentReferenceGroupByOutputType = {
+    id: string
+    reference: string
+    code: number
+    message: string
+    paymentId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PaymentReferenceCountAggregateOutputType | null
+    _avg: PaymentReferenceAvgAggregateOutputType | null
+    _sum: PaymentReferenceSumAggregateOutputType | null
+    _min: PaymentReferenceMinAggregateOutputType | null
+    _max: PaymentReferenceMaxAggregateOutputType | null
+  }
+
+  type GetPaymentReferenceGroupByPayload<T extends PaymentReferenceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaymentReferenceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaymentReferenceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaymentReferenceGroupByOutputType[P]>
+            : GetScalarType<T[P], PaymentReferenceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaymentReferenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reference?: boolean
+    code?: boolean
+    message?: boolean
+    paymentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paymentReference"]>
+
+
+
+  export type PaymentReferenceSelectScalar = {
+    id?: boolean
+    reference?: boolean
+    code?: boolean
+    message?: boolean
+    paymentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PaymentReferenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reference" | "code" | "message" | "paymentId" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentReference"]>
+  export type PaymentReferenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    payment?: boolean | PaymentDefaultArgs<ExtArgs>
+  }
+
+  export type $PaymentReferencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PaymentReference"
+    objects: {
+      payment: Prisma.$PaymentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      reference: string
+      code: number
+      message: string
+      paymentId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["paymentReference"]>
+    composites: {}
+  }
+
+  type PaymentReferenceGetPayload<S extends boolean | null | undefined | PaymentReferenceDefaultArgs> = $Result.GetResult<Prisma.$PaymentReferencePayload, S>
+
+  type PaymentReferenceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PaymentReferenceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PaymentReferenceCountAggregateInputType | true
+    }
+
+  export interface PaymentReferenceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PaymentReference'], meta: { name: 'PaymentReference' } }
+    /**
+     * Find zero or one PaymentReference that matches the filter.
+     * @param {PaymentReferenceFindUniqueArgs} args - Arguments to find a PaymentReference
+     * @example
+     * // Get one PaymentReference
+     * const paymentReference = await prisma.paymentReference.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaymentReferenceFindUniqueArgs>(args: SelectSubset<T, PaymentReferenceFindUniqueArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PaymentReference that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PaymentReferenceFindUniqueOrThrowArgs} args - Arguments to find a PaymentReference
+     * @example
+     * // Get one PaymentReference
+     * const paymentReference = await prisma.paymentReference.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaymentReferenceFindUniqueOrThrowArgs>(args: SelectSubset<T, PaymentReferenceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentReference that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentReferenceFindFirstArgs} args - Arguments to find a PaymentReference
+     * @example
+     * // Get one PaymentReference
+     * const paymentReference = await prisma.paymentReference.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaymentReferenceFindFirstArgs>(args?: SelectSubset<T, PaymentReferenceFindFirstArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentReference that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentReferenceFindFirstOrThrowArgs} args - Arguments to find a PaymentReference
+     * @example
+     * // Get one PaymentReference
+     * const paymentReference = await prisma.paymentReference.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaymentReferenceFindFirstOrThrowArgs>(args?: SelectSubset<T, PaymentReferenceFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PaymentReferences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentReferenceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PaymentReferences
+     * const paymentReferences = await prisma.paymentReference.findMany()
+     * 
+     * // Get first 10 PaymentReferences
+     * const paymentReferences = await prisma.paymentReference.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paymentReferenceWithIdOnly = await prisma.paymentReference.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaymentReferenceFindManyArgs>(args?: SelectSubset<T, PaymentReferenceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PaymentReference.
+     * @param {PaymentReferenceCreateArgs} args - Arguments to create a PaymentReference.
+     * @example
+     * // Create one PaymentReference
+     * const PaymentReference = await prisma.paymentReference.create({
+     *   data: {
+     *     // ... data to create a PaymentReference
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaymentReferenceCreateArgs>(args: SelectSubset<T, PaymentReferenceCreateArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PaymentReferences.
+     * @param {PaymentReferenceCreateManyArgs} args - Arguments to create many PaymentReferences.
+     * @example
+     * // Create many PaymentReferences
+     * const paymentReference = await prisma.paymentReference.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaymentReferenceCreateManyArgs>(args?: SelectSubset<T, PaymentReferenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PaymentReference.
+     * @param {PaymentReferenceDeleteArgs} args - Arguments to delete one PaymentReference.
+     * @example
+     * // Delete one PaymentReference
+     * const PaymentReference = await prisma.paymentReference.delete({
+     *   where: {
+     *     // ... filter to delete one PaymentReference
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaymentReferenceDeleteArgs>(args: SelectSubset<T, PaymentReferenceDeleteArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PaymentReference.
+     * @param {PaymentReferenceUpdateArgs} args - Arguments to update one PaymentReference.
+     * @example
+     * // Update one PaymentReference
+     * const paymentReference = await prisma.paymentReference.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaymentReferenceUpdateArgs>(args: SelectSubset<T, PaymentReferenceUpdateArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PaymentReferences.
+     * @param {PaymentReferenceDeleteManyArgs} args - Arguments to filter PaymentReferences to delete.
+     * @example
+     * // Delete a few PaymentReferences
+     * const { count } = await prisma.paymentReference.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaymentReferenceDeleteManyArgs>(args?: SelectSubset<T, PaymentReferenceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaymentReferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentReferenceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PaymentReferences
+     * const paymentReference = await prisma.paymentReference.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaymentReferenceUpdateManyArgs>(args: SelectSubset<T, PaymentReferenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PaymentReference.
+     * @param {PaymentReferenceUpsertArgs} args - Arguments to update or create a PaymentReference.
+     * @example
+     * // Update or create a PaymentReference
+     * const paymentReference = await prisma.paymentReference.upsert({
+     *   create: {
+     *     // ... data to create a PaymentReference
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PaymentReference we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaymentReferenceUpsertArgs>(args: SelectSubset<T, PaymentReferenceUpsertArgs<ExtArgs>>): Prisma__PaymentReferenceClient<$Result.GetResult<Prisma.$PaymentReferencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PaymentReferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentReferenceCountArgs} args - Arguments to filter PaymentReferences to count.
+     * @example
+     * // Count the number of PaymentReferences
+     * const count = await prisma.paymentReference.count({
+     *   where: {
+     *     // ... the filter for the PaymentReferences we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaymentReferenceCountArgs>(
+      args?: Subset<T, PaymentReferenceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaymentReferenceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PaymentReference.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentReferenceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaymentReferenceAggregateArgs>(args: Subset<T, PaymentReferenceAggregateArgs>): Prisma.PrismaPromise<GetPaymentReferenceAggregateType<T>>
+
+    /**
+     * Group by PaymentReference.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentReferenceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaymentReferenceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaymentReferenceGroupByArgs['orderBy'] }
+        : { orderBy?: PaymentReferenceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaymentReferenceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaymentReferenceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PaymentReference model
+   */
+  readonly fields: PaymentReferenceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PaymentReference.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaymentReferenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    payment<T extends PaymentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PaymentDefaultArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PaymentReference model
+   */
+  interface PaymentReferenceFieldRefs {
+    readonly id: FieldRef<"PaymentReference", 'String'>
+    readonly reference: FieldRef<"PaymentReference", 'String'>
+    readonly code: FieldRef<"PaymentReference", 'Int'>
+    readonly message: FieldRef<"PaymentReference", 'String'>
+    readonly paymentId: FieldRef<"PaymentReference", 'String'>
+    readonly createdAt: FieldRef<"PaymentReference", 'DateTime'>
+    readonly updatedAt: FieldRef<"PaymentReference", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PaymentReference findUnique
+   */
+  export type PaymentReferenceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentReference to fetch.
+     */
+    where: PaymentReferenceWhereUniqueInput
+  }
+
+  /**
+   * PaymentReference findUniqueOrThrow
+   */
+  export type PaymentReferenceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentReference to fetch.
+     */
+    where: PaymentReferenceWhereUniqueInput
+  }
+
+  /**
+   * PaymentReference findFirst
+   */
+  export type PaymentReferenceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentReference to fetch.
+     */
+    where?: PaymentReferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentReferences to fetch.
+     */
+    orderBy?: PaymentReferenceOrderByWithRelationInput | PaymentReferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentReferences.
+     */
+    cursor?: PaymentReferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentReferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentReferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentReferences.
+     */
+    distinct?: PaymentReferenceScalarFieldEnum | PaymentReferenceScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentReference findFirstOrThrow
+   */
+  export type PaymentReferenceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentReference to fetch.
+     */
+    where?: PaymentReferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentReferences to fetch.
+     */
+    orderBy?: PaymentReferenceOrderByWithRelationInput | PaymentReferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentReferences.
+     */
+    cursor?: PaymentReferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentReferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentReferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentReferences.
+     */
+    distinct?: PaymentReferenceScalarFieldEnum | PaymentReferenceScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentReference findMany
+   */
+  export type PaymentReferenceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentReferences to fetch.
+     */
+    where?: PaymentReferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentReferences to fetch.
+     */
+    orderBy?: PaymentReferenceOrderByWithRelationInput | PaymentReferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PaymentReferences.
+     */
+    cursor?: PaymentReferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentReferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentReferences.
+     */
+    skip?: number
+    distinct?: PaymentReferenceScalarFieldEnum | PaymentReferenceScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentReference create
+   */
+  export type PaymentReferenceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PaymentReference.
+     */
+    data: XOR<PaymentReferenceCreateInput, PaymentReferenceUncheckedCreateInput>
+  }
+
+  /**
+   * PaymentReference createMany
+   */
+  export type PaymentReferenceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PaymentReferences.
+     */
+    data: PaymentReferenceCreateManyInput | PaymentReferenceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaymentReference update
+   */
+  export type PaymentReferenceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PaymentReference.
+     */
+    data: XOR<PaymentReferenceUpdateInput, PaymentReferenceUncheckedUpdateInput>
+    /**
+     * Choose, which PaymentReference to update.
+     */
+    where: PaymentReferenceWhereUniqueInput
+  }
+
+  /**
+   * PaymentReference updateMany
+   */
+  export type PaymentReferenceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PaymentReferences.
+     */
+    data: XOR<PaymentReferenceUpdateManyMutationInput, PaymentReferenceUncheckedUpdateManyInput>
+    /**
+     * Filter which PaymentReferences to update
+     */
+    where?: PaymentReferenceWhereInput
+    /**
+     * Limit how many PaymentReferences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentReference upsert
+   */
+  export type PaymentReferenceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PaymentReference to update in case it exists.
+     */
+    where: PaymentReferenceWhereUniqueInput
+    /**
+     * In case the PaymentReference found by the `where` argument doesn't exist, create a new PaymentReference with this data.
+     */
+    create: XOR<PaymentReferenceCreateInput, PaymentReferenceUncheckedCreateInput>
+    /**
+     * In case the PaymentReference was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaymentReferenceUpdateInput, PaymentReferenceUncheckedUpdateInput>
+  }
+
+  /**
+   * PaymentReference delete
+   */
+  export type PaymentReferenceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+    /**
+     * Filter which PaymentReference to delete.
+     */
+    where: PaymentReferenceWhereUniqueInput
+  }
+
+  /**
+   * PaymentReference deleteMany
+   */
+  export type PaymentReferenceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentReferences to delete
+     */
+    where?: PaymentReferenceWhereInput
+    /**
+     * Limit how many PaymentReferences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentReference without action
+   */
+  export type PaymentReferenceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentReference
+     */
+    select?: PaymentReferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentReference
+     */
+    omit?: PaymentReferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentReferenceInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -34123,6 +37593,7 @@ export namespace Prisma {
   export const StudentScalarFieldEnum: {
     id: 'id',
     studentId: 'studentId',
+    studentType: 'studentType',
     firstName: 'firstName',
     middleName: 'middleName',
     lastName: 'lastName',
@@ -34255,7 +37726,7 @@ export namespace Prisma {
     email: 'email',
     createdAt: 'createdAt',
     updateAt: 'updateAt',
-    departmentId: 'departmentId'
+    academicFalcultyId: 'academicFalcultyId'
   };
 
   export type AdmitionExameRegistrationScalarFieldEnum = (typeof AdmitionExameRegistrationScalarFieldEnum)[keyof typeof AdmitionExameRegistrationScalarFieldEnum]
@@ -34412,6 +37883,20 @@ export namespace Prisma {
   export type CourseDisciplineScalarFieldEnum = (typeof CourseDisciplineScalarFieldEnum)[keyof typeof CourseDisciplineScalarFieldEnum]
 
 
+  export const StudentCarriedCourseScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    disciplineId: 'disciplineId',
+    semesterId: 'semesterId',
+    shift: 'shift',
+    price: 'price',
+    status: 'status',
+    createdAt: 'createdAt'
+  };
+
+  export type StudentCarriedCourseScalarFieldEnum = (typeof StudentCarriedCourseScalarFieldEnum)[keyof typeof StudentCarriedCourseScalarFieldEnum]
+
+
   export const CoursePricingScalarFieldEnum: {
     id: 'id',
     price: 'price',
@@ -34439,13 +37924,10 @@ export namespace Prisma {
 
   export const StudentSemesterPaymentScalarFieldEnum: {
     id: 'id',
-    paymentRecipt: 'paymentRecipt',
+    paymentId: 'paymentId',
     totalPayment: 'totalPayment',
     baseAmount: 'baseAmount',
     lateFee: 'lateFee',
-    aprovedPayment: 'aprovedPayment',
-    paymentType: 'paymentType',
-    paymentStatus: 'paymentStatus',
     paymentMonth: 'paymentMonth',
     paymentYear: 'paymentYear',
     createdAt: 'createdAt',
@@ -34482,6 +37964,34 @@ export namespace Prisma {
   };
 
   export type EventsScalarFieldEnum = (typeof EventsScalarFieldEnum)[keyof typeof EventsScalarFieldEnum]
+
+
+  export const PaymentScalarFieldEnum: {
+    id: 'id',
+    paymentRecipt: 'paymentRecipt',
+    totalAmount: 'totalAmount',
+    approved: 'approved',
+    paymentType: 'paymentType',
+    status: 'status',
+    method: 'method',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+  export const PaymentReferenceScalarFieldEnum: {
+    id: 'id',
+    reference: 'reference',
+    code: 'code',
+    message: 'message',
+    paymentId: 'paymentId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PaymentReferenceScalarFieldEnum = (typeof PaymentReferenceScalarFieldEnum)[keyof typeof PaymentReferenceScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -34652,7 +38162,7 @@ export namespace Prisma {
     rejectionReason: 'rejectionReason',
     phoneNumber: 'phoneNumber',
     email: 'email',
-    departmentId: 'departmentId'
+    academicFalcultyId: 'academicFalcultyId'
   };
 
   export type AdmitionExameRegistrationOrderByRelevanceFieldEnum = (typeof AdmitionExameRegistrationOrderByRelevanceFieldEnum)[keyof typeof AdmitionExameRegistrationOrderByRelevanceFieldEnum]
@@ -34783,6 +38293,16 @@ export namespace Prisma {
   export type CourseDisciplineOrderByRelevanceFieldEnum = (typeof CourseDisciplineOrderByRelevanceFieldEnum)[keyof typeof CourseDisciplineOrderByRelevanceFieldEnum]
 
 
+  export const StudentCarriedCourseOrderByRelevanceFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    disciplineId: 'disciplineId',
+    semesterId: 'semesterId'
+  };
+
+  export type StudentCarriedCourseOrderByRelevanceFieldEnum = (typeof StudentCarriedCourseOrderByRelevanceFieldEnum)[keyof typeof StudentCarriedCourseOrderByRelevanceFieldEnum]
+
+
   export const CoursePricingOrderByRelevanceFieldEnum: {
     id: 'id',
     courseId: 'courseId'
@@ -34803,7 +38323,7 @@ export namespace Prisma {
 
   export const StudentSemesterPaymentOrderByRelevanceFieldEnum: {
     id: 'id',
-    paymentRecipt: 'paymentRecipt',
+    paymentId: 'paymentId',
     studentId: 'studentId',
     academicSemesterId: 'academicSemesterId'
   };
@@ -34828,6 +38348,24 @@ export namespace Prisma {
   };
 
   export type EventsOrderByRelevanceFieldEnum = (typeof EventsOrderByRelevanceFieldEnum)[keyof typeof EventsOrderByRelevanceFieldEnum]
+
+
+  export const PaymentOrderByRelevanceFieldEnum: {
+    id: 'id',
+    paymentRecipt: 'paymentRecipt'
+  };
+
+  export type PaymentOrderByRelevanceFieldEnum = (typeof PaymentOrderByRelevanceFieldEnum)[keyof typeof PaymentOrderByRelevanceFieldEnum]
+
+
+  export const PaymentReferenceOrderByRelevanceFieldEnum: {
+    id: 'id',
+    reference: 'reference',
+    message: 'message',
+    paymentId: 'paymentId'
+  };
+
+  export type PaymentReferenceOrderByRelevanceFieldEnum = (typeof PaymentReferenceOrderByRelevanceFieldEnum)[keyof typeof PaymentReferenceOrderByRelevanceFieldEnum]
 
 
   /**
@@ -34860,6 +38398,13 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'StudentType'
+   */
+  export type EnumStudentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StudentType'>
     
 
 
@@ -34941,6 +38486,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'CarriedCourseStatus'
+   */
+  export type EnumCarriedCourseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CarriedCourseStatus'>
+    
+
+
+  /**
    * Reference to a field of type 'PAYMENTTYPE'
    */
   export type EnumPAYMENTTYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PAYMENTTYPE'>
@@ -34948,9 +38500,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'PaymentStatus'
+   * Reference to a field of type 'PAYMENTSTATUS'
    */
-  export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
+  export type EnumPAYMENTSTATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PAYMENTSTATUS'>
+    
+
+
+  /**
+   * Reference to a field of type 'PAYMENTMETHOD'
+   */
+  export type EnumPAYMENTMETHODFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PAYMENTMETHOD'>
     
   /**
    * Deep Input Types
@@ -35050,6 +38609,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseListRelationFilter
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkListRelationFilter
     studentSemesterPayments?: StudentSemesterPaymentListRelationFilter
+    StudentCarriedCourse?: StudentCarriedCourseListRelationFilter
   }
 
   export type AcademicSemesterOrderByWithRelationInput = {
@@ -35068,6 +38628,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseOrderByRelationAggregateInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkOrderByRelationAggregateInput
     studentSemesterPayments?: StudentSemesterPaymentOrderByRelationAggregateInput
+    StudentCarriedCourse?: StudentCarriedCourseOrderByRelationAggregateInput
     _relevance?: AcademicSemesterOrderByRelevanceInput
   }
 
@@ -35090,6 +38651,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseListRelationFilter
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkListRelationFilter
     studentSemesterPayments?: StudentSemesterPaymentListRelationFilter
+    StudentCarriedCourse?: StudentCarriedCourseListRelationFilter
   }, "id">
 
   export type AcademicSemesterOrderByWithAggregationInput = {
@@ -35133,6 +38695,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentListRelationFilter
     faculties?: FacultyListRelationFilter
     students?: StudentListRelationFilter
+    admitionExame?: AdmitionExameRegistrationListRelationFilter
     AdmitionExamePrice?: AdmitionExamePriceListRelationFilter
     AdmitionExamePeriod?: AdmitionExamePeriodListRelationFilter
   }
@@ -35145,6 +38708,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentOrderByRelationAggregateInput
     faculties?: FacultyOrderByRelationAggregateInput
     students?: StudentOrderByRelationAggregateInput
+    admitionExame?: AdmitionExameRegistrationOrderByRelationAggregateInput
     AdmitionExamePrice?: AdmitionExamePriceOrderByRelationAggregateInput
     AdmitionExamePeriod?: AdmitionExamePeriodOrderByRelationAggregateInput
     _relevance?: AcademicFacultyOrderByRelevanceInput
@@ -35161,6 +38725,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentListRelationFilter
     faculties?: FacultyListRelationFilter
     students?: StudentListRelationFilter
+    admitionExame?: AdmitionExameRegistrationListRelationFilter
     AdmitionExamePrice?: AdmitionExamePriceListRelationFilter
     AdmitionExamePeriod?: AdmitionExamePeriodListRelationFilter
   }, "id">
@@ -35201,7 +38766,6 @@ export namespace Prisma {
     students?: StudentListRelationFilter
     departmentHead?: XOR<UsersNullableScalarRelationFilter, UsersWhereInput> | null
     staffMembers?: UsersListRelationFilter
-    admitionExame?: AdmitionExameRegistrationListRelationFilter
     offeredCourses?: OfferedCourseListRelationFilter
   }
 
@@ -35218,7 +38782,6 @@ export namespace Prisma {
     students?: StudentOrderByRelationAggregateInput
     departmentHead?: UsersOrderByWithRelationInput
     staffMembers?: UsersOrderByRelationAggregateInput
-    admitionExame?: AdmitionExameRegistrationOrderByRelationAggregateInput
     offeredCourses?: OfferedCourseOrderByRelationAggregateInput
     _relevance?: AcademicDepartmentOrderByRelevanceInput
   }
@@ -35239,7 +38802,6 @@ export namespace Prisma {
     students?: StudentListRelationFilter
     departmentHead?: XOR<UsersNullableScalarRelationFilter, UsersWhereInput> | null
     staffMembers?: UsersListRelationFilter
-    admitionExame?: AdmitionExameRegistrationListRelationFilter
     offeredCourses?: OfferedCourseListRelationFilter
   }, "id" | "departmentHeadId">
 
@@ -35273,6 +38835,7 @@ export namespace Prisma {
     NOT?: StudentWhereInput | StudentWhereInput[]
     id?: StringFilter<"Student"> | string
     studentId?: StringFilter<"Student"> | string
+    studentType?: EnumStudentTypeFilter<"Student"> | $Enums.StudentType
     firstName?: StringFilter<"Student"> | string
     middleName?: StringNullableFilter<"Student"> | string | null
     lastName?: StringFilter<"Student"> | string
@@ -35305,11 +38868,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkListRelationFilter
     studentSemesterPayments?: StudentSemesterPaymentListRelationFilter
     studentAcademicInfos?: StudentAcademicInfoListRelationFilter
+    StudentCarriedCourse?: StudentCarriedCourseListRelationFilter
   }
 
   export type StudentOrderByWithRelationInput = {
     id?: SortOrder
     studentId?: SortOrder
+    studentType?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrderInput | SortOrder
     lastName?: SortOrder
@@ -35342,6 +38907,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkOrderByRelationAggregateInput
     studentSemesterPayments?: StudentSemesterPaymentOrderByRelationAggregateInput
     studentAcademicInfos?: StudentAcademicInfoOrderByRelationAggregateInput
+    StudentCarriedCourse?: StudentCarriedCourseOrderByRelationAggregateInput
     _relevance?: StudentOrderByRelevanceInput
   }
 
@@ -35352,6 +38918,7 @@ export namespace Prisma {
     AND?: StudentWhereInput | StudentWhereInput[]
     OR?: StudentWhereInput[]
     NOT?: StudentWhereInput | StudentWhereInput[]
+    studentType?: EnumStudentTypeFilter<"Student"> | $Enums.StudentType
     firstName?: StringFilter<"Student"> | string
     middleName?: StringNullableFilter<"Student"> | string | null
     lastName?: StringFilter<"Student"> | string
@@ -35383,11 +38950,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkListRelationFilter
     studentSemesterPayments?: StudentSemesterPaymentListRelationFilter
     studentAcademicInfos?: StudentAcademicInfoListRelationFilter
+    StudentCarriedCourse?: StudentCarriedCourseListRelationFilter
   }, "id" | "studentId" | "admissionRegistrationId">
 
   export type StudentOrderByWithAggregationInput = {
     id?: SortOrder
     studentId?: SortOrder
+    studentType?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrderInput | SortOrder
     lastName?: SortOrder
@@ -35421,6 +38990,7 @@ export namespace Prisma {
     NOT?: StudentScalarWhereWithAggregatesInput | StudentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Student"> | string
     studentId?: StringWithAggregatesFilter<"Student"> | string
+    studentType?: EnumStudentTypeWithAggregatesFilter<"Student"> | $Enums.StudentType
     firstName?: StringWithAggregatesFilter<"Student"> | string
     middleName?: StringNullableWithAggregatesFilter<"Student"> | string | null
     lastName?: StringWithAggregatesFilter<"Student"> | string
@@ -35970,9 +39540,9 @@ export namespace Prisma {
     email?: StringFilter<"AdmitionExameRegistration"> | string
     createdAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     updateAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
-    departmentId?: StringFilter<"AdmitionExameRegistration"> | string
+    academicFalcultyId?: StringFilter<"AdmitionExameRegistration"> | string
     fase?: XOR<ExameFaseScalarRelationFilter, ExameFaseWhereInput>
-    department?: XOR<AcademicDepartmentScalarRelationFilter, AcademicDepartmentWhereInput>
+    academicFalculty?: XOR<AcademicFacultyScalarRelationFilter, AcademicFacultyWhereInput>
     Student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
   }
 
@@ -35993,9 +39563,9 @@ export namespace Prisma {
     email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    departmentId?: SortOrder
+    academicFalcultyId?: SortOrder
     fase?: ExameFaseOrderByWithRelationInput
-    department?: AcademicDepartmentOrderByWithRelationInput
+    academicFalculty?: AcademicFacultyOrderByWithRelationInput
     Student?: StudentOrderByWithRelationInput
     _relevance?: AdmitionExameRegistrationOrderByRelevanceInput
   }
@@ -36020,9 +39590,9 @@ export namespace Prisma {
     email?: StringFilter<"AdmitionExameRegistration"> | string
     createdAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
     updateAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
-    departmentId?: StringFilter<"AdmitionExameRegistration"> | string
+    academicFalcultyId?: StringFilter<"AdmitionExameRegistration"> | string
     fase?: XOR<ExameFaseScalarRelationFilter, ExameFaseWhereInput>
-    department?: XOR<AcademicDepartmentScalarRelationFilter, AcademicDepartmentWhereInput>
+    academicFalculty?: XOR<AcademicFacultyScalarRelationFilter, AcademicFacultyWhereInput>
     Student?: XOR<StudentNullableScalarRelationFilter, StudentWhereInput> | null
   }, "id" | "applicantName">
 
@@ -36043,7 +39613,7 @@ export namespace Prisma {
     email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    departmentId?: SortOrder
+    academicFalcultyId?: SortOrder
     _count?: AdmitionExameRegistrationCountOrderByAggregateInput
     _avg?: AdmitionExameRegistrationAvgOrderByAggregateInput
     _max?: AdmitionExameRegistrationMaxOrderByAggregateInput
@@ -36071,7 +39641,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
     createdAt?: DateTimeWithAggregatesFilter<"AdmitionExameRegistration"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"AdmitionExameRegistration"> | Date | string
-    departmentId?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
+    academicFalcultyId?: StringWithAggregatesFilter<"AdmitionExameRegistration"> | string
   }
 
   export type AdmitionExamePriceWhereInput = {
@@ -36921,6 +40491,85 @@ export namespace Prisma {
     credits?: IntWithAggregatesFilter<"CourseDiscipline"> | number
   }
 
+  export type StudentCarriedCourseWhereInput = {
+    AND?: StudentCarriedCourseWhereInput | StudentCarriedCourseWhereInput[]
+    OR?: StudentCarriedCourseWhereInput[]
+    NOT?: StudentCarriedCourseWhereInput | StudentCarriedCourseWhereInput[]
+    id?: StringFilter<"StudentCarriedCourse"> | string
+    studentId?: StringFilter<"StudentCarriedCourse"> | string
+    disciplineId?: StringFilter<"StudentCarriedCourse"> | string
+    semesterId?: StringFilter<"StudentCarriedCourse"> | string
+    shift?: EnumShiftFilter<"StudentCarriedCourse"> | $Enums.Shift
+    price?: IntFilter<"StudentCarriedCourse"> | number
+    status?: EnumCarriedCourseStatusFilter<"StudentCarriedCourse"> | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFilter<"StudentCarriedCourse"> | Date | string
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
+    semester?: XOR<AcademicSemesterScalarRelationFilter, AcademicSemesterWhereInput>
+  }
+
+  export type StudentCarriedCourseOrderByWithRelationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    disciplineId?: SortOrder
+    semesterId?: SortOrder
+    shift?: SortOrder
+    price?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    student?: StudentOrderByWithRelationInput
+    discipline?: DisciplineOrderByWithRelationInput
+    semester?: AcademicSemesterOrderByWithRelationInput
+    _relevance?: StudentCarriedCourseOrderByRelevanceInput
+  }
+
+  export type StudentCarriedCourseWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: StudentCarriedCourseWhereInput | StudentCarriedCourseWhereInput[]
+    OR?: StudentCarriedCourseWhereInput[]
+    NOT?: StudentCarriedCourseWhereInput | StudentCarriedCourseWhereInput[]
+    studentId?: StringFilter<"StudentCarriedCourse"> | string
+    disciplineId?: StringFilter<"StudentCarriedCourse"> | string
+    semesterId?: StringFilter<"StudentCarriedCourse"> | string
+    shift?: EnumShiftFilter<"StudentCarriedCourse"> | $Enums.Shift
+    price?: IntFilter<"StudentCarriedCourse"> | number
+    status?: EnumCarriedCourseStatusFilter<"StudentCarriedCourse"> | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFilter<"StudentCarriedCourse"> | Date | string
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
+    semester?: XOR<AcademicSemesterScalarRelationFilter, AcademicSemesterWhereInput>
+  }, "id">
+
+  export type StudentCarriedCourseOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    disciplineId?: SortOrder
+    semesterId?: SortOrder
+    shift?: SortOrder
+    price?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    _count?: StudentCarriedCourseCountOrderByAggregateInput
+    _avg?: StudentCarriedCourseAvgOrderByAggregateInput
+    _max?: StudentCarriedCourseMaxOrderByAggregateInput
+    _min?: StudentCarriedCourseMinOrderByAggregateInput
+    _sum?: StudentCarriedCourseSumOrderByAggregateInput
+  }
+
+  export type StudentCarriedCourseScalarWhereWithAggregatesInput = {
+    AND?: StudentCarriedCourseScalarWhereWithAggregatesInput | StudentCarriedCourseScalarWhereWithAggregatesInput[]
+    OR?: StudentCarriedCourseScalarWhereWithAggregatesInput[]
+    NOT?: StudentCarriedCourseScalarWhereWithAggregatesInput | StudentCarriedCourseScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"StudentCarriedCourse"> | string
+    studentId?: StringWithAggregatesFilter<"StudentCarriedCourse"> | string
+    disciplineId?: StringWithAggregatesFilter<"StudentCarriedCourse"> | string
+    semesterId?: StringWithAggregatesFilter<"StudentCarriedCourse"> | string
+    shift?: EnumShiftWithAggregatesFilter<"StudentCarriedCourse"> | $Enums.Shift
+    price?: IntWithAggregatesFilter<"StudentCarriedCourse"> | number
+    status?: EnumCarriedCourseStatusWithAggregatesFilter<"StudentCarriedCourse"> | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeWithAggregatesFilter<"StudentCarriedCourse"> | Date | string
+  }
+
   export type CoursePricingWhereInput = {
     AND?: CoursePricingWhereInput | CoursePricingWhereInput[]
     OR?: CoursePricingWhereInput[]
@@ -36992,6 +40641,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Discipline"> | Date | string
     updatedAt?: DateTimeFilter<"Discipline"> | Date | string
     courseDisciplines?: CourseDisciplineListRelationFilter
+    StudentCarriedCourse?: StudentCarriedCourseListRelationFilter
   }
 
   export type DisciplineOrderByWithRelationInput = {
@@ -37004,6 +40654,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     courseDisciplines?: CourseDisciplineOrderByRelationAggregateInput
+    StudentCarriedCourse?: StudentCarriedCourseOrderByRelationAggregateInput
     _relevance?: DisciplineOrderByRelevanceInput
   }
 
@@ -37020,6 +40671,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Discipline"> | Date | string
     updatedAt?: DateTimeFilter<"Discipline"> | Date | string
     courseDisciplines?: CourseDisciplineListRelationFilter
+    StudentCarriedCourse?: StudentCarriedCourseListRelationFilter
   }, "id" | "code">
 
   export type DisciplineOrderByWithAggregationInput = {
@@ -37057,38 +40709,34 @@ export namespace Prisma {
     OR?: StudentSemesterPaymentWhereInput[]
     NOT?: StudentSemesterPaymentWhereInput | StudentSemesterPaymentWhereInput[]
     id?: StringFilter<"StudentSemesterPayment"> | string
-    paymentRecipt?: StringNullableFilter<"StudentSemesterPayment"> | string | null
+    paymentId?: StringFilter<"StudentSemesterPayment"> | string
     totalPayment?: IntFilter<"StudentSemesterPayment"> | number
     baseAmount?: IntFilter<"StudentSemesterPayment"> | number
     lateFee?: IntFilter<"StudentSemesterPayment"> | number
-    aprovedPayment?: BoolFilter<"StudentSemesterPayment"> | boolean
-    paymentType?: EnumPAYMENTTYPEFilter<"StudentSemesterPayment"> | $Enums.PAYMENTTYPE
-    paymentStatus?: EnumPaymentStatusNullableFilter<"StudentSemesterPayment"> | $Enums.PaymentStatus | null
     paymentMonth?: IntFilter<"StudentSemesterPayment"> | number
     paymentYear?: IntFilter<"StudentSemesterPayment"> | number
     createdAt?: DateTimeFilter<"StudentSemesterPayment"> | Date | string
     updatedAt?: DateTimeFilter<"StudentSemesterPayment"> | Date | string
     studentId?: StringFilter<"StudentSemesterPayment"> | string
     academicSemesterId?: StringFilter<"StudentSemesterPayment"> | string
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     academicSemester?: XOR<AcademicSemesterScalarRelationFilter, AcademicSemesterWhereInput>
   }
 
   export type StudentSemesterPaymentOrderByWithRelationInput = {
     id?: SortOrder
-    paymentRecipt?: SortOrderInput | SortOrder
+    paymentId?: SortOrder
     totalPayment?: SortOrder
     baseAmount?: SortOrder
     lateFee?: SortOrder
-    aprovedPayment?: SortOrder
-    paymentType?: SortOrder
-    paymentStatus?: SortOrderInput | SortOrder
     paymentMonth?: SortOrder
     paymentYear?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     studentId?: SortOrder
     academicSemesterId?: SortOrder
+    payment?: PaymentOrderByWithRelationInput
     student?: StudentOrderByWithRelationInput
     academicSemester?: AcademicSemesterOrderByWithRelationInput
     _relevance?: StudentSemesterPaymentOrderByRelevanceInput
@@ -37099,32 +40747,27 @@ export namespace Prisma {
     AND?: StudentSemesterPaymentWhereInput | StudentSemesterPaymentWhereInput[]
     OR?: StudentSemesterPaymentWhereInput[]
     NOT?: StudentSemesterPaymentWhereInput | StudentSemesterPaymentWhereInput[]
-    paymentRecipt?: StringNullableFilter<"StudentSemesterPayment"> | string | null
+    paymentId?: StringFilter<"StudentSemesterPayment"> | string
     totalPayment?: IntFilter<"StudentSemesterPayment"> | number
     baseAmount?: IntFilter<"StudentSemesterPayment"> | number
     lateFee?: IntFilter<"StudentSemesterPayment"> | number
-    aprovedPayment?: BoolFilter<"StudentSemesterPayment"> | boolean
-    paymentType?: EnumPAYMENTTYPEFilter<"StudentSemesterPayment"> | $Enums.PAYMENTTYPE
-    paymentStatus?: EnumPaymentStatusNullableFilter<"StudentSemesterPayment"> | $Enums.PaymentStatus | null
     paymentMonth?: IntFilter<"StudentSemesterPayment"> | number
     paymentYear?: IntFilter<"StudentSemesterPayment"> | number
     createdAt?: DateTimeFilter<"StudentSemesterPayment"> | Date | string
     updatedAt?: DateTimeFilter<"StudentSemesterPayment"> | Date | string
     studentId?: StringFilter<"StudentSemesterPayment"> | string
     academicSemesterId?: StringFilter<"StudentSemesterPayment"> | string
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     academicSemester?: XOR<AcademicSemesterScalarRelationFilter, AcademicSemesterWhereInput>
   }, "id">
 
   export type StudentSemesterPaymentOrderByWithAggregationInput = {
     id?: SortOrder
-    paymentRecipt?: SortOrderInput | SortOrder
+    paymentId?: SortOrder
     totalPayment?: SortOrder
     baseAmount?: SortOrder
     lateFee?: SortOrder
-    aprovedPayment?: SortOrder
-    paymentType?: SortOrder
-    paymentStatus?: SortOrderInput | SortOrder
     paymentMonth?: SortOrder
     paymentYear?: SortOrder
     createdAt?: SortOrder
@@ -37143,13 +40786,10 @@ export namespace Prisma {
     OR?: StudentSemesterPaymentScalarWhereWithAggregatesInput[]
     NOT?: StudentSemesterPaymentScalarWhereWithAggregatesInput | StudentSemesterPaymentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"StudentSemesterPayment"> | string
-    paymentRecipt?: StringNullableWithAggregatesFilter<"StudentSemesterPayment"> | string | null
+    paymentId?: StringWithAggregatesFilter<"StudentSemesterPayment"> | string
     totalPayment?: IntWithAggregatesFilter<"StudentSemesterPayment"> | number
     baseAmount?: IntWithAggregatesFilter<"StudentSemesterPayment"> | number
     lateFee?: IntWithAggregatesFilter<"StudentSemesterPayment"> | number
-    aprovedPayment?: BoolWithAggregatesFilter<"StudentSemesterPayment"> | boolean
-    paymentType?: EnumPAYMENTTYPEWithAggregatesFilter<"StudentSemesterPayment"> | $Enums.PAYMENTTYPE
-    paymentStatus?: EnumPaymentStatusNullableWithAggregatesFilter<"StudentSemesterPayment"> | $Enums.PaymentStatus | null
     paymentMonth?: IntWithAggregatesFilter<"StudentSemesterPayment"> | number
     paymentYear?: IntWithAggregatesFilter<"StudentSemesterPayment"> | number
     createdAt?: DateTimeWithAggregatesFilter<"StudentSemesterPayment"> | Date | string
@@ -37294,6 +40934,155 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Events"> | Date | string
   }
 
+  export type PaymentWhereInput = {
+    AND?: PaymentWhereInput | PaymentWhereInput[]
+    OR?: PaymentWhereInput[]
+    NOT?: PaymentWhereInput | PaymentWhereInput[]
+    id?: StringFilter<"Payment"> | string
+    paymentRecipt?: StringNullableFilter<"Payment"> | string | null
+    totalAmount?: IntFilter<"Payment"> | number
+    approved?: BoolFilter<"Payment"> | boolean
+    paymentType?: EnumPAYMENTTYPEFilter<"Payment"> | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFilter<"Payment"> | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFilter<"Payment"> | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentListRelationFilter
+    PaymentReference?: PaymentReferenceListRelationFilter
+  }
+
+  export type PaymentOrderByWithRelationInput = {
+    id?: SortOrder
+    paymentRecipt?: SortOrderInput | SortOrder
+    totalAmount?: SortOrder
+    approved?: SortOrder
+    paymentType?: SortOrder
+    status?: SortOrder
+    method?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    StudentSemesterPayment?: StudentSemesterPaymentOrderByRelationAggregateInput
+    PaymentReference?: PaymentReferenceOrderByRelationAggregateInput
+    _relevance?: PaymentOrderByRelevanceInput
+  }
+
+  export type PaymentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PaymentWhereInput | PaymentWhereInput[]
+    OR?: PaymentWhereInput[]
+    NOT?: PaymentWhereInput | PaymentWhereInput[]
+    paymentRecipt?: StringNullableFilter<"Payment"> | string | null
+    totalAmount?: IntFilter<"Payment"> | number
+    approved?: BoolFilter<"Payment"> | boolean
+    paymentType?: EnumPAYMENTTYPEFilter<"Payment"> | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFilter<"Payment"> | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFilter<"Payment"> | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentListRelationFilter
+    PaymentReference?: PaymentReferenceListRelationFilter
+  }, "id">
+
+  export type PaymentOrderByWithAggregationInput = {
+    id?: SortOrder
+    paymentRecipt?: SortOrderInput | SortOrder
+    totalAmount?: SortOrder
+    approved?: SortOrder
+    paymentType?: SortOrder
+    status?: SortOrder
+    method?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PaymentCountOrderByAggregateInput
+    _avg?: PaymentAvgOrderByAggregateInput
+    _max?: PaymentMaxOrderByAggregateInput
+    _min?: PaymentMinOrderByAggregateInput
+    _sum?: PaymentSumOrderByAggregateInput
+  }
+
+  export type PaymentScalarWhereWithAggregatesInput = {
+    AND?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
+    OR?: PaymentScalarWhereWithAggregatesInput[]
+    NOT?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Payment"> | string
+    paymentRecipt?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    totalAmount?: IntWithAggregatesFilter<"Payment"> | number
+    approved?: BoolWithAggregatesFilter<"Payment"> | boolean
+    paymentType?: EnumPAYMENTTYPEWithAggregatesFilter<"Payment"> | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSWithAggregatesFilter<"Payment"> | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODWithAggregatesFilter<"Payment"> | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
+  }
+
+  export type PaymentReferenceWhereInput = {
+    AND?: PaymentReferenceWhereInput | PaymentReferenceWhereInput[]
+    OR?: PaymentReferenceWhereInput[]
+    NOT?: PaymentReferenceWhereInput | PaymentReferenceWhereInput[]
+    id?: StringFilter<"PaymentReference"> | string
+    reference?: StringFilter<"PaymentReference"> | string
+    code?: IntFilter<"PaymentReference"> | number
+    message?: StringFilter<"PaymentReference"> | string
+    paymentId?: StringFilter<"PaymentReference"> | string
+    createdAt?: DateTimeFilter<"PaymentReference"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentReference"> | Date | string
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
+  }
+
+  export type PaymentReferenceOrderByWithRelationInput = {
+    id?: SortOrder
+    reference?: SortOrder
+    code?: SortOrder
+    message?: SortOrder
+    paymentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    payment?: PaymentOrderByWithRelationInput
+    _relevance?: PaymentReferenceOrderByRelevanceInput
+  }
+
+  export type PaymentReferenceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PaymentReferenceWhereInput | PaymentReferenceWhereInput[]
+    OR?: PaymentReferenceWhereInput[]
+    NOT?: PaymentReferenceWhereInput | PaymentReferenceWhereInput[]
+    reference?: StringFilter<"PaymentReference"> | string
+    code?: IntFilter<"PaymentReference"> | number
+    message?: StringFilter<"PaymentReference"> | string
+    paymentId?: StringFilter<"PaymentReference"> | string
+    createdAt?: DateTimeFilter<"PaymentReference"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentReference"> | Date | string
+    payment?: XOR<PaymentScalarRelationFilter, PaymentWhereInput>
+  }, "id">
+
+  export type PaymentReferenceOrderByWithAggregationInput = {
+    id?: SortOrder
+    reference?: SortOrder
+    code?: SortOrder
+    message?: SortOrder
+    paymentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PaymentReferenceCountOrderByAggregateInput
+    _avg?: PaymentReferenceAvgOrderByAggregateInput
+    _max?: PaymentReferenceMaxOrderByAggregateInput
+    _min?: PaymentReferenceMinOrderByAggregateInput
+    _sum?: PaymentReferenceSumOrderByAggregateInput
+  }
+
+  export type PaymentReferenceScalarWhereWithAggregatesInput = {
+    AND?: PaymentReferenceScalarWhereWithAggregatesInput | PaymentReferenceScalarWhereWithAggregatesInput[]
+    OR?: PaymentReferenceScalarWhereWithAggregatesInput[]
+    NOT?: PaymentReferenceScalarWhereWithAggregatesInput | PaymentReferenceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PaymentReference"> | string
+    reference?: StringWithAggregatesFilter<"PaymentReference"> | string
+    code?: IntWithAggregatesFilter<"PaymentReference"> | number
+    message?: StringWithAggregatesFilter<"PaymentReference"> | string
+    paymentId?: StringWithAggregatesFilter<"PaymentReference"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PaymentReference"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PaymentReference"> | Date | string
+  }
+
   export type UsersCreateInput = {
     id?: string
     name: string
@@ -37395,6 +41184,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUncheckedCreateInput = {
@@ -37413,6 +41203,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUpdateInput = {
@@ -37431,6 +41222,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterUncheckedUpdateInput = {
@@ -37449,6 +41241,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterCreateManyInput = {
@@ -37495,6 +41288,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -37507,6 +41301,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -37519,6 +41314,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -37531,6 +41327,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -37567,7 +41364,6 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
     departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
     staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -37582,7 +41378,6 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -37597,7 +41392,6 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
     departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -37612,7 +41406,6 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -37644,6 +41437,7 @@ export namespace Prisma {
   export type StudentCreateInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -37672,11 +41466,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -37705,11 +41501,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -37738,11 +41536,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -37771,11 +41571,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentCreateManyInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -37803,6 +41605,7 @@ export namespace Prisma {
   export type StudentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -37826,6 +41629,7 @@ export namespace Prisma {
   export type StudentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -38393,7 +42197,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updateAt?: Date | string
     fase: ExameFaseCreateNestedOneWithoutRegistrationsInput
-    department: AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput
+    academicFalculty: AcademicFacultyCreateNestedOneWithoutAdmitionExameInput
     Student?: StudentCreateNestedOneWithoutAdmissionRegistrationInput
   }
 
@@ -38414,7 +42218,7 @@ export namespace Prisma {
     email: string
     createdAt?: Date | string
     updateAt?: Date | string
-    departmentId: string
+    academicFalcultyId: string
     Student?: StudentUncheckedCreateNestedOneWithoutAdmissionRegistrationInput
   }
 
@@ -38435,7 +42239,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fase?: ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput
-    department?: AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput
+    academicFalculty?: AcademicFacultyUpdateOneRequiredWithoutAdmitionExameNestedInput
     Student?: StudentUpdateOneWithoutAdmissionRegistrationNestedInput
   }
 
@@ -38456,7 +42260,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    departmentId?: StringFieldUpdateOperationsInput | string
+    academicFalcultyId?: StringFieldUpdateOperationsInput | string
     Student?: StudentUncheckedUpdateOneWithoutAdmissionRegistrationNestedInput
   }
 
@@ -38477,7 +42281,7 @@ export namespace Prisma {
     email: string
     createdAt?: Date | string
     updateAt?: Date | string
-    departmentId: string
+    academicFalcultyId: string
   }
 
   export type AdmitionExameRegistrationUpdateManyMutationInput = {
@@ -38515,7 +42319,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    departmentId?: StringFieldUpdateOperationsInput | string
+    academicFalcultyId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AdmitionExamePriceCreateInput = {
@@ -39342,6 +43146,80 @@ export namespace Prisma {
     credits?: IntFieldUpdateOperationsInput | number
   }
 
+  export type StudentCarriedCourseCreateInput = {
+    id?: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+    student: StudentCreateNestedOneWithoutStudentCarriedCourseInput
+    discipline: DisciplineCreateNestedOneWithoutStudentCarriedCourseInput
+    semester: AcademicSemesterCreateNestedOneWithoutStudentCarriedCourseInput
+  }
+
+  export type StudentCarriedCourseUncheckedCreateInput = {
+    id?: string
+    studentId: string
+    disciplineId: string
+    semesterId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+  }
+
+  export type StudentCarriedCourseUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+    discipline?: DisciplineUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+    semester?: AcademicSemesterUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    disciplineId?: StringFieldUpdateOperationsInput | string
+    semesterId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCarriedCourseCreateManyInput = {
+    id?: string
+    studentId: string
+    disciplineId: string
+    semesterId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+  }
+
+  export type StudentCarriedCourseUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    disciplineId?: StringFieldUpdateOperationsInput | string
+    semesterId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CoursePricingCreateInput = {
     id?: string
     price: number
@@ -39407,6 +43285,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineCreateNestedManyWithoutDisciplineInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutDisciplineInput
   }
 
   export type DisciplineUncheckedCreateInput = {
@@ -39419,6 +43298,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutDisciplineInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutDisciplineInput
   }
 
   export type DisciplineUpdateInput = {
@@ -39431,6 +43311,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUpdateManyWithoutDisciplineNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutDisciplineNestedInput
   }
 
   export type DisciplineUncheckedUpdateInput = {
@@ -39443,6 +43324,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutDisciplineNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutDisciplineNestedInput
   }
 
   export type DisciplineCreateManyInput = {
@@ -39480,30 +43362,24 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCreateInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    payment: PaymentCreateNestedOneWithoutStudentSemesterPaymentInput
     student: StudentCreateNestedOneWithoutStudentSemesterPaymentsInput
     academicSemester: AcademicSemesterCreateNestedOneWithoutStudentSemesterPaymentsInput
   }
 
   export type StudentSemesterPaymentUncheckedCreateInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    paymentId: string
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
@@ -39514,30 +43390,24 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment?: PaymentUpdateOneRequiredWithoutStudentSemesterPaymentNestedInput
     student?: StudentUpdateOneRequiredWithoutStudentSemesterPaymentsNestedInput
     academicSemester?: AcademicSemesterUpdateOneRequiredWithoutStudentSemesterPaymentsNestedInput
   }
 
   export type StudentSemesterPaymentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: StringFieldUpdateOperationsInput | string
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39548,13 +43418,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCreateManyInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    paymentId: string
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
@@ -39565,13 +43432,9 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39580,13 +43443,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: StringFieldUpdateOperationsInput | string
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39737,6 +43597,167 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     location?: DateTimeFieldUpdateOperationsInput | Date | string
     mandatory?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentCreateInput = {
+    id?: string
+    paymentRecipt?: string | null
+    totalAmount?: number
+    approved?: boolean
+    paymentType?: $Enums.PAYMENTTYPE
+    status?: $Enums.PAYMENTSTATUS
+    method?: $Enums.PAYMENTMETHOD
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentCreateNestedManyWithoutPaymentInput
+    PaymentReference?: PaymentReferenceCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentUncheckedCreateInput = {
+    id?: string
+    paymentRecipt?: string | null
+    totalAmount?: number
+    approved?: boolean
+    paymentType?: $Enums.PAYMENTTYPE
+    status?: $Enums.PAYMENTSTATUS
+    method?: $Enums.PAYMENTMETHOD
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutPaymentInput
+    PaymentReference?: PaymentReferenceUncheckedCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentUpdateManyWithoutPaymentNestedInput
+    PaymentReference?: PaymentReferenceUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type PaymentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentUncheckedUpdateManyWithoutPaymentNestedInput
+    PaymentReference?: PaymentReferenceUncheckedUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type PaymentCreateManyInput = {
+    id?: string
+    paymentRecipt?: string | null
+    totalAmount?: number
+    approved?: boolean
+    paymentType?: $Enums.PAYMENTTYPE
+    status?: $Enums.PAYMENTSTATUS
+    method?: $Enums.PAYMENTMETHOD
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentReferenceCreateInput = {
+    id?: string
+    reference: string
+    code: number
+    message: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    payment: PaymentCreateNestedOneWithoutPaymentReferenceInput
+  }
+
+  export type PaymentReferenceUncheckedCreateInput = {
+    id?: string
+    reference: string
+    code: number
+    message: string
+    paymentId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentReferenceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reference?: StringFieldUpdateOperationsInput | string
+    code?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment?: PaymentUpdateOneRequiredWithoutPaymentReferenceNestedInput
+  }
+
+  export type PaymentReferenceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reference?: StringFieldUpdateOperationsInput | string
+    code?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentReferenceCreateManyInput = {
+    id?: string
+    reference: string
+    code: number
+    message: string
+    paymentId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentReferenceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reference?: StringFieldUpdateOperationsInput | string
+    code?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentReferenceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reference?: StringFieldUpdateOperationsInput | string
+    code?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39949,6 +43970,12 @@ export namespace Prisma {
     none?: StudentSemesterPaymentWhereInput
   }
 
+  export type StudentCarriedCourseListRelationFilter = {
+    every?: StudentCarriedCourseWhereInput
+    some?: StudentCarriedCourseWhereInput
+    none?: StudentCarriedCourseWhereInput
+  }
+
   export type CourseDisciplineOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -39970,6 +43997,10 @@ export namespace Prisma {
   }
 
   export type StudentSemesterPaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StudentCarriedCourseOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -40029,6 +44060,12 @@ export namespace Prisma {
     none?: FacultyWhereInput
   }
 
+  export type AdmitionExameRegistrationListRelationFilter = {
+    every?: AdmitionExameRegistrationWhereInput
+    some?: AdmitionExameRegistrationWhereInput
+    none?: AdmitionExameRegistrationWhereInput
+  }
+
   export type AdmitionExamePriceListRelationFilter = {
     every?: AdmitionExamePriceWhereInput
     some?: AdmitionExamePriceWhereInput
@@ -40042,6 +44079,10 @@ export namespace Prisma {
   }
 
   export type FacultyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AdmitionExameRegistrationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -40102,12 +44143,6 @@ export namespace Prisma {
     none?: UsersWhereInput
   }
 
-  export type AdmitionExameRegistrationListRelationFilter = {
-    every?: AdmitionExameRegistrationWhereInput
-    some?: AdmitionExameRegistrationWhereInput
-    none?: AdmitionExameRegistrationWhereInput
-  }
-
   export type OfferedCourseListRelationFilter = {
     every?: OfferedCourseWhereInput
     some?: OfferedCourseWhereInput
@@ -40119,10 +44154,6 @@ export namespace Prisma {
   }
 
   export type UsersOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AdmitionExameRegistrationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -40161,6 +44192,13 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     departmentHeadId?: SortOrder
+  }
+
+  export type EnumStudentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.StudentType | EnumStudentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.StudentType[]
+    notIn?: $Enums.StudentType[]
+    not?: NestedEnumStudentTypeFilter<$PrismaModel> | $Enums.StudentType
   }
 
   export type EnumShiftFilter<$PrismaModel = never> = {
@@ -40231,6 +44269,7 @@ export namespace Prisma {
   export type StudentCountOrderByAggregateInput = {
     id?: SortOrder
     studentId?: SortOrder
+    studentType?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrder
     lastName?: SortOrder
@@ -40258,6 +44297,7 @@ export namespace Prisma {
   export type StudentMaxOrderByAggregateInput = {
     id?: SortOrder
     studentId?: SortOrder
+    studentType?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrder
     lastName?: SortOrder
@@ -40285,6 +44325,7 @@ export namespace Prisma {
   export type StudentMinOrderByAggregateInput = {
     id?: SortOrder
     studentId?: SortOrder
+    studentType?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrder
     lastName?: SortOrder
@@ -40307,6 +44348,16 @@ export namespace Prisma {
     admissionRegistrationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumStudentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StudentType | EnumStudentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.StudentType[]
+    notIn?: $Enums.StudentType[]
+    not?: NestedEnumStudentTypeWithAggregatesFilter<$PrismaModel> | $Enums.StudentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStudentTypeFilter<$PrismaModel>
+    _max?: NestedEnumStudentTypeFilter<$PrismaModel>
   }
 
   export type EnumShiftWithAggregatesFilter<$PrismaModel = never> = {
@@ -40760,7 +44811,7 @@ export namespace Prisma {
     email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    departmentId?: SortOrder
+    academicFalcultyId?: SortOrder
   }
 
   export type AdmitionExameRegistrationAvgOrderByAggregateInput = {
@@ -40785,7 +44836,7 @@ export namespace Prisma {
     email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    departmentId?: SortOrder
+    academicFalcultyId?: SortOrder
   }
 
   export type AdmitionExameRegistrationMinOrderByAggregateInput = {
@@ -40805,7 +44856,7 @@ export namespace Prisma {
     email?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    departmentId?: SortOrder
+    academicFalcultyId?: SortOrder
   }
 
   export type AdmitionExameRegistrationSumOrderByAggregateInput = {
@@ -41546,6 +45597,70 @@ export namespace Prisma {
     credits?: SortOrder
   }
 
+  export type EnumCarriedCourseStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarriedCourseStatus | EnumCarriedCourseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CarriedCourseStatus[]
+    notIn?: $Enums.CarriedCourseStatus[]
+    not?: NestedEnumCarriedCourseStatusFilter<$PrismaModel> | $Enums.CarriedCourseStatus
+  }
+
+  export type StudentCarriedCourseOrderByRelevanceInput = {
+    fields: StudentCarriedCourseOrderByRelevanceFieldEnum | StudentCarriedCourseOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type StudentCarriedCourseCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    disciplineId?: SortOrder
+    semesterId?: SortOrder
+    shift?: SortOrder
+    price?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentCarriedCourseAvgOrderByAggregateInput = {
+    price?: SortOrder
+  }
+
+  export type StudentCarriedCourseMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    disciplineId?: SortOrder
+    semesterId?: SortOrder
+    shift?: SortOrder
+    price?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentCarriedCourseMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    disciplineId?: SortOrder
+    semesterId?: SortOrder
+    shift?: SortOrder
+    price?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentCarriedCourseSumOrderByAggregateInput = {
+    price?: SortOrder
+  }
+
+  export type EnumCarriedCourseStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarriedCourseStatus | EnumCarriedCourseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CarriedCourseStatus[]
+    notIn?: $Enums.CarriedCourseStatus[]
+    not?: NestedEnumCarriedCourseStatusWithAggregatesFilter<$PrismaModel> | $Enums.CarriedCourseStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCarriedCourseStatusFilter<$PrismaModel>
+    _max?: NestedEnumCarriedCourseStatusFilter<$PrismaModel>
+  }
+
   export type CoursePricingOrderByRelevanceInput = {
     fields: CoursePricingOrderByRelevanceFieldEnum | CoursePricingOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -41633,18 +45748,9 @@ export namespace Prisma {
     minimumGradeToDismiss?: SortOrder
   }
 
-  export type EnumPAYMENTTYPEFilter<$PrismaModel = never> = {
-    equals?: $Enums.PAYMENTTYPE | EnumPAYMENTTYPEFieldRefInput<$PrismaModel>
-    in?: $Enums.PAYMENTTYPE[]
-    notIn?: $Enums.PAYMENTTYPE[]
-    not?: NestedEnumPAYMENTTYPEFilter<$PrismaModel> | $Enums.PAYMENTTYPE
-  }
-
-  export type EnumPaymentStatusNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.PaymentStatus[] | null
-    notIn?: $Enums.PaymentStatus[] | null
-    not?: NestedEnumPaymentStatusNullableFilter<$PrismaModel> | $Enums.PaymentStatus | null
+  export type PaymentScalarRelationFilter = {
+    is?: PaymentWhereInput
+    isNot?: PaymentWhereInput
   }
 
   export type StudentSemesterPaymentOrderByRelevanceInput = {
@@ -41655,13 +45761,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCountOrderByAggregateInput = {
     id?: SortOrder
-    paymentRecipt?: SortOrder
+    paymentId?: SortOrder
     totalPayment?: SortOrder
     baseAmount?: SortOrder
     lateFee?: SortOrder
-    aprovedPayment?: SortOrder
-    paymentType?: SortOrder
-    paymentStatus?: SortOrder
     paymentMonth?: SortOrder
     paymentYear?: SortOrder
     createdAt?: SortOrder
@@ -41680,13 +45783,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentMaxOrderByAggregateInput = {
     id?: SortOrder
-    paymentRecipt?: SortOrder
+    paymentId?: SortOrder
     totalPayment?: SortOrder
     baseAmount?: SortOrder
     lateFee?: SortOrder
-    aprovedPayment?: SortOrder
-    paymentType?: SortOrder
-    paymentStatus?: SortOrder
     paymentMonth?: SortOrder
     paymentYear?: SortOrder
     createdAt?: SortOrder
@@ -41697,13 +45797,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentMinOrderByAggregateInput = {
     id?: SortOrder
-    paymentRecipt?: SortOrder
+    paymentId?: SortOrder
     totalPayment?: SortOrder
     baseAmount?: SortOrder
     lateFee?: SortOrder
-    aprovedPayment?: SortOrder
-    paymentType?: SortOrder
-    paymentStatus?: SortOrder
     paymentMonth?: SortOrder
     paymentYear?: SortOrder
     createdAt?: SortOrder
@@ -41718,26 +45815,6 @@ export namespace Prisma {
     lateFee?: SortOrder
     paymentMonth?: SortOrder
     paymentYear?: SortOrder
-  }
-
-  export type EnumPAYMENTTYPEWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.PAYMENTTYPE | EnumPAYMENTTYPEFieldRefInput<$PrismaModel>
-    in?: $Enums.PAYMENTTYPE[]
-    notIn?: $Enums.PAYMENTTYPE[]
-    not?: NestedEnumPAYMENTTYPEWithAggregatesFilter<$PrismaModel> | $Enums.PAYMENTTYPE
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPAYMENTTYPEFilter<$PrismaModel>
-    _max?: NestedEnumPAYMENTTYPEFilter<$PrismaModel>
-  }
-
-  export type EnumPaymentStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.PaymentStatus[] | null
-    notIn?: $Enums.PaymentStatus[] | null
-    not?: NestedEnumPaymentStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumPaymentStatusNullableFilter<$PrismaModel>
-    _max?: NestedEnumPaymentStatusNullableFilter<$PrismaModel>
   }
 
   export type StudentAcademicInfoOrderByRelevanceInput = {
@@ -41823,6 +45900,161 @@ export namespace Prisma {
     mandatory?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumPAYMENTTYPEFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTTYPE | EnumPAYMENTTYPEFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTTYPE[]
+    notIn?: $Enums.PAYMENTTYPE[]
+    not?: NestedEnumPAYMENTTYPEFilter<$PrismaModel> | $Enums.PAYMENTTYPE
+  }
+
+  export type EnumPAYMENTSTATUSFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTSTATUS | EnumPAYMENTSTATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTSTATUS[]
+    notIn?: $Enums.PAYMENTSTATUS[]
+    not?: NestedEnumPAYMENTSTATUSFilter<$PrismaModel> | $Enums.PAYMENTSTATUS
+  }
+
+  export type EnumPAYMENTMETHODFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTMETHOD | EnumPAYMENTMETHODFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTMETHOD[]
+    notIn?: $Enums.PAYMENTMETHOD[]
+    not?: NestedEnumPAYMENTMETHODFilter<$PrismaModel> | $Enums.PAYMENTMETHOD
+  }
+
+  export type PaymentReferenceListRelationFilter = {
+    every?: PaymentReferenceWhereInput
+    some?: PaymentReferenceWhereInput
+    none?: PaymentReferenceWhereInput
+  }
+
+  export type PaymentReferenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PaymentOrderByRelevanceInput = {
+    fields: PaymentOrderByRelevanceFieldEnum | PaymentOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type PaymentCountOrderByAggregateInput = {
+    id?: SortOrder
+    paymentRecipt?: SortOrder
+    totalAmount?: SortOrder
+    approved?: SortOrder
+    paymentType?: SortOrder
+    status?: SortOrder
+    method?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentAvgOrderByAggregateInput = {
+    totalAmount?: SortOrder
+  }
+
+  export type PaymentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    paymentRecipt?: SortOrder
+    totalAmount?: SortOrder
+    approved?: SortOrder
+    paymentType?: SortOrder
+    status?: SortOrder
+    method?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentMinOrderByAggregateInput = {
+    id?: SortOrder
+    paymentRecipt?: SortOrder
+    totalAmount?: SortOrder
+    approved?: SortOrder
+    paymentType?: SortOrder
+    status?: SortOrder
+    method?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentSumOrderByAggregateInput = {
+    totalAmount?: SortOrder
+  }
+
+  export type EnumPAYMENTTYPEWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTTYPE | EnumPAYMENTTYPEFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTTYPE[]
+    notIn?: $Enums.PAYMENTTYPE[]
+    not?: NestedEnumPAYMENTTYPEWithAggregatesFilter<$PrismaModel> | $Enums.PAYMENTTYPE
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPAYMENTTYPEFilter<$PrismaModel>
+    _max?: NestedEnumPAYMENTTYPEFilter<$PrismaModel>
+  }
+
+  export type EnumPAYMENTSTATUSWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTSTATUS | EnumPAYMENTSTATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTSTATUS[]
+    notIn?: $Enums.PAYMENTSTATUS[]
+    not?: NestedEnumPAYMENTSTATUSWithAggregatesFilter<$PrismaModel> | $Enums.PAYMENTSTATUS
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPAYMENTSTATUSFilter<$PrismaModel>
+    _max?: NestedEnumPAYMENTSTATUSFilter<$PrismaModel>
+  }
+
+  export type EnumPAYMENTMETHODWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTMETHOD | EnumPAYMENTMETHODFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTMETHOD[]
+    notIn?: $Enums.PAYMENTMETHOD[]
+    not?: NestedEnumPAYMENTMETHODWithAggregatesFilter<$PrismaModel> | $Enums.PAYMENTMETHOD
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPAYMENTMETHODFilter<$PrismaModel>
+    _max?: NestedEnumPAYMENTMETHODFilter<$PrismaModel>
+  }
+
+  export type PaymentReferenceOrderByRelevanceInput = {
+    fields: PaymentReferenceOrderByRelevanceFieldEnum | PaymentReferenceOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type PaymentReferenceCountOrderByAggregateInput = {
+    id?: SortOrder
+    reference?: SortOrder
+    code?: SortOrder
+    message?: SortOrder
+    paymentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentReferenceAvgOrderByAggregateInput = {
+    code?: SortOrder
+  }
+
+  export type PaymentReferenceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    reference?: SortOrder
+    code?: SortOrder
+    message?: SortOrder
+    paymentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentReferenceMinOrderByAggregateInput = {
+    id?: SortOrder
+    reference?: SortOrder
+    code?: SortOrder
+    message?: SortOrder
+    paymentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentReferenceSumOrderByAggregateInput = {
+    code?: SortOrder
   }
 
   export type AcademicDepartmentCreateNestedOneWithoutDepartmentHeadInput = {
@@ -41953,6 +46185,13 @@ export namespace Prisma {
     connect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
   }
 
+  export type StudentCarriedCourseCreateNestedManyWithoutSemesterInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutSemesterInput, StudentCarriedCourseUncheckedCreateWithoutSemesterInput> | StudentCarriedCourseCreateWithoutSemesterInput[] | StudentCarriedCourseUncheckedCreateWithoutSemesterInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutSemesterInput | StudentCarriedCourseCreateOrConnectWithoutSemesterInput[]
+    createMany?: StudentCarriedCourseCreateManySemesterInputEnvelope
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+  }
+
   export type CourseDisciplineUncheckedCreateNestedManyWithoutSemesterInput = {
     create?: XOR<CourseDisciplineCreateWithoutSemesterInput, CourseDisciplineUncheckedCreateWithoutSemesterInput> | CourseDisciplineCreateWithoutSemesterInput[] | CourseDisciplineUncheckedCreateWithoutSemesterInput[]
     connectOrCreate?: CourseDisciplineCreateOrConnectWithoutSemesterInput | CourseDisciplineCreateOrConnectWithoutSemesterInput[]
@@ -41993,6 +46232,13 @@ export namespace Prisma {
     connectOrCreate?: StudentSemesterPaymentCreateOrConnectWithoutAcademicSemesterInput | StudentSemesterPaymentCreateOrConnectWithoutAcademicSemesterInput[]
     createMany?: StudentSemesterPaymentCreateManyAcademicSemesterInputEnvelope
     connect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+  }
+
+  export type StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutSemesterInput, StudentCarriedCourseUncheckedCreateWithoutSemesterInput> | StudentCarriedCourseCreateWithoutSemesterInput[] | StudentCarriedCourseUncheckedCreateWithoutSemesterInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutSemesterInput | StudentCarriedCourseCreateOrConnectWithoutSemesterInput[]
+    createMany?: StudentCarriedCourseCreateManySemesterInputEnvelope
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -42083,6 +46329,20 @@ export namespace Prisma {
     deleteMany?: StudentSemesterPaymentScalarWhereInput | StudentSemesterPaymentScalarWhereInput[]
   }
 
+  export type StudentCarriedCourseUpdateManyWithoutSemesterNestedInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutSemesterInput, StudentCarriedCourseUncheckedCreateWithoutSemesterInput> | StudentCarriedCourseCreateWithoutSemesterInput[] | StudentCarriedCourseUncheckedCreateWithoutSemesterInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutSemesterInput | StudentCarriedCourseCreateOrConnectWithoutSemesterInput[]
+    upsert?: StudentCarriedCourseUpsertWithWhereUniqueWithoutSemesterInput | StudentCarriedCourseUpsertWithWhereUniqueWithoutSemesterInput[]
+    createMany?: StudentCarriedCourseCreateManySemesterInputEnvelope
+    set?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    disconnect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    delete?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    update?: StudentCarriedCourseUpdateWithWhereUniqueWithoutSemesterInput | StudentCarriedCourseUpdateWithWhereUniqueWithoutSemesterInput[]
+    updateMany?: StudentCarriedCourseUpdateManyWithWhereWithoutSemesterInput | StudentCarriedCourseUpdateManyWithWhereWithoutSemesterInput[]
+    deleteMany?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
+  }
+
   export type CourseDisciplineUncheckedUpdateManyWithoutSemesterNestedInput = {
     create?: XOR<CourseDisciplineCreateWithoutSemesterInput, CourseDisciplineUncheckedCreateWithoutSemesterInput> | CourseDisciplineCreateWithoutSemesterInput[] | CourseDisciplineUncheckedCreateWithoutSemesterInput[]
     connectOrCreate?: CourseDisciplineCreateOrConnectWithoutSemesterInput | CourseDisciplineCreateOrConnectWithoutSemesterInput[]
@@ -42167,6 +46427,20 @@ export namespace Prisma {
     deleteMany?: StudentSemesterPaymentScalarWhereInput | StudentSemesterPaymentScalarWhereInput[]
   }
 
+  export type StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutSemesterInput, StudentCarriedCourseUncheckedCreateWithoutSemesterInput> | StudentCarriedCourseCreateWithoutSemesterInput[] | StudentCarriedCourseUncheckedCreateWithoutSemesterInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutSemesterInput | StudentCarriedCourseCreateOrConnectWithoutSemesterInput[]
+    upsert?: StudentCarriedCourseUpsertWithWhereUniqueWithoutSemesterInput | StudentCarriedCourseUpsertWithWhereUniqueWithoutSemesterInput[]
+    createMany?: StudentCarriedCourseCreateManySemesterInputEnvelope
+    set?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    disconnect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    delete?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    update?: StudentCarriedCourseUpdateWithWhereUniqueWithoutSemesterInput | StudentCarriedCourseUpdateWithWhereUniqueWithoutSemesterInput[]
+    updateMany?: StudentCarriedCourseUpdateManyWithWhereWithoutSemesterInput | StudentCarriedCourseUpdateManyWithWhereWithoutSemesterInput[]
+    deleteMany?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
+  }
+
   export type AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput = {
     create?: XOR<AcademicDepartmentCreateWithoutAcademicFacultyInput, AcademicDepartmentUncheckedCreateWithoutAcademicFacultyInput> | AcademicDepartmentCreateWithoutAcademicFacultyInput[] | AcademicDepartmentUncheckedCreateWithoutAcademicFacultyInput[]
     connectOrCreate?: AcademicDepartmentCreateOrConnectWithoutAcademicFacultyInput | AcademicDepartmentCreateOrConnectWithoutAcademicFacultyInput[]
@@ -42186,6 +46460,13 @@ export namespace Prisma {
     connectOrCreate?: StudentCreateOrConnectWithoutAcademicFacultyInput | StudentCreateOrConnectWithoutAcademicFacultyInput[]
     createMany?: StudentCreateManyAcademicFacultyInputEnvelope
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+  }
+
+  export type AdmitionExameRegistrationCreateNestedManyWithoutAcademicFalcultyInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput> | AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput[] | AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput | AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput[]
+    createMany?: AdmitionExameRegistrationCreateManyAcademicFalcultyInputEnvelope
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
   }
 
   export type AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput = {
@@ -42221,6 +46502,13 @@ export namespace Prisma {
     connectOrCreate?: StudentCreateOrConnectWithoutAcademicFacultyInput | StudentCreateOrConnectWithoutAcademicFacultyInput[]
     createMany?: StudentCreateManyAcademicFacultyInputEnvelope
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+  }
+
+  export type AdmitionExameRegistrationUncheckedCreateNestedManyWithoutAcademicFalcultyInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput> | AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput[] | AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput | AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput[]
+    createMany?: AdmitionExameRegistrationCreateManyAcademicFalcultyInputEnvelope
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
   }
 
   export type AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput = {
@@ -42277,6 +46565,20 @@ export namespace Prisma {
     update?: StudentUpdateWithWhereUniqueWithoutAcademicFacultyInput | StudentUpdateWithWhereUniqueWithoutAcademicFacultyInput[]
     updateMany?: StudentUpdateManyWithWhereWithoutAcademicFacultyInput | StudentUpdateManyWithWhereWithoutAcademicFacultyInput[]
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
+  }
+
+  export type AdmitionExameRegistrationUpdateManyWithoutAcademicFalcultyNestedInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput> | AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput[] | AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput | AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput[]
+    upsert?: AdmitionExameRegistrationUpsertWithWhereUniqueWithoutAcademicFalcultyInput | AdmitionExameRegistrationUpsertWithWhereUniqueWithoutAcademicFalcultyInput[]
+    createMany?: AdmitionExameRegistrationCreateManyAcademicFalcultyInputEnvelope
+    set?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    disconnect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    delete?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    update?: AdmitionExameRegistrationUpdateWithWhereUniqueWithoutAcademicFalcultyInput | AdmitionExameRegistrationUpdateWithWhereUniqueWithoutAcademicFalcultyInput[]
+    updateMany?: AdmitionExameRegistrationUpdateManyWithWhereWithoutAcademicFalcultyInput | AdmitionExameRegistrationUpdateManyWithWhereWithoutAcademicFalcultyInput[]
+    deleteMany?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
   }
 
   export type AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput = {
@@ -42349,6 +46651,20 @@ export namespace Prisma {
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
+  export type AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyNestedInput = {
+    create?: XOR<AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput> | AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput[] | AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput[]
+    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput | AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput[]
+    upsert?: AdmitionExameRegistrationUpsertWithWhereUniqueWithoutAcademicFalcultyInput | AdmitionExameRegistrationUpsertWithWhereUniqueWithoutAcademicFalcultyInput[]
+    createMany?: AdmitionExameRegistrationCreateManyAcademicFalcultyInputEnvelope
+    set?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    disconnect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    delete?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
+    update?: AdmitionExameRegistrationUpdateWithWhereUniqueWithoutAcademicFalcultyInput | AdmitionExameRegistrationUpdateWithWhereUniqueWithoutAcademicFalcultyInput[]
+    updateMany?: AdmitionExameRegistrationUpdateManyWithWhereWithoutAcademicFalcultyInput | AdmitionExameRegistrationUpdateManyWithWhereWithoutAcademicFalcultyInput[]
+    deleteMany?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
+  }
+
   export type AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput = {
     create?: XOR<AdmitionExamePriceCreateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput> | AdmitionExamePriceCreateWithoutAcademicFacultyInput[] | AdmitionExamePriceUncheckedCreateWithoutAcademicFacultyInput[]
     connectOrCreate?: AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput | AdmitionExamePriceCreateOrConnectWithoutAcademicFacultyInput[]
@@ -42416,13 +46732,6 @@ export namespace Prisma {
     connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
   }
 
-  export type AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput = {
-    create?: XOR<AdmitionExameRegistrationCreateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput> | AdmitionExameRegistrationCreateWithoutDepartmentInput[] | AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput[]
-    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput | AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput[]
-    createMany?: AdmitionExameRegistrationCreateManyDepartmentInputEnvelope
-    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-  }
-
   export type OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput = {
     create?: XOR<OfferedCourseCreateWithoutAcademicDepartmentInput, OfferedCourseUncheckedCreateWithoutAcademicDepartmentInput> | OfferedCourseCreateWithoutAcademicDepartmentInput[] | OfferedCourseUncheckedCreateWithoutAcademicDepartmentInput[]
     connectOrCreate?: OfferedCourseCreateOrConnectWithoutAcademicDepartmentInput | OfferedCourseCreateOrConnectWithoutAcademicDepartmentInput[]
@@ -42455,13 +46764,6 @@ export namespace Prisma {
     create?: XOR<UsersCreateWithoutStaffDepartmentsInput, UsersUncheckedCreateWithoutStaffDepartmentsInput> | UsersCreateWithoutStaffDepartmentsInput[] | UsersUncheckedCreateWithoutStaffDepartmentsInput[]
     connectOrCreate?: UsersCreateOrConnectWithoutStaffDepartmentsInput | UsersCreateOrConnectWithoutStaffDepartmentsInput[]
     connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
-  }
-
-  export type AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput = {
-    create?: XOR<AdmitionExameRegistrationCreateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput> | AdmitionExameRegistrationCreateWithoutDepartmentInput[] | AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput[]
-    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput | AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput[]
-    createMany?: AdmitionExameRegistrationCreateManyDepartmentInputEnvelope
-    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
   }
 
   export type OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput = {
@@ -42544,20 +46846,6 @@ export namespace Prisma {
     deleteMany?: UsersScalarWhereInput | UsersScalarWhereInput[]
   }
 
-  export type AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput = {
-    create?: XOR<AdmitionExameRegistrationCreateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput> | AdmitionExameRegistrationCreateWithoutDepartmentInput[] | AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput[]
-    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput | AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput[]
-    upsert?: AdmitionExameRegistrationUpsertWithWhereUniqueWithoutDepartmentInput | AdmitionExameRegistrationUpsertWithWhereUniqueWithoutDepartmentInput[]
-    createMany?: AdmitionExameRegistrationCreateManyDepartmentInputEnvelope
-    set?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    disconnect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    delete?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    update?: AdmitionExameRegistrationUpdateWithWhereUniqueWithoutDepartmentInput | AdmitionExameRegistrationUpdateWithWhereUniqueWithoutDepartmentInput[]
-    updateMany?: AdmitionExameRegistrationUpdateManyWithWhereWithoutDepartmentInput | AdmitionExameRegistrationUpdateManyWithWhereWithoutDepartmentInput[]
-    deleteMany?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
-  }
-
   export type OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput = {
     create?: XOR<OfferedCourseCreateWithoutAcademicDepartmentInput, OfferedCourseUncheckedCreateWithoutAcademicDepartmentInput> | OfferedCourseCreateWithoutAcademicDepartmentInput[] | OfferedCourseUncheckedCreateWithoutAcademicDepartmentInput[]
     connectOrCreate?: OfferedCourseCreateOrConnectWithoutAcademicDepartmentInput | OfferedCourseCreateOrConnectWithoutAcademicDepartmentInput[]
@@ -42625,20 +46913,6 @@ export namespace Prisma {
     update?: UsersUpdateWithWhereUniqueWithoutStaffDepartmentsInput | UsersUpdateWithWhereUniqueWithoutStaffDepartmentsInput[]
     updateMany?: UsersUpdateManyWithWhereWithoutStaffDepartmentsInput | UsersUpdateManyWithWhereWithoutStaffDepartmentsInput[]
     deleteMany?: UsersScalarWhereInput | UsersScalarWhereInput[]
-  }
-
-  export type AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput = {
-    create?: XOR<AdmitionExameRegistrationCreateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput> | AdmitionExameRegistrationCreateWithoutDepartmentInput[] | AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput[]
-    connectOrCreate?: AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput | AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput[]
-    upsert?: AdmitionExameRegistrationUpsertWithWhereUniqueWithoutDepartmentInput | AdmitionExameRegistrationUpsertWithWhereUniqueWithoutDepartmentInput[]
-    createMany?: AdmitionExameRegistrationCreateManyDepartmentInputEnvelope
-    set?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    disconnect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    delete?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    connect?: AdmitionExameRegistrationWhereUniqueInput | AdmitionExameRegistrationWhereUniqueInput[]
-    update?: AdmitionExameRegistrationUpdateWithWhereUniqueWithoutDepartmentInput | AdmitionExameRegistrationUpdateWithWhereUniqueWithoutDepartmentInput[]
-    updateMany?: AdmitionExameRegistrationUpdateManyWithWhereWithoutDepartmentInput | AdmitionExameRegistrationUpdateManyWithWhereWithoutDepartmentInput[]
-    deleteMany?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
   }
 
   export type OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput = {
@@ -42721,6 +46995,13 @@ export namespace Prisma {
     connect?: StudentAcademicInfoWhereUniqueInput | StudentAcademicInfoWhereUniqueInput[]
   }
 
+  export type StudentCarriedCourseCreateNestedManyWithoutStudentInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutStudentInput, StudentCarriedCourseUncheckedCreateWithoutStudentInput> | StudentCarriedCourseCreateWithoutStudentInput[] | StudentCarriedCourseUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutStudentInput | StudentCarriedCourseCreateOrConnectWithoutStudentInput[]
+    createMany?: StudentCarriedCourseCreateManyStudentInputEnvelope
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+  }
+
   export type StudentSemesterRegistrationUncheckedCreateNestedManyWithoutStudentInput = {
     create?: XOR<StudentSemesterRegistrationCreateWithoutStudentInput, StudentSemesterRegistrationUncheckedCreateWithoutStudentInput> | StudentSemesterRegistrationCreateWithoutStudentInput[] | StudentSemesterRegistrationUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: StudentSemesterRegistrationCreateOrConnectWithoutStudentInput | StudentSemesterRegistrationCreateOrConnectWithoutStudentInput[]
@@ -42761,6 +47042,17 @@ export namespace Prisma {
     connectOrCreate?: StudentAcademicInfoCreateOrConnectWithoutStudentInput | StudentAcademicInfoCreateOrConnectWithoutStudentInput[]
     createMany?: StudentAcademicInfoCreateManyStudentInputEnvelope
     connect?: StudentAcademicInfoWhereUniqueInput | StudentAcademicInfoWhereUniqueInput[]
+  }
+
+  export type StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutStudentInput, StudentCarriedCourseUncheckedCreateWithoutStudentInput> | StudentCarriedCourseCreateWithoutStudentInput[] | StudentCarriedCourseUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutStudentInput | StudentCarriedCourseCreateOrConnectWithoutStudentInput[]
+    createMany?: StudentCarriedCourseCreateManyStudentInputEnvelope
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+  }
+
+  export type EnumStudentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.StudentType
   }
 
   export type EnumShiftFieldUpdateOperationsInput = {
@@ -42889,6 +47181,20 @@ export namespace Prisma {
     deleteMany?: StudentAcademicInfoScalarWhereInput | StudentAcademicInfoScalarWhereInput[]
   }
 
+  export type StudentCarriedCourseUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutStudentInput, StudentCarriedCourseUncheckedCreateWithoutStudentInput> | StudentCarriedCourseCreateWithoutStudentInput[] | StudentCarriedCourseUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutStudentInput | StudentCarriedCourseCreateOrConnectWithoutStudentInput[]
+    upsert?: StudentCarriedCourseUpsertWithWhereUniqueWithoutStudentInput | StudentCarriedCourseUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: StudentCarriedCourseCreateManyStudentInputEnvelope
+    set?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    disconnect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    delete?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    update?: StudentCarriedCourseUpdateWithWhereUniqueWithoutStudentInput | StudentCarriedCourseUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: StudentCarriedCourseUpdateManyWithWhereWithoutStudentInput | StudentCarriedCourseUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
+  }
+
   export type StudentSemesterRegistrationUncheckedUpdateManyWithoutStudentNestedInput = {
     create?: XOR<StudentSemesterRegistrationCreateWithoutStudentInput, StudentSemesterRegistrationUncheckedCreateWithoutStudentInput> | StudentSemesterRegistrationCreateWithoutStudentInput[] | StudentSemesterRegistrationUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: StudentSemesterRegistrationCreateOrConnectWithoutStudentInput | StudentSemesterRegistrationCreateOrConnectWithoutStudentInput[]
@@ -42971,6 +47277,20 @@ export namespace Prisma {
     update?: StudentAcademicInfoUpdateWithWhereUniqueWithoutStudentInput | StudentAcademicInfoUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: StudentAcademicInfoUpdateManyWithWhereWithoutStudentInput | StudentAcademicInfoUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: StudentAcademicInfoScalarWhereInput | StudentAcademicInfoScalarWhereInput[]
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutStudentInput, StudentCarriedCourseUncheckedCreateWithoutStudentInput> | StudentCarriedCourseCreateWithoutStudentInput[] | StudentCarriedCourseUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutStudentInput | StudentCarriedCourseCreateOrConnectWithoutStudentInput[]
+    upsert?: StudentCarriedCourseUpsertWithWhereUniqueWithoutStudentInput | StudentCarriedCourseUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: StudentCarriedCourseCreateManyStudentInputEnvelope
+    set?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    disconnect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    delete?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    update?: StudentCarriedCourseUpdateWithWhereUniqueWithoutStudentInput | StudentCarriedCourseUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: StudentCarriedCourseUpdateManyWithWhereWithoutStudentInput | StudentCarriedCourseUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
   }
 
   export type CourseFacultyCreateNestedManyWithoutFacultyInput = {
@@ -43779,10 +48099,10 @@ export namespace Prisma {
     connect?: ExameFaseWhereUniqueInput
   }
 
-  export type AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput = {
-    create?: XOR<AcademicDepartmentCreateWithoutAdmitionExameInput, AcademicDepartmentUncheckedCreateWithoutAdmitionExameInput>
-    connectOrCreate?: AcademicDepartmentCreateOrConnectWithoutAdmitionExameInput
-    connect?: AcademicDepartmentWhereUniqueInput
+  export type AcademicFacultyCreateNestedOneWithoutAdmitionExameInput = {
+    create?: XOR<AcademicFacultyCreateWithoutAdmitionExameInput, AcademicFacultyUncheckedCreateWithoutAdmitionExameInput>
+    connectOrCreate?: AcademicFacultyCreateOrConnectWithoutAdmitionExameInput
+    connect?: AcademicFacultyWhereUniqueInput
   }
 
   export type StudentCreateNestedOneWithoutAdmissionRegistrationInput = {
@@ -43821,12 +48141,12 @@ export namespace Prisma {
     update?: XOR<XOR<ExameFaseUpdateToOneWithWhereWithoutRegistrationsInput, ExameFaseUpdateWithoutRegistrationsInput>, ExameFaseUncheckedUpdateWithoutRegistrationsInput>
   }
 
-  export type AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput = {
-    create?: XOR<AcademicDepartmentCreateWithoutAdmitionExameInput, AcademicDepartmentUncheckedCreateWithoutAdmitionExameInput>
-    connectOrCreate?: AcademicDepartmentCreateOrConnectWithoutAdmitionExameInput
-    upsert?: AcademicDepartmentUpsertWithoutAdmitionExameInput
-    connect?: AcademicDepartmentWhereUniqueInput
-    update?: XOR<XOR<AcademicDepartmentUpdateToOneWithWhereWithoutAdmitionExameInput, AcademicDepartmentUpdateWithoutAdmitionExameInput>, AcademicDepartmentUncheckedUpdateWithoutAdmitionExameInput>
+  export type AcademicFacultyUpdateOneRequiredWithoutAdmitionExameNestedInput = {
+    create?: XOR<AcademicFacultyCreateWithoutAdmitionExameInput, AcademicFacultyUncheckedCreateWithoutAdmitionExameInput>
+    connectOrCreate?: AcademicFacultyCreateOrConnectWithoutAdmitionExameInput
+    upsert?: AcademicFacultyUpsertWithoutAdmitionExameInput
+    connect?: AcademicFacultyWhereUniqueInput
+    update?: XOR<XOR<AcademicFacultyUpdateToOneWithWhereWithoutAdmitionExameInput, AcademicFacultyUpdateWithoutAdmitionExameInput>, AcademicFacultyUncheckedUpdateWithoutAdmitionExameInput>
   }
 
   export type StudentUpdateOneWithoutAdmissionRegistrationNestedInput = {
@@ -44493,6 +48813,52 @@ export namespace Prisma {
     update?: XOR<XOR<AcademicSemesterUpdateToOneWithWhereWithoutCourseDisciplinesInput, AcademicSemesterUpdateWithoutCourseDisciplinesInput>, AcademicSemesterUncheckedUpdateWithoutCourseDisciplinesInput>
   }
 
+  export type StudentCreateNestedOneWithoutStudentCarriedCourseInput = {
+    create?: XOR<StudentCreateWithoutStudentCarriedCourseInput, StudentUncheckedCreateWithoutStudentCarriedCourseInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutStudentCarriedCourseInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type DisciplineCreateNestedOneWithoutStudentCarriedCourseInput = {
+    create?: XOR<DisciplineCreateWithoutStudentCarriedCourseInput, DisciplineUncheckedCreateWithoutStudentCarriedCourseInput>
+    connectOrCreate?: DisciplineCreateOrConnectWithoutStudentCarriedCourseInput
+    connect?: DisciplineWhereUniqueInput
+  }
+
+  export type AcademicSemesterCreateNestedOneWithoutStudentCarriedCourseInput = {
+    create?: XOR<AcademicSemesterCreateWithoutStudentCarriedCourseInput, AcademicSemesterUncheckedCreateWithoutStudentCarriedCourseInput>
+    connectOrCreate?: AcademicSemesterCreateOrConnectWithoutStudentCarriedCourseInput
+    connect?: AcademicSemesterWhereUniqueInput
+  }
+
+  export type EnumCarriedCourseStatusFieldUpdateOperationsInput = {
+    set?: $Enums.CarriedCourseStatus
+  }
+
+  export type StudentUpdateOneRequiredWithoutStudentCarriedCourseNestedInput = {
+    create?: XOR<StudentCreateWithoutStudentCarriedCourseInput, StudentUncheckedCreateWithoutStudentCarriedCourseInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutStudentCarriedCourseInput
+    upsert?: StudentUpsertWithoutStudentCarriedCourseInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutStudentCarriedCourseInput, StudentUpdateWithoutStudentCarriedCourseInput>, StudentUncheckedUpdateWithoutStudentCarriedCourseInput>
+  }
+
+  export type DisciplineUpdateOneRequiredWithoutStudentCarriedCourseNestedInput = {
+    create?: XOR<DisciplineCreateWithoutStudentCarriedCourseInput, DisciplineUncheckedCreateWithoutStudentCarriedCourseInput>
+    connectOrCreate?: DisciplineCreateOrConnectWithoutStudentCarriedCourseInput
+    upsert?: DisciplineUpsertWithoutStudentCarriedCourseInput
+    connect?: DisciplineWhereUniqueInput
+    update?: XOR<XOR<DisciplineUpdateToOneWithWhereWithoutStudentCarriedCourseInput, DisciplineUpdateWithoutStudentCarriedCourseInput>, DisciplineUncheckedUpdateWithoutStudentCarriedCourseInput>
+  }
+
+  export type AcademicSemesterUpdateOneRequiredWithoutStudentCarriedCourseNestedInput = {
+    create?: XOR<AcademicSemesterCreateWithoutStudentCarriedCourseInput, AcademicSemesterUncheckedCreateWithoutStudentCarriedCourseInput>
+    connectOrCreate?: AcademicSemesterCreateOrConnectWithoutStudentCarriedCourseInput
+    upsert?: AcademicSemesterUpsertWithoutStudentCarriedCourseInput
+    connect?: AcademicSemesterWhereUniqueInput
+    update?: XOR<XOR<AcademicSemesterUpdateToOneWithWhereWithoutStudentCarriedCourseInput, AcademicSemesterUpdateWithoutStudentCarriedCourseInput>, AcademicSemesterUncheckedUpdateWithoutStudentCarriedCourseInput>
+  }
+
   export type CourseCreateNestedOneWithoutCoursePricingInput = {
     create?: XOR<CourseCreateWithoutCoursePricingInput, CourseUncheckedCreateWithoutCoursePricingInput>
     connectOrCreate?: CourseCreateOrConnectWithoutCoursePricingInput
@@ -44514,11 +48880,25 @@ export namespace Prisma {
     connect?: CourseDisciplineWhereUniqueInput | CourseDisciplineWhereUniqueInput[]
   }
 
+  export type StudentCarriedCourseCreateNestedManyWithoutDisciplineInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutDisciplineInput, StudentCarriedCourseUncheckedCreateWithoutDisciplineInput> | StudentCarriedCourseCreateWithoutDisciplineInput[] | StudentCarriedCourseUncheckedCreateWithoutDisciplineInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutDisciplineInput | StudentCarriedCourseCreateOrConnectWithoutDisciplineInput[]
+    createMany?: StudentCarriedCourseCreateManyDisciplineInputEnvelope
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+  }
+
   export type CourseDisciplineUncheckedCreateNestedManyWithoutDisciplineInput = {
     create?: XOR<CourseDisciplineCreateWithoutDisciplineInput, CourseDisciplineUncheckedCreateWithoutDisciplineInput> | CourseDisciplineCreateWithoutDisciplineInput[] | CourseDisciplineUncheckedCreateWithoutDisciplineInput[]
     connectOrCreate?: CourseDisciplineCreateOrConnectWithoutDisciplineInput | CourseDisciplineCreateOrConnectWithoutDisciplineInput[]
     createMany?: CourseDisciplineCreateManyDisciplineInputEnvelope
     connect?: CourseDisciplineWhereUniqueInput | CourseDisciplineWhereUniqueInput[]
+  }
+
+  export type StudentCarriedCourseUncheckedCreateNestedManyWithoutDisciplineInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutDisciplineInput, StudentCarriedCourseUncheckedCreateWithoutDisciplineInput> | StudentCarriedCourseCreateWithoutDisciplineInput[] | StudentCarriedCourseUncheckedCreateWithoutDisciplineInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutDisciplineInput | StudentCarriedCourseCreateOrConnectWithoutDisciplineInput[]
+    createMany?: StudentCarriedCourseCreateManyDisciplineInputEnvelope
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
   }
 
   export type CourseDisciplineUpdateManyWithoutDisciplineNestedInput = {
@@ -44535,6 +48915,20 @@ export namespace Prisma {
     deleteMany?: CourseDisciplineScalarWhereInput | CourseDisciplineScalarWhereInput[]
   }
 
+  export type StudentCarriedCourseUpdateManyWithoutDisciplineNestedInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutDisciplineInput, StudentCarriedCourseUncheckedCreateWithoutDisciplineInput> | StudentCarriedCourseCreateWithoutDisciplineInput[] | StudentCarriedCourseUncheckedCreateWithoutDisciplineInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutDisciplineInput | StudentCarriedCourseCreateOrConnectWithoutDisciplineInput[]
+    upsert?: StudentCarriedCourseUpsertWithWhereUniqueWithoutDisciplineInput | StudentCarriedCourseUpsertWithWhereUniqueWithoutDisciplineInput[]
+    createMany?: StudentCarriedCourseCreateManyDisciplineInputEnvelope
+    set?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    disconnect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    delete?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    update?: StudentCarriedCourseUpdateWithWhereUniqueWithoutDisciplineInput | StudentCarriedCourseUpdateWithWhereUniqueWithoutDisciplineInput[]
+    updateMany?: StudentCarriedCourseUpdateManyWithWhereWithoutDisciplineInput | StudentCarriedCourseUpdateManyWithWhereWithoutDisciplineInput[]
+    deleteMany?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
+  }
+
   export type CourseDisciplineUncheckedUpdateManyWithoutDisciplineNestedInput = {
     create?: XOR<CourseDisciplineCreateWithoutDisciplineInput, CourseDisciplineUncheckedCreateWithoutDisciplineInput> | CourseDisciplineCreateWithoutDisciplineInput[] | CourseDisciplineUncheckedCreateWithoutDisciplineInput[]
     connectOrCreate?: CourseDisciplineCreateOrConnectWithoutDisciplineInput | CourseDisciplineCreateOrConnectWithoutDisciplineInput[]
@@ -44549,6 +48943,26 @@ export namespace Prisma {
     deleteMany?: CourseDisciplineScalarWhereInput | CourseDisciplineScalarWhereInput[]
   }
 
+  export type StudentCarriedCourseUncheckedUpdateManyWithoutDisciplineNestedInput = {
+    create?: XOR<StudentCarriedCourseCreateWithoutDisciplineInput, StudentCarriedCourseUncheckedCreateWithoutDisciplineInput> | StudentCarriedCourseCreateWithoutDisciplineInput[] | StudentCarriedCourseUncheckedCreateWithoutDisciplineInput[]
+    connectOrCreate?: StudentCarriedCourseCreateOrConnectWithoutDisciplineInput | StudentCarriedCourseCreateOrConnectWithoutDisciplineInput[]
+    upsert?: StudentCarriedCourseUpsertWithWhereUniqueWithoutDisciplineInput | StudentCarriedCourseUpsertWithWhereUniqueWithoutDisciplineInput[]
+    createMany?: StudentCarriedCourseCreateManyDisciplineInputEnvelope
+    set?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    disconnect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    delete?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    connect?: StudentCarriedCourseWhereUniqueInput | StudentCarriedCourseWhereUniqueInput[]
+    update?: StudentCarriedCourseUpdateWithWhereUniqueWithoutDisciplineInput | StudentCarriedCourseUpdateWithWhereUniqueWithoutDisciplineInput[]
+    updateMany?: StudentCarriedCourseUpdateManyWithWhereWithoutDisciplineInput | StudentCarriedCourseUpdateManyWithWhereWithoutDisciplineInput[]
+    deleteMany?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
+  }
+
+  export type PaymentCreateNestedOneWithoutStudentSemesterPaymentInput = {
+    create?: XOR<PaymentCreateWithoutStudentSemesterPaymentInput, PaymentUncheckedCreateWithoutStudentSemesterPaymentInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutStudentSemesterPaymentInput
+    connect?: PaymentWhereUniqueInput
+  }
+
   export type StudentCreateNestedOneWithoutStudentSemesterPaymentsInput = {
     create?: XOR<StudentCreateWithoutStudentSemesterPaymentsInput, StudentUncheckedCreateWithoutStudentSemesterPaymentsInput>
     connectOrCreate?: StudentCreateOrConnectWithoutStudentSemesterPaymentsInput
@@ -44561,12 +48975,12 @@ export namespace Prisma {
     connect?: AcademicSemesterWhereUniqueInput
   }
 
-  export type EnumPAYMENTTYPEFieldUpdateOperationsInput = {
-    set?: $Enums.PAYMENTTYPE
-  }
-
-  export type NullableEnumPaymentStatusFieldUpdateOperationsInput = {
-    set?: $Enums.PaymentStatus | null
+  export type PaymentUpdateOneRequiredWithoutStudentSemesterPaymentNestedInput = {
+    create?: XOR<PaymentCreateWithoutStudentSemesterPaymentInput, PaymentUncheckedCreateWithoutStudentSemesterPaymentInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutStudentSemesterPaymentInput
+    upsert?: PaymentUpsertWithoutStudentSemesterPaymentInput
+    connect?: PaymentWhereUniqueInput
+    update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutStudentSemesterPaymentInput, PaymentUpdateWithoutStudentSemesterPaymentInput>, PaymentUncheckedUpdateWithoutStudentSemesterPaymentInput>
   }
 
   export type StudentUpdateOneRequiredWithoutStudentSemesterPaymentsNestedInput = {
@@ -44597,6 +49011,116 @@ export namespace Prisma {
     upsert?: StudentUpsertWithoutStudentAcademicInfosInput
     connect?: StudentWhereUniqueInput
     update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutStudentAcademicInfosInput, StudentUpdateWithoutStudentAcademicInfosInput>, StudentUncheckedUpdateWithoutStudentAcademicInfosInput>
+  }
+
+  export type StudentSemesterPaymentCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<StudentSemesterPaymentCreateWithoutPaymentInput, StudentSemesterPaymentUncheckedCreateWithoutPaymentInput> | StudentSemesterPaymentCreateWithoutPaymentInput[] | StudentSemesterPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: StudentSemesterPaymentCreateOrConnectWithoutPaymentInput | StudentSemesterPaymentCreateOrConnectWithoutPaymentInput[]
+    createMany?: StudentSemesterPaymentCreateManyPaymentInputEnvelope
+    connect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+  }
+
+  export type PaymentReferenceCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<PaymentReferenceCreateWithoutPaymentInput, PaymentReferenceUncheckedCreateWithoutPaymentInput> | PaymentReferenceCreateWithoutPaymentInput[] | PaymentReferenceUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: PaymentReferenceCreateOrConnectWithoutPaymentInput | PaymentReferenceCreateOrConnectWithoutPaymentInput[]
+    createMany?: PaymentReferenceCreateManyPaymentInputEnvelope
+    connect?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+  }
+
+  export type StudentSemesterPaymentUncheckedCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<StudentSemesterPaymentCreateWithoutPaymentInput, StudentSemesterPaymentUncheckedCreateWithoutPaymentInput> | StudentSemesterPaymentCreateWithoutPaymentInput[] | StudentSemesterPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: StudentSemesterPaymentCreateOrConnectWithoutPaymentInput | StudentSemesterPaymentCreateOrConnectWithoutPaymentInput[]
+    createMany?: StudentSemesterPaymentCreateManyPaymentInputEnvelope
+    connect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+  }
+
+  export type PaymentReferenceUncheckedCreateNestedManyWithoutPaymentInput = {
+    create?: XOR<PaymentReferenceCreateWithoutPaymentInput, PaymentReferenceUncheckedCreateWithoutPaymentInput> | PaymentReferenceCreateWithoutPaymentInput[] | PaymentReferenceUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: PaymentReferenceCreateOrConnectWithoutPaymentInput | PaymentReferenceCreateOrConnectWithoutPaymentInput[]
+    createMany?: PaymentReferenceCreateManyPaymentInputEnvelope
+    connect?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+  }
+
+  export type EnumPAYMENTTYPEFieldUpdateOperationsInput = {
+    set?: $Enums.PAYMENTTYPE
+  }
+
+  export type EnumPAYMENTSTATUSFieldUpdateOperationsInput = {
+    set?: $Enums.PAYMENTSTATUS
+  }
+
+  export type EnumPAYMENTMETHODFieldUpdateOperationsInput = {
+    set?: $Enums.PAYMENTMETHOD
+  }
+
+  export type StudentSemesterPaymentUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<StudentSemesterPaymentCreateWithoutPaymentInput, StudentSemesterPaymentUncheckedCreateWithoutPaymentInput> | StudentSemesterPaymentCreateWithoutPaymentInput[] | StudentSemesterPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: StudentSemesterPaymentCreateOrConnectWithoutPaymentInput | StudentSemesterPaymentCreateOrConnectWithoutPaymentInput[]
+    upsert?: StudentSemesterPaymentUpsertWithWhereUniqueWithoutPaymentInput | StudentSemesterPaymentUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: StudentSemesterPaymentCreateManyPaymentInputEnvelope
+    set?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    disconnect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    delete?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    connect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    update?: StudentSemesterPaymentUpdateWithWhereUniqueWithoutPaymentInput | StudentSemesterPaymentUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: StudentSemesterPaymentUpdateManyWithWhereWithoutPaymentInput | StudentSemesterPaymentUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: StudentSemesterPaymentScalarWhereInput | StudentSemesterPaymentScalarWhereInput[]
+  }
+
+  export type PaymentReferenceUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<PaymentReferenceCreateWithoutPaymentInput, PaymentReferenceUncheckedCreateWithoutPaymentInput> | PaymentReferenceCreateWithoutPaymentInput[] | PaymentReferenceUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: PaymentReferenceCreateOrConnectWithoutPaymentInput | PaymentReferenceCreateOrConnectWithoutPaymentInput[]
+    upsert?: PaymentReferenceUpsertWithWhereUniqueWithoutPaymentInput | PaymentReferenceUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: PaymentReferenceCreateManyPaymentInputEnvelope
+    set?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    disconnect?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    delete?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    connect?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    update?: PaymentReferenceUpdateWithWhereUniqueWithoutPaymentInput | PaymentReferenceUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: PaymentReferenceUpdateManyWithWhereWithoutPaymentInput | PaymentReferenceUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: PaymentReferenceScalarWhereInput | PaymentReferenceScalarWhereInput[]
+  }
+
+  export type StudentSemesterPaymentUncheckedUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<StudentSemesterPaymentCreateWithoutPaymentInput, StudentSemesterPaymentUncheckedCreateWithoutPaymentInput> | StudentSemesterPaymentCreateWithoutPaymentInput[] | StudentSemesterPaymentUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: StudentSemesterPaymentCreateOrConnectWithoutPaymentInput | StudentSemesterPaymentCreateOrConnectWithoutPaymentInput[]
+    upsert?: StudentSemesterPaymentUpsertWithWhereUniqueWithoutPaymentInput | StudentSemesterPaymentUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: StudentSemesterPaymentCreateManyPaymentInputEnvelope
+    set?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    disconnect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    delete?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    connect?: StudentSemesterPaymentWhereUniqueInput | StudentSemesterPaymentWhereUniqueInput[]
+    update?: StudentSemesterPaymentUpdateWithWhereUniqueWithoutPaymentInput | StudentSemesterPaymentUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: StudentSemesterPaymentUpdateManyWithWhereWithoutPaymentInput | StudentSemesterPaymentUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: StudentSemesterPaymentScalarWhereInput | StudentSemesterPaymentScalarWhereInput[]
+  }
+
+  export type PaymentReferenceUncheckedUpdateManyWithoutPaymentNestedInput = {
+    create?: XOR<PaymentReferenceCreateWithoutPaymentInput, PaymentReferenceUncheckedCreateWithoutPaymentInput> | PaymentReferenceCreateWithoutPaymentInput[] | PaymentReferenceUncheckedCreateWithoutPaymentInput[]
+    connectOrCreate?: PaymentReferenceCreateOrConnectWithoutPaymentInput | PaymentReferenceCreateOrConnectWithoutPaymentInput[]
+    upsert?: PaymentReferenceUpsertWithWhereUniqueWithoutPaymentInput | PaymentReferenceUpsertWithWhereUniqueWithoutPaymentInput[]
+    createMany?: PaymentReferenceCreateManyPaymentInputEnvelope
+    set?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    disconnect?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    delete?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    connect?: PaymentReferenceWhereUniqueInput | PaymentReferenceWhereUniqueInput[]
+    update?: PaymentReferenceUpdateWithWhereUniqueWithoutPaymentInput | PaymentReferenceUpdateWithWhereUniqueWithoutPaymentInput[]
+    updateMany?: PaymentReferenceUpdateManyWithWhereWithoutPaymentInput | PaymentReferenceUpdateManyWithWhereWithoutPaymentInput[]
+    deleteMany?: PaymentReferenceScalarWhereInput | PaymentReferenceScalarWhereInput[]
+  }
+
+  export type PaymentCreateNestedOneWithoutPaymentReferenceInput = {
+    create?: XOR<PaymentCreateWithoutPaymentReferenceInput, PaymentUncheckedCreateWithoutPaymentReferenceInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutPaymentReferenceInput
+    connect?: PaymentWhereUniqueInput
+  }
+
+  export type PaymentUpdateOneRequiredWithoutPaymentReferenceNestedInput = {
+    create?: XOR<PaymentCreateWithoutPaymentReferenceInput, PaymentUncheckedCreateWithoutPaymentReferenceInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutPaymentReferenceInput
+    upsert?: PaymentUpsertWithoutPaymentReferenceInput
+    connect?: PaymentWhereUniqueInput
+    update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutPaymentReferenceInput, PaymentUpdateWithoutPaymentReferenceInput>, PaymentUncheckedUpdateWithoutPaymentReferenceInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -44742,6 +49266,13 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedEnumStudentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.StudentType | EnumStudentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.StudentType[]
+    notIn?: $Enums.StudentType[]
+    not?: NestedEnumStudentTypeFilter<$PrismaModel> | $Enums.StudentType
+  }
+
   export type NestedEnumShiftFilter<$PrismaModel = never> = {
     equals?: $Enums.Shift | EnumShiftFieldRefInput<$PrismaModel>
     in?: $Enums.Shift[]
@@ -44754,6 +49285,16 @@ export namespace Prisma {
     in?: $Enums.YearLevel[]
     notIn?: $Enums.YearLevel[]
     not?: NestedEnumYearLevelFilter<$PrismaModel> | $Enums.YearLevel
+  }
+
+  export type NestedEnumStudentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StudentType | EnumStudentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.StudentType[]
+    notIn?: $Enums.StudentType[]
+    not?: NestedEnumStudentTypeWithAggregatesFilter<$PrismaModel> | $Enums.StudentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStudentTypeFilter<$PrismaModel>
+    _max?: NestedEnumStudentTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumShiftWithAggregatesFilter<$PrismaModel = never> = {
@@ -44983,6 +49524,23 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedEnumCarriedCourseStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarriedCourseStatus | EnumCarriedCourseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CarriedCourseStatus[]
+    notIn?: $Enums.CarriedCourseStatus[]
+    not?: NestedEnumCarriedCourseStatusFilter<$PrismaModel> | $Enums.CarriedCourseStatus
+  }
+
+  export type NestedEnumCarriedCourseStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarriedCourseStatus | EnumCarriedCourseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CarriedCourseStatus[]
+    notIn?: $Enums.CarriedCourseStatus[]
+    not?: NestedEnumCarriedCourseStatusWithAggregatesFilter<$PrismaModel> | $Enums.CarriedCourseStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCarriedCourseStatusFilter<$PrismaModel>
+    _max?: NestedEnumCarriedCourseStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumPAYMENTTYPEFilter<$PrismaModel = never> = {
     equals?: $Enums.PAYMENTTYPE | EnumPAYMENTTYPEFieldRefInput<$PrismaModel>
     in?: $Enums.PAYMENTTYPE[]
@@ -44990,11 +49548,18 @@ export namespace Prisma {
     not?: NestedEnumPAYMENTTYPEFilter<$PrismaModel> | $Enums.PAYMENTTYPE
   }
 
-  export type NestedEnumPaymentStatusNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.PaymentStatus[] | null
-    notIn?: $Enums.PaymentStatus[] | null
-    not?: NestedEnumPaymentStatusNullableFilter<$PrismaModel> | $Enums.PaymentStatus | null
+  export type NestedEnumPAYMENTSTATUSFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTSTATUS | EnumPAYMENTSTATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTSTATUS[]
+    notIn?: $Enums.PAYMENTSTATUS[]
+    not?: NestedEnumPAYMENTSTATUSFilter<$PrismaModel> | $Enums.PAYMENTSTATUS
+  }
+
+  export type NestedEnumPAYMENTMETHODFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTMETHOD | EnumPAYMENTMETHODFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTMETHOD[]
+    notIn?: $Enums.PAYMENTMETHOD[]
+    not?: NestedEnumPAYMENTMETHODFilter<$PrismaModel> | $Enums.PAYMENTMETHOD
   }
 
   export type NestedEnumPAYMENTTYPEWithAggregatesFilter<$PrismaModel = never> = {
@@ -45007,14 +49572,24 @@ export namespace Prisma {
     _max?: NestedEnumPAYMENTTYPEFilter<$PrismaModel>
   }
 
-  export type NestedEnumPaymentStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.PaymentStatus[] | null
-    notIn?: $Enums.PaymentStatus[] | null
-    not?: NestedEnumPaymentStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.PaymentStatus | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumPaymentStatusNullableFilter<$PrismaModel>
-    _max?: NestedEnumPaymentStatusNullableFilter<$PrismaModel>
+  export type NestedEnumPAYMENTSTATUSWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTSTATUS | EnumPAYMENTSTATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTSTATUS[]
+    notIn?: $Enums.PAYMENTSTATUS[]
+    not?: NestedEnumPAYMENTSTATUSWithAggregatesFilter<$PrismaModel> | $Enums.PAYMENTSTATUS
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPAYMENTSTATUSFilter<$PrismaModel>
+    _max?: NestedEnumPAYMENTSTATUSFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPAYMENTMETHODWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PAYMENTMETHOD | EnumPAYMENTMETHODFieldRefInput<$PrismaModel>
+    in?: $Enums.PAYMENTMETHOD[]
+    notIn?: $Enums.PAYMENTMETHOD[]
+    not?: NestedEnumPAYMENTMETHODWithAggregatesFilter<$PrismaModel> | $Enums.PAYMENTMETHOD
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPAYMENTMETHODFilter<$PrismaModel>
+    _max?: NestedEnumPAYMENTMETHODFilter<$PrismaModel>
   }
 
   export type AcademicDepartmentCreateWithoutDepartmentHeadInput = {
@@ -45027,7 +49602,6 @@ export namespace Prisma {
     courses?: CourseCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -45041,7 +49615,6 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -45060,7 +49633,6 @@ export namespace Prisma {
     courses?: CourseCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
     departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -45074,7 +49646,6 @@ export namespace Prisma {
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -45104,7 +49675,6 @@ export namespace Prisma {
     courses?: CourseUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -45118,7 +49688,6 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -45215,6 +49784,7 @@ export namespace Prisma {
   export type StudentCreateWithoutAcademicSemesterInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -45242,11 +49812,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAcademicSemesterInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -45274,6 +49846,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAcademicSemesterInput = {
@@ -45368,29 +49941,23 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCreateWithoutAcademicSemesterInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    payment: PaymentCreateNestedOneWithoutStudentSemesterPaymentInput
     student: StudentCreateNestedOneWithoutStudentSemesterPaymentsInput
   }
 
   export type StudentSemesterPaymentUncheckedCreateWithoutAcademicSemesterInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    paymentId: string
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
@@ -45405,6 +49972,36 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCreateManyAcademicSemesterInputEnvelope = {
     data: StudentSemesterPaymentCreateManyAcademicSemesterInput | StudentSemesterPaymentCreateManyAcademicSemesterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StudentCarriedCourseCreateWithoutSemesterInput = {
+    id?: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+    student: StudentCreateNestedOneWithoutStudentCarriedCourseInput
+    discipline: DisciplineCreateNestedOneWithoutStudentCarriedCourseInput
+  }
+
+  export type StudentCarriedCourseUncheckedCreateWithoutSemesterInput = {
+    id?: string
+    studentId: string
+    disciplineId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+  }
+
+  export type StudentCarriedCourseCreateOrConnectWithoutSemesterInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    create: XOR<StudentCarriedCourseCreateWithoutSemesterInput, StudentCarriedCourseUncheckedCreateWithoutSemesterInput>
+  }
+
+  export type StudentCarriedCourseCreateManySemesterInputEnvelope = {
+    data: StudentCarriedCourseCreateManySemesterInput | StudentCarriedCourseCreateManySemesterInput[]
     skipDuplicates?: boolean
   }
 
@@ -45486,6 +50083,7 @@ export namespace Prisma {
     NOT?: StudentScalarWhereInput | StudentScalarWhereInput[]
     id?: StringFilter<"Student"> | string
     studentId?: StringFilter<"Student"> | string
+    studentType?: EnumStudentTypeFilter<"Student"> | $Enums.StudentType
     firstName?: StringFilter<"Student"> | string
     middleName?: StringNullableFilter<"Student"> | string | null
     lastName?: StringFilter<"Student"> | string
@@ -45600,19 +50198,46 @@ export namespace Prisma {
     OR?: StudentSemesterPaymentScalarWhereInput[]
     NOT?: StudentSemesterPaymentScalarWhereInput | StudentSemesterPaymentScalarWhereInput[]
     id?: StringFilter<"StudentSemesterPayment"> | string
-    paymentRecipt?: StringNullableFilter<"StudentSemesterPayment"> | string | null
+    paymentId?: StringFilter<"StudentSemesterPayment"> | string
     totalPayment?: IntFilter<"StudentSemesterPayment"> | number
     baseAmount?: IntFilter<"StudentSemesterPayment"> | number
     lateFee?: IntFilter<"StudentSemesterPayment"> | number
-    aprovedPayment?: BoolFilter<"StudentSemesterPayment"> | boolean
-    paymentType?: EnumPAYMENTTYPEFilter<"StudentSemesterPayment"> | $Enums.PAYMENTTYPE
-    paymentStatus?: EnumPaymentStatusNullableFilter<"StudentSemesterPayment"> | $Enums.PaymentStatus | null
     paymentMonth?: IntFilter<"StudentSemesterPayment"> | number
     paymentYear?: IntFilter<"StudentSemesterPayment"> | number
     createdAt?: DateTimeFilter<"StudentSemesterPayment"> | Date | string
     updatedAt?: DateTimeFilter<"StudentSemesterPayment"> | Date | string
     studentId?: StringFilter<"StudentSemesterPayment"> | string
     academicSemesterId?: StringFilter<"StudentSemesterPayment"> | string
+  }
+
+  export type StudentCarriedCourseUpsertWithWhereUniqueWithoutSemesterInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    update: XOR<StudentCarriedCourseUpdateWithoutSemesterInput, StudentCarriedCourseUncheckedUpdateWithoutSemesterInput>
+    create: XOR<StudentCarriedCourseCreateWithoutSemesterInput, StudentCarriedCourseUncheckedCreateWithoutSemesterInput>
+  }
+
+  export type StudentCarriedCourseUpdateWithWhereUniqueWithoutSemesterInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    data: XOR<StudentCarriedCourseUpdateWithoutSemesterInput, StudentCarriedCourseUncheckedUpdateWithoutSemesterInput>
+  }
+
+  export type StudentCarriedCourseUpdateManyWithWhereWithoutSemesterInput = {
+    where: StudentCarriedCourseScalarWhereInput
+    data: XOR<StudentCarriedCourseUpdateManyMutationInput, StudentCarriedCourseUncheckedUpdateManyWithoutSemesterInput>
+  }
+
+  export type StudentCarriedCourseScalarWhereInput = {
+    AND?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
+    OR?: StudentCarriedCourseScalarWhereInput[]
+    NOT?: StudentCarriedCourseScalarWhereInput | StudentCarriedCourseScalarWhereInput[]
+    id?: StringFilter<"StudentCarriedCourse"> | string
+    studentId?: StringFilter<"StudentCarriedCourse"> | string
+    disciplineId?: StringFilter<"StudentCarriedCourse"> | string
+    semesterId?: StringFilter<"StudentCarriedCourse"> | string
+    shift?: EnumShiftFilter<"StudentCarriedCourse"> | $Enums.Shift
+    price?: IntFilter<"StudentCarriedCourse"> | number
+    status?: EnumCarriedCourseStatusFilter<"StudentCarriedCourse"> | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFilter<"StudentCarriedCourse"> | Date | string
   }
 
   export type AcademicDepartmentCreateWithoutAcademicFacultyInput = {
@@ -45625,7 +50250,6 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
     departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
     staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -45639,7 +50263,6 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -45706,6 +50329,7 @@ export namespace Prisma {
   export type StudentCreateWithoutAcademicFacultyInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -45733,11 +50357,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAcademicFacultyInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -45765,6 +50391,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAcademicFacultyInput = {
@@ -45774,6 +50401,56 @@ export namespace Prisma {
 
   export type StudentCreateManyAcademicFacultyInputEnvelope = {
     data: StudentCreateManyAcademicFacultyInput | StudentCreateManyAcademicFacultyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput = {
+    id?: string
+    applicantName: string
+    paymentRecipt: string
+    status?: $Enums.Status
+    document: string
+    paymentAmoute?: number | null
+    aprovePayment?: boolean | null
+    exameResults?: number | null
+    passed?: boolean | null
+    exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
+    createdAt?: Date | string
+    updateAt?: Date | string
+    fase: ExameFaseCreateNestedOneWithoutRegistrationsInput
+    Student?: StudentCreateNestedOneWithoutAdmissionRegistrationInput
+  }
+
+  export type AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput = {
+    id?: string
+    applicantName: string
+    paymentRecipt: string
+    status?: $Enums.Status
+    document: string
+    paymentAmoute?: number | null
+    aprovePayment?: boolean | null
+    exameResults?: number | null
+    passed?: boolean | null
+    faseId: string
+    exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Student?: StudentUncheckedCreateNestedOneWithoutAdmissionRegistrationInput
+  }
+
+  export type AdmitionExameRegistrationCreateOrConnectWithoutAcademicFalcultyInput = {
+    where: AdmitionExameRegistrationWhereUniqueInput
+    create: XOR<AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput>
+  }
+
+  export type AdmitionExameRegistrationCreateManyAcademicFalcultyInputEnvelope = {
+    data: AdmitionExameRegistrationCreateManyAcademicFalcultyInput | AdmitionExameRegistrationCreateManyAcademicFalcultyInput[]
     skipDuplicates?: boolean
   }
 
@@ -45897,6 +50574,45 @@ export namespace Prisma {
     data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyWithoutAcademicFacultyInput>
   }
 
+  export type AdmitionExameRegistrationUpsertWithWhereUniqueWithoutAcademicFalcultyInput = {
+    where: AdmitionExameRegistrationWhereUniqueInput
+    update: XOR<AdmitionExameRegistrationUpdateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedUpdateWithoutAcademicFalcultyInput>
+    create: XOR<AdmitionExameRegistrationCreateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedCreateWithoutAcademicFalcultyInput>
+  }
+
+  export type AdmitionExameRegistrationUpdateWithWhereUniqueWithoutAcademicFalcultyInput = {
+    where: AdmitionExameRegistrationWhereUniqueInput
+    data: XOR<AdmitionExameRegistrationUpdateWithoutAcademicFalcultyInput, AdmitionExameRegistrationUncheckedUpdateWithoutAcademicFalcultyInput>
+  }
+
+  export type AdmitionExameRegistrationUpdateManyWithWhereWithoutAcademicFalcultyInput = {
+    where: AdmitionExameRegistrationScalarWhereInput
+    data: XOR<AdmitionExameRegistrationUpdateManyMutationInput, AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyInput>
+  }
+
+  export type AdmitionExameRegistrationScalarWhereInput = {
+    AND?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
+    OR?: AdmitionExameRegistrationScalarWhereInput[]
+    NOT?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
+    id?: StringFilter<"AdmitionExameRegistration"> | string
+    applicantName?: StringFilter<"AdmitionExameRegistration"> | string
+    paymentRecipt?: StringFilter<"AdmitionExameRegistration"> | string
+    status?: EnumStatusFilter<"AdmitionExameRegistration"> | $Enums.Status
+    document?: StringFilter<"AdmitionExameRegistration"> | string
+    paymentAmoute?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
+    aprovePayment?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
+    exameResults?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
+    passed?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
+    faseId?: StringFilter<"AdmitionExameRegistration"> | string
+    exameDate?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
+    rejectionReason?: StringNullableFilter<"AdmitionExameRegistration"> | string | null
+    phoneNumber?: StringFilter<"AdmitionExameRegistration"> | string
+    email?: StringFilter<"AdmitionExameRegistration"> | string
+    createdAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
+    updateAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
+    academicFalcultyId?: StringFilter<"AdmitionExameRegistration"> | string
+  }
+
   export type AdmitionExamePriceUpsertWithWhereUniqueWithoutAcademicFacultyInput = {
     where: AdmitionExamePriceWhereUniqueInput
     update: XOR<AdmitionExamePriceUpdateWithoutAcademicFacultyInput, AdmitionExamePriceUncheckedUpdateWithoutAcademicFacultyInput>
@@ -45959,6 +50675,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -45970,6 +50687,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -46078,6 +50796,7 @@ export namespace Prisma {
   export type StudentCreateWithoutAcademicDepartmentInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -46105,11 +50824,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAcademicDepartmentInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -46137,6 +50858,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAcademicDepartmentInput = {
@@ -46207,56 +50929,6 @@ export namespace Prisma {
     create: XOR<UsersCreateWithoutStaffDepartmentsInput, UsersUncheckedCreateWithoutStaffDepartmentsInput>
   }
 
-  export type AdmitionExameRegistrationCreateWithoutDepartmentInput = {
-    id?: string
-    applicantName: string
-    paymentRecipt: string
-    status?: $Enums.Status
-    document: string
-    paymentAmoute?: number | null
-    aprovePayment?: boolean | null
-    exameResults?: number | null
-    passed?: boolean | null
-    exameDate: Date | string
-    rejectionReason?: string | null
-    phoneNumber: string
-    email: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    fase: ExameFaseCreateNestedOneWithoutRegistrationsInput
-    Student?: StudentCreateNestedOneWithoutAdmissionRegistrationInput
-  }
-
-  export type AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput = {
-    id?: string
-    applicantName: string
-    paymentRecipt: string
-    status?: $Enums.Status
-    document: string
-    paymentAmoute?: number | null
-    aprovePayment?: boolean | null
-    exameResults?: number | null
-    passed?: boolean | null
-    faseId: string
-    exameDate: Date | string
-    rejectionReason?: string | null
-    phoneNumber: string
-    email: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    Student?: StudentUncheckedCreateNestedOneWithoutAdmissionRegistrationInput
-  }
-
-  export type AdmitionExameRegistrationCreateOrConnectWithoutDepartmentInput = {
-    where: AdmitionExameRegistrationWhereUniqueInput
-    create: XOR<AdmitionExameRegistrationCreateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput>
-  }
-
-  export type AdmitionExameRegistrationCreateManyDepartmentInputEnvelope = {
-    data: AdmitionExameRegistrationCreateManyDepartmentInput | AdmitionExameRegistrationCreateManyDepartmentInput[]
-    skipDuplicates?: boolean
-  }
-
   export type OfferedCourseCreateWithoutAcademicDepartmentInput = {
     id?: string
     suspendGrade?: number
@@ -46303,6 +50975,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -46314,6 +50987,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -46446,45 +51120,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Users"> | Date | string
   }
 
-  export type AdmitionExameRegistrationUpsertWithWhereUniqueWithoutDepartmentInput = {
-    where: AdmitionExameRegistrationWhereUniqueInput
-    update: XOR<AdmitionExameRegistrationUpdateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedUpdateWithoutDepartmentInput>
-    create: XOR<AdmitionExameRegistrationCreateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedCreateWithoutDepartmentInput>
-  }
-
-  export type AdmitionExameRegistrationUpdateWithWhereUniqueWithoutDepartmentInput = {
-    where: AdmitionExameRegistrationWhereUniqueInput
-    data: XOR<AdmitionExameRegistrationUpdateWithoutDepartmentInput, AdmitionExameRegistrationUncheckedUpdateWithoutDepartmentInput>
-  }
-
-  export type AdmitionExameRegistrationUpdateManyWithWhereWithoutDepartmentInput = {
-    where: AdmitionExameRegistrationScalarWhereInput
-    data: XOR<AdmitionExameRegistrationUpdateManyMutationInput, AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentInput>
-  }
-
-  export type AdmitionExameRegistrationScalarWhereInput = {
-    AND?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
-    OR?: AdmitionExameRegistrationScalarWhereInput[]
-    NOT?: AdmitionExameRegistrationScalarWhereInput | AdmitionExameRegistrationScalarWhereInput[]
-    id?: StringFilter<"AdmitionExameRegistration"> | string
-    applicantName?: StringFilter<"AdmitionExameRegistration"> | string
-    paymentRecipt?: StringFilter<"AdmitionExameRegistration"> | string
-    status?: EnumStatusFilter<"AdmitionExameRegistration"> | $Enums.Status
-    document?: StringFilter<"AdmitionExameRegistration"> | string
-    paymentAmoute?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
-    aprovePayment?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
-    exameResults?: IntNullableFilter<"AdmitionExameRegistration"> | number | null
-    passed?: BoolNullableFilter<"AdmitionExameRegistration"> | boolean | null
-    faseId?: StringFilter<"AdmitionExameRegistration"> | string
-    exameDate?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
-    rejectionReason?: StringNullableFilter<"AdmitionExameRegistration"> | string | null
-    phoneNumber?: StringFilter<"AdmitionExameRegistration"> | string
-    email?: StringFilter<"AdmitionExameRegistration"> | string
-    createdAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
-    updateAt?: DateTimeFilter<"AdmitionExameRegistration"> | Date | string
-    departmentId?: StringFilter<"AdmitionExameRegistration"> | string
-  }
-
   export type OfferedCourseUpsertWithWhereUniqueWithoutAcademicDepartmentInput = {
     where: OfferedCourseWhereUniqueInput
     update: XOR<OfferedCourseUpdateWithoutAcademicDepartmentInput, OfferedCourseUncheckedUpdateWithoutAcademicDepartmentInput>
@@ -46519,6 +51154,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -46530,6 +51166,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -46556,7 +51193,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updateAt?: Date | string
     fase: ExameFaseCreateNestedOneWithoutRegistrationsInput
-    department: AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput
+    academicFalculty: AcademicFacultyCreateNestedOneWithoutAdmitionExameInput
   }
 
   export type AdmitionExameRegistrationUncheckedCreateWithoutStudentInput = {
@@ -46576,7 +51213,7 @@ export namespace Prisma {
     email: string
     createdAt?: Date | string
     updateAt?: Date | string
-    departmentId: string
+    academicFalcultyId: string
   }
 
   export type AdmitionExameRegistrationCreateOrConnectWithoutStudentInput = {
@@ -46594,7 +51231,6 @@ export namespace Prisma {
     courses?: CourseCreateNestedManyWithoutAcademicDepartmentInput
     departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
     staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -46608,7 +51244,6 @@ export namespace Prisma {
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -46632,6 +51267,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUncheckedCreateWithoutStudentsInput = {
@@ -46649,6 +51285,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterCreateOrConnectWithoutStudentsInput = {
@@ -46794,29 +51431,23 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCreateWithoutStudentInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    payment: PaymentCreateNestedOneWithoutStudentSemesterPaymentInput
     academicSemester: AcademicSemesterCreateNestedOneWithoutStudentSemesterPaymentsInput
   }
 
   export type StudentSemesterPaymentUncheckedCreateWithoutStudentInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    paymentId: string
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
@@ -46860,6 +51491,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StudentCarriedCourseCreateWithoutStudentInput = {
+    id?: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+    discipline: DisciplineCreateNestedOneWithoutStudentCarriedCourseInput
+    semester: AcademicSemesterCreateNestedOneWithoutStudentCarriedCourseInput
+  }
+
+  export type StudentCarriedCourseUncheckedCreateWithoutStudentInput = {
+    id?: string
+    disciplineId: string
+    semesterId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+  }
+
+  export type StudentCarriedCourseCreateOrConnectWithoutStudentInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    create: XOR<StudentCarriedCourseCreateWithoutStudentInput, StudentCarriedCourseUncheckedCreateWithoutStudentInput>
+  }
+
+  export type StudentCarriedCourseCreateManyStudentInputEnvelope = {
+    data: StudentCarriedCourseCreateManyStudentInput | StudentCarriedCourseCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AcademicFacultyUpsertWithoutStudentsInput = {
     update: XOR<AcademicFacultyUpdateWithoutStudentsInput, AcademicFacultyUncheckedUpdateWithoutStudentsInput>
     create: XOR<AcademicFacultyCreateWithoutStudentsInput, AcademicFacultyUncheckedCreateWithoutStudentsInput>
@@ -46878,6 +51539,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -46889,6 +51551,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -46921,7 +51584,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fase?: ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput
-    department?: AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput
+    academicFalculty?: AcademicFacultyUpdateOneRequiredWithoutAdmitionExameNestedInput
   }
 
   export type AdmitionExameRegistrationUncheckedUpdateWithoutStudentInput = {
@@ -46941,7 +51604,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    departmentId?: StringFieldUpdateOperationsInput | string
+    academicFalcultyId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AcademicDepartmentUpsertWithoutStudentsInput = {
@@ -46965,7 +51628,6 @@ export namespace Prisma {
     courses?: CourseUpdateManyWithoutAcademicDepartmentNestedInput
     departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -46979,7 +51641,6 @@ export namespace Prisma {
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -47009,6 +51670,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterUncheckedUpdateWithoutStudentsInput = {
@@ -47026,6 +51688,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput
   }
 
   export type StudentSemesterRegistrationUpsertWithWhereUniqueWithoutStudentInput = {
@@ -47162,6 +51825,22 @@ export namespace Prisma {
     cgpa?: FloatNullableFilter<"StudentAcademicInfo"> | number | null
   }
 
+  export type StudentCarriedCourseUpsertWithWhereUniqueWithoutStudentInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    update: XOR<StudentCarriedCourseUpdateWithoutStudentInput, StudentCarriedCourseUncheckedUpdateWithoutStudentInput>
+    create: XOR<StudentCarriedCourseCreateWithoutStudentInput, StudentCarriedCourseUncheckedCreateWithoutStudentInput>
+  }
+
+  export type StudentCarriedCourseUpdateWithWhereUniqueWithoutStudentInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    data: XOR<StudentCarriedCourseUpdateWithoutStudentInput, StudentCarriedCourseUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type StudentCarriedCourseUpdateManyWithWhereWithoutStudentInput = {
+    where: StudentCarriedCourseScalarWhereInput
+    data: XOR<StudentCarriedCourseUpdateManyMutationInput, StudentCarriedCourseUncheckedUpdateManyWithoutStudentInput>
+  }
+
   export type CourseFacultyCreateWithoutFacultyInput = {
     course: CourseCreateNestedOneWithoutFacultiesInput
   }
@@ -47190,7 +51869,6 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
     departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
     staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -47204,7 +51882,6 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -47220,6 +51897,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -47231,6 +51909,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
@@ -47319,7 +51998,6 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
     departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -47333,7 +52011,6 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -47355,6 +52032,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -47366,6 +52044,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
@@ -47605,7 +52284,6 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
     departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
     staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -47619,7 +52297,6 @@ export namespace Prisma {
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
     offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
   }
 
@@ -47808,7 +52485,6 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
     departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -47822,7 +52498,6 @@ export namespace Prisma {
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -48289,6 +52964,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUncheckedCreateWithoutSemesterRegistrationsInput = {
@@ -48306,6 +52982,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterCreateOrConnectWithoutSemesterRegistrationsInput = {
@@ -48491,6 +53168,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterUncheckedUpdateWithoutSemesterRegistrationsInput = {
@@ -48508,6 +53186,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput
   }
 
   export type OfferedCourseUpsertWithWhereUniqueWithoutSemesterRegistrationInput = {
@@ -48629,42 +53308,39 @@ export namespace Prisma {
     create: XOR<ExameFaseCreateWithoutRegistrationsInput, ExameFaseUncheckedCreateWithoutRegistrationsInput>
   }
 
-  export type AcademicDepartmentCreateWithoutAdmitionExameInput = {
+  export type AcademicFacultyCreateWithoutAdmitionExameInput = {
     id?: string
     title: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    academicFaculty: AcademicFacultyCreateNestedOneWithoutAcademicDepartmentsInput
-    faculties?: FacultyCreateNestedManyWithoutAcademicDepartmentInput
-    courses?: CourseCreateNestedManyWithoutAcademicDepartmentInput
-    students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
-    departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
-    staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    offeredCourses?: OfferedCourseCreateNestedManyWithoutAcademicDepartmentInput
+    academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
+    faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
+    students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
 
-  export type AcademicDepartmentUncheckedCreateWithoutAdmitionExameInput = {
+  export type AcademicFacultyUncheckedCreateWithoutAdmitionExameInput = {
     id?: string
     title: string
-    academicFacultyId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    departmentHeadId?: string | null
-    faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicDepartmentInput
-    courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
-    students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
-    staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    offeredCourses?: OfferedCourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
+    academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
 
-  export type AcademicDepartmentCreateOrConnectWithoutAdmitionExameInput = {
-    where: AcademicDepartmentWhereUniqueInput
-    create: XOR<AcademicDepartmentCreateWithoutAdmitionExameInput, AcademicDepartmentUncheckedCreateWithoutAdmitionExameInput>
+  export type AcademicFacultyCreateOrConnectWithoutAdmitionExameInput = {
+    where: AcademicFacultyWhereUniqueInput
+    create: XOR<AcademicFacultyCreateWithoutAdmitionExameInput, AcademicFacultyUncheckedCreateWithoutAdmitionExameInput>
   }
 
   export type StudentCreateWithoutAdmissionRegistrationInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -48692,11 +53368,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAdmissionRegistrationInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -48724,6 +53402,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAdmissionRegistrationInput = {
@@ -48762,43 +53441,39 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AcademicDepartmentUpsertWithoutAdmitionExameInput = {
-    update: XOR<AcademicDepartmentUpdateWithoutAdmitionExameInput, AcademicDepartmentUncheckedUpdateWithoutAdmitionExameInput>
-    create: XOR<AcademicDepartmentCreateWithoutAdmitionExameInput, AcademicDepartmentUncheckedCreateWithoutAdmitionExameInput>
-    where?: AcademicDepartmentWhereInput
+  export type AcademicFacultyUpsertWithoutAdmitionExameInput = {
+    update: XOR<AcademicFacultyUpdateWithoutAdmitionExameInput, AcademicFacultyUncheckedUpdateWithoutAdmitionExameInput>
+    create: XOR<AcademicFacultyCreateWithoutAdmitionExameInput, AcademicFacultyUncheckedCreateWithoutAdmitionExameInput>
+    where?: AcademicFacultyWhereInput
   }
 
-  export type AcademicDepartmentUpdateToOneWithWhereWithoutAdmitionExameInput = {
-    where?: AcademicDepartmentWhereInput
-    data: XOR<AcademicDepartmentUpdateWithoutAdmitionExameInput, AcademicDepartmentUncheckedUpdateWithoutAdmitionExameInput>
+  export type AcademicFacultyUpdateToOneWithWhereWithoutAdmitionExameInput = {
+    where?: AcademicFacultyWhereInput
+    data: XOR<AcademicFacultyUpdateWithoutAdmitionExameInput, AcademicFacultyUncheckedUpdateWithoutAdmitionExameInput>
   }
 
-  export type AcademicDepartmentUpdateWithoutAdmitionExameInput = {
+  export type AcademicFacultyUpdateWithoutAdmitionExameInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    academicFaculty?: AcademicFacultyUpdateOneRequiredWithoutAcademicDepartmentsNestedInput
-    faculties?: FacultyUpdateManyWithoutAcademicDepartmentNestedInput
-    courses?: CourseUpdateManyWithoutAcademicDepartmentNestedInput
-    students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
-    departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
-    staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
+    academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
+    faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
+    students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
 
-  export type AcademicDepartmentUncheckedUpdateWithoutAdmitionExameInput = {
+  export type AcademicFacultyUncheckedUpdateWithoutAdmitionExameInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    academicFacultyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    departmentHeadId?: NullableStringFieldUpdateOperationsInput | string | null
-    faculties?: FacultyUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
-    courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
-    students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
-    staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
+    academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
 
   export type StudentUpsertWithoutAdmissionRegistrationInput = {
@@ -48815,6 +53490,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutAdmissionRegistrationInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -48842,11 +53518,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAdmissionRegistrationInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -48874,6 +53552,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type AcademicFacultyCreateWithoutAdmitionExamePriceInput = {
@@ -48884,6 +53563,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodCreateNestedManyWithoutAcademicFacultyInput
   }
 
@@ -48895,6 +53575,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
 
@@ -48922,6 +53603,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUpdateManyWithoutAcademicFacultyNestedInput
   }
 
@@ -48933,6 +53615,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePeriod?: AdmitionExamePeriodUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
 
@@ -48944,6 +53627,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceCreateNestedManyWithoutAcademicFacultyInput
   }
 
@@ -48955,6 +53639,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedCreateNestedManyWithoutAcademicFacultyInput
     faculties?: FacultyUncheckedCreateNestedManyWithoutAcademicFacultyInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicFacultyInput
+    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutAcademicFalcultyInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedCreateNestedManyWithoutAcademicFacultyInput
   }
 
@@ -48982,6 +53667,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUpdateManyWithoutAcademicFacultyNestedInput
   }
 
@@ -48993,6 +53679,7 @@ export namespace Prisma {
     academicDepartments?: AcademicDepartmentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicFacultyNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicFacultyNestedInput
+    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyNestedInput
     AdmitionExamePrice?: AdmitionExamePriceUncheckedUpdateManyWithoutAcademicFacultyNestedInput
   }
 
@@ -49012,7 +53699,7 @@ export namespace Prisma {
     email: string
     createdAt?: Date | string
     updateAt?: Date | string
-    department: AcademicDepartmentCreateNestedOneWithoutAdmitionExameInput
+    academicFalculty: AcademicFacultyCreateNestedOneWithoutAdmitionExameInput
     Student?: StudentCreateNestedOneWithoutAdmissionRegistrationInput
   }
 
@@ -49032,7 +53719,7 @@ export namespace Prisma {
     email: string
     createdAt?: Date | string
     updateAt?: Date | string
-    departmentId: string
+    academicFalcultyId: string
     Student?: StudentUncheckedCreateNestedOneWithoutAdmissionRegistrationInput
   }
 
@@ -49073,7 +53760,6 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicDepartmentInput
     departmentHead?: UsersCreateNestedOneWithoutAcademicDepartmentInput
     staffMembers?: UsersCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationCreateNestedManyWithoutDepartmentInput
   }
 
   export type AcademicDepartmentUncheckedCreateWithoutOfferedCoursesInput = {
@@ -49087,7 +53773,6 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     students?: StudentUncheckedCreateNestedManyWithoutAcademicDepartmentInput
     staffMembers?: UsersUncheckedCreateNestedManyWithoutStaffDepartmentsInput
-    admitionExame?: AdmitionExameRegistrationUncheckedCreateNestedManyWithoutDepartmentInput
   }
 
   export type AcademicDepartmentCreateOrConnectWithoutOfferedCoursesInput = {
@@ -49251,7 +53936,6 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
     departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
   }
 
   export type AcademicDepartmentUncheckedUpdateWithoutOfferedCoursesInput = {
@@ -49265,7 +53949,6 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
   export type SemesterRegistrationUpsertWithoutOfferedCoursesInput = {
@@ -49889,6 +54572,7 @@ export namespace Prisma {
   export type StudentCreateWithoutStudentSemesterRegistrationsInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -49916,11 +54600,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentSemesterRegistrationsInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -49948,6 +54634,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentSemesterRegistrationsInput = {
@@ -50002,6 +54689,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutStudentSemesterRegistrationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -50029,11 +54717,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentSemesterRegistrationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -50061,6 +54751,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type SemesterRegistrationUpsertWithoutStudentSemesterRegistrationsInput = {
@@ -50138,6 +54829,7 @@ export namespace Prisma {
   export type StudentCreateWithoutStudentSemesterRegistrationCoursesInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -50165,11 +54857,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentSemesterRegistrationCoursesInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -50197,6 +54891,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentSemesterRegistrationCoursesInput = {
@@ -50309,6 +55004,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutStudentSemesterRegistrationCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -50336,11 +55032,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentSemesterRegistrationCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -50368,6 +55066,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type OfferedCourseUpsertWithoutStudentSemesterRegistrationCoursesInput = {
@@ -50437,6 +55136,7 @@ export namespace Prisma {
   export type StudentCreateWithoutStudentEnrolledCoursesInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -50464,11 +55164,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentEnrolledCoursesInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -50496,6 +55198,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentEnrolledCoursesInput = {
@@ -50603,6 +55306,7 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUncheckedCreateWithoutStudentEnrolledCoursesInput = {
@@ -50620,6 +55324,7 @@ export namespace Prisma {
     students?: StudentUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterCreateOrConnectWithoutStudentEnrolledCoursesInput = {
@@ -50641,6 +55346,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutStudentEnrolledCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -50668,11 +55374,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentEnrolledCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -50700,6 +55408,7 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type CourseUpsertWithoutStudentCoursesInput = {
@@ -50791,6 +55500,7 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterUncheckedUpdateWithoutStudentEnrolledCoursesInput = {
@@ -50808,11 +55518,13 @@ export namespace Prisma {
     students?: StudentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput
   }
 
   export type StudentCreateWithoutStudentEnrolledCourseMarksInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -50840,11 +55552,13 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentEnrolledCourseMarksInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -50872,6 +55586,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentEnrolledCourseMarksInput = {
@@ -50925,6 +55640,7 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUncheckedCreateWithoutStudentEnrolledCourseMarksInput = {
@@ -50942,6 +55658,7 @@ export namespace Prisma {
     students?: StudentUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterCreateOrConnectWithoutStudentEnrolledCourseMarksInput = {
@@ -50963,6 +55680,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutStudentEnrolledCourseMarksInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -50990,11 +55708,13 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentEnrolledCourseMarksInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -51022,6 +55742,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentEnrolledCourseUpsertWithoutStudentEnrolledCourseMarksInput = {
@@ -51087,6 +55808,7 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterUncheckedUpdateWithoutStudentEnrolledCourseMarksInput = {
@@ -51104,6 +55826,7 @@ export namespace Prisma {
     students?: StudentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput
   }
 
   export type CourseCreateWithoutCourseDisciplinesInput = {
@@ -51156,6 +55879,7 @@ export namespace Prisma {
     minimumGradeToDismiss?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutDisciplineInput
   }
 
   export type DisciplineUncheckedCreateWithoutCourseDisciplinesInput = {
@@ -51167,6 +55891,7 @@ export namespace Prisma {
     minimumGradeToDismiss?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutDisciplineInput
   }
 
   export type DisciplineCreateOrConnectWithoutCourseDisciplinesInput = {
@@ -51189,6 +55914,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUncheckedCreateWithoutCourseDisciplinesInput = {
@@ -51206,6 +55932,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterCreateOrConnectWithoutCourseDisciplinesInput = {
@@ -51280,6 +56007,7 @@ export namespace Prisma {
     minimumGradeToDismiss?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutDisciplineNestedInput
   }
 
   export type DisciplineUncheckedUpdateWithoutCourseDisciplinesInput = {
@@ -51291,6 +56019,7 @@ export namespace Prisma {
     minimumGradeToDismiss?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutDisciplineNestedInput
   }
 
   export type AcademicSemesterUpsertWithoutCourseDisciplinesInput = {
@@ -51319,6 +56048,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutAcademicSemesterNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterUncheckedUpdateWithoutCourseDisciplinesInput = {
@@ -51331,6 +56061,311 @@ export namespace Prisma {
     isCurrent?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    semesterRegistrations?: SemesterRegistrationUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    students?: StudentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput
+  }
+
+  export type StudentCreateWithoutStudentCarriedCourseInput = {
+    id?: string
+    studentId: string
+    studentType?: $Enums.StudentType
+    firstName: string
+    middleName?: string | null
+    lastName: string
+    profileImage?: string | null
+    email?: string | null
+    contactNo?: string | null
+    gender: string
+    isWoker?: boolean
+    shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
+    isActive?: boolean
+    password: string
+    gradeDeclarationFile: string
+    biFile: string
+    presentAddress: string
+    permanentAddress?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    academicFaculty: AcademicFacultyCreateNestedOneWithoutStudentsInput
+    admissionRegistration?: AdmitionExameRegistrationCreateNestedOneWithoutStudentInput
+    academicDepartment: AcademicDepartmentCreateNestedOneWithoutStudentsInput
+    academicSemester: AcademicSemesterCreateNestedOneWithoutStudentsInput
+    studentSemesterRegistrations?: StudentSemesterRegistrationCreateNestedManyWithoutStudentInput
+    studentSemesterRegistrationCourses?: StudentSemesterRegistrationCourseCreateNestedManyWithoutStudentInput
+    studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutStudentInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
+    studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
+    studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateWithoutStudentCarriedCourseInput = {
+    id?: string
+    studentId: string
+    studentType?: $Enums.StudentType
+    firstName: string
+    middleName?: string | null
+    lastName: string
+    profileImage?: string | null
+    email?: string | null
+    contactNo?: string | null
+    gender: string
+    isWoker?: boolean
+    shift?: $Enums.Shift
+    yearLevel?: $Enums.YearLevel
+    isActive?: boolean
+    password: string
+    gradeDeclarationFile: string
+    biFile: string
+    presentAddress: string
+    permanentAddress?: string | null
+    academicSemesterId: string
+    academicFacultyId: string
+    academicDepartmentId: string
+    admissionRegistrationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    studentSemesterRegistrations?: StudentSemesterRegistrationUncheckedCreateNestedManyWithoutStudentInput
+    studentSemesterRegistrationCourses?: StudentSemesterRegistrationCourseUncheckedCreateNestedManyWithoutStudentInput
+    studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutStudentInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
+    studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
+    studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentCreateOrConnectWithoutStudentCarriedCourseInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutStudentCarriedCourseInput, StudentUncheckedCreateWithoutStudentCarriedCourseInput>
+  }
+
+  export type DisciplineCreateWithoutStudentCarriedCourseInput = {
+    id?: string
+    name: string
+    code: string
+    description?: string | null
+    credits: number
+    minimumGradeToDismiss?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    courseDisciplines?: CourseDisciplineCreateNestedManyWithoutDisciplineInput
+  }
+
+  export type DisciplineUncheckedCreateWithoutStudentCarriedCourseInput = {
+    id?: string
+    name: string
+    code: string
+    description?: string | null
+    credits: number
+    minimumGradeToDismiss?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutDisciplineInput
+  }
+
+  export type DisciplineCreateOrConnectWithoutStudentCarriedCourseInput = {
+    where: DisciplineWhereUniqueInput
+    create: XOR<DisciplineCreateWithoutStudentCarriedCourseInput, DisciplineUncheckedCreateWithoutStudentCarriedCourseInput>
+  }
+
+  export type AcademicSemesterCreateWithoutStudentCarriedCourseInput = {
+    id?: string
+    title: string
+    year: string
+    code: string
+    startMonth: string
+    endMonth: string
+    isCurrent?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    courseDisciplines?: CourseDisciplineCreateNestedManyWithoutSemesterInput
+    semesterRegistrations?: SemesterRegistrationCreateNestedManyWithoutAcademicSemesterInput
+    students?: StudentCreateNestedManyWithoutAcademicSemesterInput
+    studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutAcademicSemesterInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutAcademicSemesterInput
+    studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutAcademicSemesterInput
+  }
+
+  export type AcademicSemesterUncheckedCreateWithoutStudentCarriedCourseInput = {
+    id?: string
+    title: string
+    year: string
+    code: string
+    startMonth: string
+    endMonth: string
+    isCurrent?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    courseDisciplines?: CourseDisciplineUncheckedCreateNestedManyWithoutSemesterInput
+    semesterRegistrations?: SemesterRegistrationUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    students?: StudentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutAcademicSemesterInput
+  }
+
+  export type AcademicSemesterCreateOrConnectWithoutStudentCarriedCourseInput = {
+    where: AcademicSemesterWhereUniqueInput
+    create: XOR<AcademicSemesterCreateWithoutStudentCarriedCourseInput, AcademicSemesterUncheckedCreateWithoutStudentCarriedCourseInput>
+  }
+
+  export type StudentUpsertWithoutStudentCarriedCourseInput = {
+    update: XOR<StudentUpdateWithoutStudentCarriedCourseInput, StudentUncheckedUpdateWithoutStudentCarriedCourseInput>
+    create: XOR<StudentCreateWithoutStudentCarriedCourseInput, StudentUncheckedCreateWithoutStudentCarriedCourseInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutStudentCarriedCourseInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutStudentCarriedCourseInput, StudentUncheckedUpdateWithoutStudentCarriedCourseInput>
+  }
+
+  export type StudentUpdateWithoutStudentCarriedCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
+    firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    isWoker?: BoolFieldUpdateOperationsInput | boolean
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    password?: StringFieldUpdateOperationsInput | string
+    gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
+    biFile?: StringFieldUpdateOperationsInput | string
+    presentAddress?: StringFieldUpdateOperationsInput | string
+    permanentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    academicFaculty?: AcademicFacultyUpdateOneRequiredWithoutStudentsNestedInput
+    admissionRegistration?: AdmitionExameRegistrationUpdateOneWithoutStudentNestedInput
+    academicDepartment?: AcademicDepartmentUpdateOneRequiredWithoutStudentsNestedInput
+    academicSemester?: AcademicSemesterUpdateOneRequiredWithoutStudentsNestedInput
+    studentSemesterRegistrations?: StudentSemesterRegistrationUpdateManyWithoutStudentNestedInput
+    studentSemesterRegistrationCourses?: StudentSemesterRegistrationCourseUpdateManyWithoutStudentNestedInput
+    studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutStudentNestedInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
+    studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
+    studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutStudentCarriedCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
+    firstName?: StringFieldUpdateOperationsInput | string
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    contactNo?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    isWoker?: BoolFieldUpdateOperationsInput | boolean
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    yearLevel?: EnumYearLevelFieldUpdateOperationsInput | $Enums.YearLevel
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    password?: StringFieldUpdateOperationsInput | string
+    gradeDeclarationFile?: StringFieldUpdateOperationsInput | string
+    biFile?: StringFieldUpdateOperationsInput | string
+    presentAddress?: StringFieldUpdateOperationsInput | string
+    permanentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    academicSemesterId?: StringFieldUpdateOperationsInput | string
+    academicFacultyId?: StringFieldUpdateOperationsInput | string
+    academicDepartmentId?: StringFieldUpdateOperationsInput | string
+    admissionRegistrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    studentSemesterRegistrations?: StudentSemesterRegistrationUncheckedUpdateManyWithoutStudentNestedInput
+    studentSemesterRegistrationCourses?: StudentSemesterRegistrationCourseUncheckedUpdateManyWithoutStudentNestedInput
+    studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutStudentNestedInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
+    studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
+    studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type DisciplineUpsertWithoutStudentCarriedCourseInput = {
+    update: XOR<DisciplineUpdateWithoutStudentCarriedCourseInput, DisciplineUncheckedUpdateWithoutStudentCarriedCourseInput>
+    create: XOR<DisciplineCreateWithoutStudentCarriedCourseInput, DisciplineUncheckedCreateWithoutStudentCarriedCourseInput>
+    where?: DisciplineWhereInput
+  }
+
+  export type DisciplineUpdateToOneWithWhereWithoutStudentCarriedCourseInput = {
+    where?: DisciplineWhereInput
+    data: XOR<DisciplineUpdateWithoutStudentCarriedCourseInput, DisciplineUncheckedUpdateWithoutStudentCarriedCourseInput>
+  }
+
+  export type DisciplineUpdateWithoutStudentCarriedCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
+    minimumGradeToDismiss?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDisciplines?: CourseDisciplineUpdateManyWithoutDisciplineNestedInput
+  }
+
+  export type DisciplineUncheckedUpdateWithoutStudentCarriedCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
+    minimumGradeToDismiss?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutDisciplineNestedInput
+  }
+
+  export type AcademicSemesterUpsertWithoutStudentCarriedCourseInput = {
+    update: XOR<AcademicSemesterUpdateWithoutStudentCarriedCourseInput, AcademicSemesterUncheckedUpdateWithoutStudentCarriedCourseInput>
+    create: XOR<AcademicSemesterCreateWithoutStudentCarriedCourseInput, AcademicSemesterUncheckedCreateWithoutStudentCarriedCourseInput>
+    where?: AcademicSemesterWhereInput
+  }
+
+  export type AcademicSemesterUpdateToOneWithWhereWithoutStudentCarriedCourseInput = {
+    where?: AcademicSemesterWhereInput
+    data: XOR<AcademicSemesterUpdateWithoutStudentCarriedCourseInput, AcademicSemesterUncheckedUpdateWithoutStudentCarriedCourseInput>
+  }
+
+  export type AcademicSemesterUpdateWithoutStudentCarriedCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    year?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    startMonth?: StringFieldUpdateOperationsInput | string
+    endMonth?: StringFieldUpdateOperationsInput | string
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDisciplines?: CourseDisciplineUpdateManyWithoutSemesterNestedInput
+    semesterRegistrations?: SemesterRegistrationUpdateManyWithoutAcademicSemesterNestedInput
+    students?: StudentUpdateManyWithoutAcademicSemesterNestedInput
+    studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutAcademicSemesterNestedInput
+    studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutAcademicSemesterNestedInput
+    studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutAcademicSemesterNestedInput
+  }
+
+  export type AcademicSemesterUncheckedUpdateWithoutStudentCarriedCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    year?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    startMonth?: StringFieldUpdateOperationsInput | string
+    endMonth?: StringFieldUpdateOperationsInput | string
+    isCurrent?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseDisciplines?: CourseDisciplineUncheckedUpdateManyWithoutSemesterNestedInput
     semesterRegistrations?: SemesterRegistrationUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutAcademicSemesterNestedInput
@@ -51450,6 +56485,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StudentCarriedCourseCreateWithoutDisciplineInput = {
+    id?: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+    student: StudentCreateNestedOneWithoutStudentCarriedCourseInput
+    semester: AcademicSemesterCreateNestedOneWithoutStudentCarriedCourseInput
+  }
+
+  export type StudentCarriedCourseUncheckedCreateWithoutDisciplineInput = {
+    id?: string
+    studentId: string
+    semesterId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+  }
+
+  export type StudentCarriedCourseCreateOrConnectWithoutDisciplineInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    create: XOR<StudentCarriedCourseCreateWithoutDisciplineInput, StudentCarriedCourseUncheckedCreateWithoutDisciplineInput>
+  }
+
+  export type StudentCarriedCourseCreateManyDisciplineInputEnvelope = {
+    data: StudentCarriedCourseCreateManyDisciplineInput | StudentCarriedCourseCreateManyDisciplineInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CourseDisciplineUpsertWithWhereUniqueWithoutDisciplineInput = {
     where: CourseDisciplineWhereUniqueInput
     update: XOR<CourseDisciplineUpdateWithoutDisciplineInput, CourseDisciplineUncheckedUpdateWithoutDisciplineInput>
@@ -51466,9 +56531,57 @@ export namespace Prisma {
     data: XOR<CourseDisciplineUpdateManyMutationInput, CourseDisciplineUncheckedUpdateManyWithoutDisciplineInput>
   }
 
+  export type StudentCarriedCourseUpsertWithWhereUniqueWithoutDisciplineInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    update: XOR<StudentCarriedCourseUpdateWithoutDisciplineInput, StudentCarriedCourseUncheckedUpdateWithoutDisciplineInput>
+    create: XOR<StudentCarriedCourseCreateWithoutDisciplineInput, StudentCarriedCourseUncheckedCreateWithoutDisciplineInput>
+  }
+
+  export type StudentCarriedCourseUpdateWithWhereUniqueWithoutDisciplineInput = {
+    where: StudentCarriedCourseWhereUniqueInput
+    data: XOR<StudentCarriedCourseUpdateWithoutDisciplineInput, StudentCarriedCourseUncheckedUpdateWithoutDisciplineInput>
+  }
+
+  export type StudentCarriedCourseUpdateManyWithWhereWithoutDisciplineInput = {
+    where: StudentCarriedCourseScalarWhereInput
+    data: XOR<StudentCarriedCourseUpdateManyMutationInput, StudentCarriedCourseUncheckedUpdateManyWithoutDisciplineInput>
+  }
+
+  export type PaymentCreateWithoutStudentSemesterPaymentInput = {
+    id?: string
+    paymentRecipt?: string | null
+    totalAmount?: number
+    approved?: boolean
+    paymentType?: $Enums.PAYMENTTYPE
+    status?: $Enums.PAYMENTSTATUS
+    method?: $Enums.PAYMENTMETHOD
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PaymentReference?: PaymentReferenceCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentUncheckedCreateWithoutStudentSemesterPaymentInput = {
+    id?: string
+    paymentRecipt?: string | null
+    totalAmount?: number
+    approved?: boolean
+    paymentType?: $Enums.PAYMENTTYPE
+    status?: $Enums.PAYMENTSTATUS
+    method?: $Enums.PAYMENTMETHOD
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PaymentReference?: PaymentReferenceUncheckedCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentCreateOrConnectWithoutStudentSemesterPaymentInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutStudentSemesterPaymentInput, PaymentUncheckedCreateWithoutStudentSemesterPaymentInput>
+  }
+
   export type StudentCreateWithoutStudentSemesterPaymentsInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -51496,11 +56609,13 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutStudentInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentSemesterPaymentsInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -51528,6 +56643,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutStudentInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentSemesterPaymentsInput = {
@@ -51550,6 +56666,7 @@ export namespace Prisma {
     students?: StudentCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterUncheckedCreateWithoutStudentSemesterPaymentsInput = {
@@ -51567,11 +56684,49 @@ export namespace Prisma {
     students?: StudentUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutAcademicSemesterInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutAcademicSemesterInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutSemesterInput
   }
 
   export type AcademicSemesterCreateOrConnectWithoutStudentSemesterPaymentsInput = {
     where: AcademicSemesterWhereUniqueInput
     create: XOR<AcademicSemesterCreateWithoutStudentSemesterPaymentsInput, AcademicSemesterUncheckedCreateWithoutStudentSemesterPaymentsInput>
+  }
+
+  export type PaymentUpsertWithoutStudentSemesterPaymentInput = {
+    update: XOR<PaymentUpdateWithoutStudentSemesterPaymentInput, PaymentUncheckedUpdateWithoutStudentSemesterPaymentInput>
+    create: XOR<PaymentCreateWithoutStudentSemesterPaymentInput, PaymentUncheckedCreateWithoutStudentSemesterPaymentInput>
+    where?: PaymentWhereInput
+  }
+
+  export type PaymentUpdateToOneWithWhereWithoutStudentSemesterPaymentInput = {
+    where?: PaymentWhereInput
+    data: XOR<PaymentUpdateWithoutStudentSemesterPaymentInput, PaymentUncheckedUpdateWithoutStudentSemesterPaymentInput>
+  }
+
+  export type PaymentUpdateWithoutStudentSemesterPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PaymentReference?: PaymentReferenceUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type PaymentUncheckedUpdateWithoutStudentSemesterPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PaymentReference?: PaymentReferenceUncheckedUpdateManyWithoutPaymentNestedInput
   }
 
   export type StudentUpsertWithoutStudentSemesterPaymentsInput = {
@@ -51588,6 +56743,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutStudentSemesterPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -51615,11 +56771,13 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutStudentNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentSemesterPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -51647,6 +56805,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutStudentNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type AcademicSemesterUpsertWithoutStudentSemesterPaymentsInput = {
@@ -51675,6 +56834,7 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutSemesterNestedInput
   }
 
   export type AcademicSemesterUncheckedUpdateWithoutStudentSemesterPaymentsInput = {
@@ -51692,11 +56852,13 @@ export namespace Prisma {
     students?: StudentUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutAcademicSemesterNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutAcademicSemesterNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutSemesterNestedInput
   }
 
   export type StudentCreateWithoutStudentAcademicInfosInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -51724,11 +56886,13 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseCreateNestedManyWithoutStudentInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentAcademicInfosInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -51756,6 +56920,7 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedCreateNestedManyWithoutStudentInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedCreateNestedManyWithoutStudentInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutStudentInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentAcademicInfosInput = {
@@ -51777,6 +56942,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutStudentAcademicInfosInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -51804,11 +56970,13 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUpdateManyWithoutStudentNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentAcademicInfosInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -51836,6 +57004,184 @@ export namespace Prisma {
     studentEnrolledCourses?: StudentEnrolledCourseUncheckedUpdateManyWithoutStudentNestedInput
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentSemesterPaymentCreateWithoutPaymentInput = {
+    id?: string
+    totalPayment: number
+    baseAmount: number
+    lateFee?: number
+    paymentMonth: number
+    paymentYear: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    student: StudentCreateNestedOneWithoutStudentSemesterPaymentsInput
+    academicSemester: AcademicSemesterCreateNestedOneWithoutStudentSemesterPaymentsInput
+  }
+
+  export type StudentSemesterPaymentUncheckedCreateWithoutPaymentInput = {
+    id?: string
+    totalPayment: number
+    baseAmount: number
+    lateFee?: number
+    paymentMonth: number
+    paymentYear: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    studentId: string
+    academicSemesterId: string
+  }
+
+  export type StudentSemesterPaymentCreateOrConnectWithoutPaymentInput = {
+    where: StudentSemesterPaymentWhereUniqueInput
+    create: XOR<StudentSemesterPaymentCreateWithoutPaymentInput, StudentSemesterPaymentUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type StudentSemesterPaymentCreateManyPaymentInputEnvelope = {
+    data: StudentSemesterPaymentCreateManyPaymentInput | StudentSemesterPaymentCreateManyPaymentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PaymentReferenceCreateWithoutPaymentInput = {
+    id?: string
+    reference: string
+    code: number
+    message: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentReferenceUncheckedCreateWithoutPaymentInput = {
+    id?: string
+    reference: string
+    code: number
+    message: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentReferenceCreateOrConnectWithoutPaymentInput = {
+    where: PaymentReferenceWhereUniqueInput
+    create: XOR<PaymentReferenceCreateWithoutPaymentInput, PaymentReferenceUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type PaymentReferenceCreateManyPaymentInputEnvelope = {
+    data: PaymentReferenceCreateManyPaymentInput | PaymentReferenceCreateManyPaymentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StudentSemesterPaymentUpsertWithWhereUniqueWithoutPaymentInput = {
+    where: StudentSemesterPaymentWhereUniqueInput
+    update: XOR<StudentSemesterPaymentUpdateWithoutPaymentInput, StudentSemesterPaymentUncheckedUpdateWithoutPaymentInput>
+    create: XOR<StudentSemesterPaymentCreateWithoutPaymentInput, StudentSemesterPaymentUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type StudentSemesterPaymentUpdateWithWhereUniqueWithoutPaymentInput = {
+    where: StudentSemesterPaymentWhereUniqueInput
+    data: XOR<StudentSemesterPaymentUpdateWithoutPaymentInput, StudentSemesterPaymentUncheckedUpdateWithoutPaymentInput>
+  }
+
+  export type StudentSemesterPaymentUpdateManyWithWhereWithoutPaymentInput = {
+    where: StudentSemesterPaymentScalarWhereInput
+    data: XOR<StudentSemesterPaymentUpdateManyMutationInput, StudentSemesterPaymentUncheckedUpdateManyWithoutPaymentInput>
+  }
+
+  export type PaymentReferenceUpsertWithWhereUniqueWithoutPaymentInput = {
+    where: PaymentReferenceWhereUniqueInput
+    update: XOR<PaymentReferenceUpdateWithoutPaymentInput, PaymentReferenceUncheckedUpdateWithoutPaymentInput>
+    create: XOR<PaymentReferenceCreateWithoutPaymentInput, PaymentReferenceUncheckedCreateWithoutPaymentInput>
+  }
+
+  export type PaymentReferenceUpdateWithWhereUniqueWithoutPaymentInput = {
+    where: PaymentReferenceWhereUniqueInput
+    data: XOR<PaymentReferenceUpdateWithoutPaymentInput, PaymentReferenceUncheckedUpdateWithoutPaymentInput>
+  }
+
+  export type PaymentReferenceUpdateManyWithWhereWithoutPaymentInput = {
+    where: PaymentReferenceScalarWhereInput
+    data: XOR<PaymentReferenceUpdateManyMutationInput, PaymentReferenceUncheckedUpdateManyWithoutPaymentInput>
+  }
+
+  export type PaymentReferenceScalarWhereInput = {
+    AND?: PaymentReferenceScalarWhereInput | PaymentReferenceScalarWhereInput[]
+    OR?: PaymentReferenceScalarWhereInput[]
+    NOT?: PaymentReferenceScalarWhereInput | PaymentReferenceScalarWhereInput[]
+    id?: StringFilter<"PaymentReference"> | string
+    reference?: StringFilter<"PaymentReference"> | string
+    code?: IntFilter<"PaymentReference"> | number
+    message?: StringFilter<"PaymentReference"> | string
+    paymentId?: StringFilter<"PaymentReference"> | string
+    createdAt?: DateTimeFilter<"PaymentReference"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentReference"> | Date | string
+  }
+
+  export type PaymentCreateWithoutPaymentReferenceInput = {
+    id?: string
+    paymentRecipt?: string | null
+    totalAmount?: number
+    approved?: boolean
+    paymentType?: $Enums.PAYMENTTYPE
+    status?: $Enums.PAYMENTSTATUS
+    method?: $Enums.PAYMENTMETHOD
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentUncheckedCreateWithoutPaymentReferenceInput = {
+    id?: string
+    paymentRecipt?: string | null
+    totalAmount?: number
+    approved?: boolean
+    paymentType?: $Enums.PAYMENTTYPE
+    status?: $Enums.PAYMENTSTATUS
+    method?: $Enums.PAYMENTMETHOD
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentUncheckedCreateNestedManyWithoutPaymentInput
+  }
+
+  export type PaymentCreateOrConnectWithoutPaymentReferenceInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutPaymentReferenceInput, PaymentUncheckedCreateWithoutPaymentReferenceInput>
+  }
+
+  export type PaymentUpsertWithoutPaymentReferenceInput = {
+    update: XOR<PaymentUpdateWithoutPaymentReferenceInput, PaymentUncheckedUpdateWithoutPaymentReferenceInput>
+    create: XOR<PaymentCreateWithoutPaymentReferenceInput, PaymentUncheckedCreateWithoutPaymentReferenceInput>
+    where?: PaymentWhereInput
+  }
+
+  export type PaymentUpdateToOneWithWhereWithoutPaymentReferenceInput = {
+    where?: PaymentWhereInput
+    data: XOR<PaymentUpdateWithoutPaymentReferenceInput, PaymentUncheckedUpdateWithoutPaymentReferenceInput>
+  }
+
+  export type PaymentUpdateWithoutPaymentReferenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentUpdateManyWithoutPaymentNestedInput
+  }
+
+  export type PaymentUncheckedUpdateWithoutPaymentReferenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
+    status?: EnumPAYMENTSTATUSFieldUpdateOperationsInput | $Enums.PAYMENTSTATUS
+    method?: EnumPAYMENTMETHODFieldUpdateOperationsInput | $Enums.PAYMENTMETHOD
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    StudentSemesterPayment?: StudentSemesterPaymentUncheckedUpdateManyWithoutPaymentNestedInput
   }
 
   export type AcademicDepartmentUpdateWithoutStaffMembersInput = {
@@ -51848,7 +57194,6 @@ export namespace Prisma {
     courses?: CourseUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
     departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -51862,7 +57207,6 @@ export namespace Prisma {
     faculties?: FacultyUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -51894,6 +57238,7 @@ export namespace Prisma {
   export type StudentCreateManyAcademicSemesterInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -51948,18 +57293,25 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCreateManyAcademicSemesterInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    paymentId: string
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
     updatedAt?: Date | string
     studentId: string
+  }
+
+  export type StudentCarriedCourseCreateManySemesterInput = {
+    id?: string
+    studentId: string
+    disciplineId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
   }
 
   export type CourseDisciplineUpdateWithoutSemesterInput = {
@@ -52023,6 +57375,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutAcademicSemesterInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52050,11 +57403,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAcademicSemesterInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52082,11 +57437,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateManyWithoutAcademicSemesterInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52201,29 +57558,23 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentUpdateWithoutAcademicSemesterInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment?: PaymentUpdateOneRequiredWithoutStudentSemesterPaymentNestedInput
     student?: StudentUpdateOneRequiredWithoutStudentSemesterPaymentsNestedInput
   }
 
   export type StudentSemesterPaymentUncheckedUpdateWithoutAcademicSemesterInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: StringFieldUpdateOperationsInput | string
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52233,18 +57584,45 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentUncheckedUpdateManyWithoutAcademicSemesterInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: StringFieldUpdateOperationsInput | string
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type StudentCarriedCourseUpdateWithoutSemesterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+    discipline?: DisciplineUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateWithoutSemesterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    disciplineId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateManyWithoutSemesterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    disciplineId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AcademicDepartmentCreateManyAcademicFacultyInput = {
@@ -52276,6 +57654,7 @@ export namespace Prisma {
   export type StudentCreateManyAcademicFacultyInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -52297,6 +57676,25 @@ export namespace Prisma {
     admissionRegistrationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type AdmitionExameRegistrationCreateManyAcademicFalcultyInput = {
+    id?: string
+    applicantName: string
+    paymentRecipt: string
+    status?: $Enums.Status
+    document: string
+    paymentAmoute?: number | null
+    aprovePayment?: boolean | null
+    exameResults?: number | null
+    passed?: boolean | null
+    faseId: string
+    exameDate: Date | string
+    rejectionReason?: string | null
+    phoneNumber: string
+    email: string
+    createdAt?: Date | string
+    updateAt?: Date | string
   }
 
   export type AdmitionExamePriceCreateManyAcademicFacultyInput = {
@@ -52324,7 +57722,6 @@ export namespace Prisma {
     students?: StudentUpdateManyWithoutAcademicDepartmentNestedInput
     departmentHead?: UsersUpdateOneWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -52338,7 +57735,6 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     students?: StudentUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
     staffMembers?: UsersUncheckedUpdateManyWithoutStaffDepartmentsNestedInput
-    admitionExame?: AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentNestedInput
     offeredCourses?: OfferedCourseUncheckedUpdateManyWithoutAcademicDepartmentNestedInput
   }
 
@@ -52411,6 +57807,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutAcademicFacultyInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52438,11 +57835,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAcademicFacultyInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52470,11 +57869,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateManyWithoutAcademicFacultyInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52496,6 +57897,65 @@ export namespace Prisma {
     admissionRegistrationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmitionExameRegistrationUpdateWithoutAcademicFalcultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicantName?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    document?: StringFieldUpdateOperationsInput | string
+    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
+    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fase?: ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput
+    Student?: StudentUpdateOneWithoutAdmissionRegistrationNestedInput
+  }
+
+  export type AdmitionExameRegistrationUncheckedUpdateWithoutAcademicFalcultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicantName?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    document?: StringFieldUpdateOperationsInput | string
+    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
+    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    faseId?: StringFieldUpdateOperationsInput | string
+    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Student?: StudentUncheckedUpdateOneWithoutAdmissionRegistrationNestedInput
+  }
+
+  export type AdmitionExameRegistrationUncheckedUpdateManyWithoutAcademicFalcultyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicantName?: StringFieldUpdateOperationsInput | string
+    paymentRecipt?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    document?: StringFieldUpdateOperationsInput | string
+    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
+    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    faseId?: StringFieldUpdateOperationsInput | string
+    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AdmitionExamePriceUpdateWithoutAcademicFacultyInput = {
@@ -52575,6 +58035,7 @@ export namespace Prisma {
   export type StudentCreateManyAcademicDepartmentInput = {
     id?: string
     studentId: string
+    studentType?: $Enums.StudentType
     firstName: string
     middleName?: string | null
     lastName: string
@@ -52596,25 +58057,6 @@ export namespace Prisma {
     admissionRegistrationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-  }
-
-  export type AdmitionExameRegistrationCreateManyDepartmentInput = {
-    id?: string
-    applicantName: string
-    paymentRecipt: string
-    status?: $Enums.Status
-    document: string
-    paymentAmoute?: number | null
-    aprovePayment?: boolean | null
-    exameResults?: number | null
-    passed?: boolean | null
-    faseId: string
-    exameDate: Date | string
-    rejectionReason?: string | null
-    phoneNumber: string
-    email: string
-    createdAt?: Date | string
-    updateAt?: Date | string
   }
 
   export type OfferedCourseCreateManyAcademicDepartmentInput = {
@@ -52732,6 +58174,7 @@ export namespace Prisma {
   export type StudentUpdateWithoutAcademicDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52759,11 +58202,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAcademicDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52791,11 +58236,13 @@ export namespace Prisma {
     studentEnrolledCourseMarks?: StudentEnrolledCourseMarkUncheckedUpdateManyWithoutStudentNestedInput
     studentSemesterPayments?: StudentSemesterPaymentUncheckedUpdateManyWithoutStudentNestedInput
     studentAcademicInfos?: StudentAcademicInfoUncheckedUpdateManyWithoutStudentNestedInput
+    StudentCarriedCourse?: StudentCarriedCourseUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateManyWithoutAcademicDepartmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentId?: StringFieldUpdateOperationsInput | string
+    studentType?: EnumStudentTypeFieldUpdateOperationsInput | $Enums.StudentType
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
@@ -52852,65 +58299,6 @@ export namespace Prisma {
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AdmitionExameRegistrationUpdateWithoutDepartmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    applicantName?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    document?: StringFieldUpdateOperationsInput | string
-    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
-    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fase?: ExameFaseUpdateOneRequiredWithoutRegistrationsNestedInput
-    Student?: StudentUpdateOneWithoutAdmissionRegistrationNestedInput
-  }
-
-  export type AdmitionExameRegistrationUncheckedUpdateWithoutDepartmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    applicantName?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    document?: StringFieldUpdateOperationsInput | string
-    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
-    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    faseId?: StringFieldUpdateOperationsInput | string
-    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Student?: StudentUncheckedUpdateOneWithoutAdmissionRegistrationNestedInput
-  }
-
-  export type AdmitionExameRegistrationUncheckedUpdateManyWithoutDepartmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    applicantName?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    document?: StringFieldUpdateOperationsInput | string
-    paymentAmoute?: NullableIntFieldUpdateOperationsInput | number | null
-    aprovePayment?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    exameResults?: NullableIntFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    faseId?: StringFieldUpdateOperationsInput | string
-    exameDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OfferedCourseUpdateWithoutAcademicDepartmentInput = {
@@ -52987,13 +58375,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentCreateManyStudentInput = {
     id?: string
-    paymentRecipt?: string | null
-    totalPayment?: number
+    paymentId: string
+    totalPayment: number
     baseAmount: number
     lateFee?: number
-    aprovedPayment?: boolean
-    paymentType?: $Enums.PAYMENTTYPE
-    paymentStatus?: $Enums.PaymentStatus | null
     paymentMonth: number
     paymentYear: number
     createdAt?: Date | string
@@ -53007,6 +58392,16 @@ export namespace Prisma {
     updatedAt?: Date | string
     totalCompletedCredits?: number | null
     cgpa?: number | null
+  }
+
+  export type StudentCarriedCourseCreateManyStudentInput = {
+    id?: string
+    disciplineId: string
+    semesterId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
   }
 
   export type StudentSemesterRegistrationUpdateWithoutStudentInput = {
@@ -53154,29 +58549,23 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentUpdateWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment?: PaymentUpdateOneRequiredWithoutStudentSemesterPaymentNestedInput
     academicSemester?: AcademicSemesterUpdateOneRequiredWithoutStudentSemesterPaymentsNestedInput
   }
 
   export type StudentSemesterPaymentUncheckedUpdateWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: StringFieldUpdateOperationsInput | string
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53186,13 +58575,10 @@ export namespace Prisma {
 
   export type StudentSemesterPaymentUncheckedUpdateManyWithoutStudentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    paymentRecipt?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: StringFieldUpdateOperationsInput | string
     totalPayment?: IntFieldUpdateOperationsInput | number
     baseAmount?: IntFieldUpdateOperationsInput | number
     lateFee?: IntFieldUpdateOperationsInput | number
-    aprovedPayment?: BoolFieldUpdateOperationsInput | boolean
-    paymentType?: EnumPAYMENTTYPEFieldUpdateOperationsInput | $Enums.PAYMENTTYPE
-    paymentStatus?: NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
     paymentMonth?: IntFieldUpdateOperationsInput | number
     paymentYear?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53222,6 +58608,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalCompletedCredits?: NullableIntFieldUpdateOperationsInput | number | null
     cgpa?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type StudentCarriedCourseUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    discipline?: DisciplineUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+    semester?: AcademicSemesterUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    disciplineId?: StringFieldUpdateOperationsInput | string
+    semesterId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateManyWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    disciplineId?: StringFieldUpdateOperationsInput | string
+    semesterId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CourseFacultyCreateManyFacultyInput = {
@@ -53740,7 +59156,7 @@ export namespace Prisma {
     email: string
     createdAt?: Date | string
     updateAt?: Date | string
-    departmentId: string
+    academicFalcultyId: string
   }
 
   export type AdmitionExameRegistrationUpdateWithoutFaseInput = {
@@ -53759,7 +59175,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    department?: AcademicDepartmentUpdateOneRequiredWithoutAdmitionExameNestedInput
+    academicFalculty?: AcademicFacultyUpdateOneRequiredWithoutAdmitionExameNestedInput
     Student?: StudentUpdateOneWithoutAdmissionRegistrationNestedInput
   }
 
@@ -53779,7 +59195,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    departmentId?: StringFieldUpdateOperationsInput | string
+    academicFalcultyId?: StringFieldUpdateOperationsInput | string
     Student?: StudentUncheckedUpdateOneWithoutAdmissionRegistrationNestedInput
   }
 
@@ -53799,7 +59215,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    departmentId?: StringFieldUpdateOperationsInput | string
+    academicFalcultyId?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferedCourseSectionCreateManyOfferedCourseInput = {
@@ -54033,6 +59449,16 @@ export namespace Prisma {
     credits: number
   }
 
+  export type StudentCarriedCourseCreateManyDisciplineInput = {
+    id?: string
+    studentId: string
+    semesterId: string
+    shift: $Enums.Shift
+    price: number
+    status?: $Enums.CarriedCourseStatus
+    createdAt?: Date | string
+  }
+
   export type CourseDisciplineUpdateWithoutDisciplineInput = {
     id?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
@@ -54052,6 +59478,124 @@ export namespace Prisma {
     courseId?: StringFieldUpdateOperationsInput | string
     semesterId?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type StudentCarriedCourseUpdateWithoutDisciplineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+    semester?: AcademicSemesterUpdateOneRequiredWithoutStudentCarriedCourseNestedInput
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateWithoutDisciplineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    semesterId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCarriedCourseUncheckedUpdateManyWithoutDisciplineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    semesterId?: StringFieldUpdateOperationsInput | string
+    shift?: EnumShiftFieldUpdateOperationsInput | $Enums.Shift
+    price?: IntFieldUpdateOperationsInput | number
+    status?: EnumCarriedCourseStatusFieldUpdateOperationsInput | $Enums.CarriedCourseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentSemesterPaymentCreateManyPaymentInput = {
+    id?: string
+    totalPayment: number
+    baseAmount: number
+    lateFee?: number
+    paymentMonth: number
+    paymentYear: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    studentId: string
+    academicSemesterId: string
+  }
+
+  export type PaymentReferenceCreateManyPaymentInput = {
+    id?: string
+    reference: string
+    code: number
+    message: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentSemesterPaymentUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPayment?: IntFieldUpdateOperationsInput | number
+    baseAmount?: IntFieldUpdateOperationsInput | number
+    lateFee?: IntFieldUpdateOperationsInput | number
+    paymentMonth?: IntFieldUpdateOperationsInput | number
+    paymentYear?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutStudentSemesterPaymentsNestedInput
+    academicSemester?: AcademicSemesterUpdateOneRequiredWithoutStudentSemesterPaymentsNestedInput
+  }
+
+  export type StudentSemesterPaymentUncheckedUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPayment?: IntFieldUpdateOperationsInput | number
+    baseAmount?: IntFieldUpdateOperationsInput | number
+    lateFee?: IntFieldUpdateOperationsInput | number
+    paymentMonth?: IntFieldUpdateOperationsInput | number
+    paymentYear?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    academicSemesterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type StudentSemesterPaymentUncheckedUpdateManyWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPayment?: IntFieldUpdateOperationsInput | number
+    baseAmount?: IntFieldUpdateOperationsInput | number
+    lateFee?: IntFieldUpdateOperationsInput | number
+    paymentMonth?: IntFieldUpdateOperationsInput | number
+    paymentYear?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    academicSemesterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PaymentReferenceUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reference?: StringFieldUpdateOperationsInput | string
+    code?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentReferenceUncheckedUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reference?: StringFieldUpdateOperationsInput | string
+    code?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentReferenceUncheckedUpdateManyWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reference?: StringFieldUpdateOperationsInput | string
+    code?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

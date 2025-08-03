@@ -13,7 +13,7 @@ import { IQueryParams } from '../../interfaces/common';
 import { prisma } from '../../shared/prisma';
 import { asyncForEach } from '../../shared/utils';
 import { StudentEnrolledCourseMarkService } from '../studentEnrolledCourseMark/studentEnrolledCourseMark.service';
-import { studentSemesterPaymentService } from '../studentSemesterPayment/studentSemesterPayment.service';
+import { StudentSemesterPaymentController } from '../studentSemesterPayment/studentSemesterPayment.controller';
 import { studentSemesterRegistrationCourseService } from '../studentSemesterRegistrationCourse/studentSemesterRegistrationCourse.service';
 import { IEnrollCoursePayload } from './semesterRegistration.interface';
 import { SemesterRegistrationUtils } from './semesterRegistration.utils';
@@ -404,12 +404,14 @@ const startNewSemesterService = async (id: string) => {
       studentSemesterRegistrations,
       async (studentSemReg: StudentSemesterRegistration) => {
         if (studentSemReg.totalCreditsTaken) {
-
-          await studentSemesterPaymentService.createSemesterPayment(tx, {
-            studentId: studentSemReg.studentId,
-            academicSemesterId: semesterRegistration.academicSemesterId,
-            paymentRecipt: studentSemReg.paymentRecipt,
-          });
+          await StudentSemesterPaymentController.createSemesterPaymentWithPayment(
+            tx,
+            {
+              studentId: studentSemReg.studentId,
+              academicSemesterId: semesterRegistration.academicSemesterId,
+              paymentRecipt: studentSemReg.paymentRecipt,
+            }
+          );
         }
 
         const studentSemesterRegistrationCourses =

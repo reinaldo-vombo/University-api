@@ -7,9 +7,10 @@ import { prisma } from '../../shared/prisma';
 import bcrypt from 'bcrypt';
 
 const createUserService = async (info: Users): Promise<Users> => {
-  const { name, email, role } = info;
+  const { name, email, role, avatar } = info;
   const generatedPassword = generatePassword(12);
-  const template = userEnviteEmail(name, generatedPassword);
+  const template = userEnviteEmail(name, generatedPassword, avatar);
+
   // Hash the generated password
   const hashedPassword = await bcrypt.hash(generatedPassword, 10);
   const result = await prisma.users.create({

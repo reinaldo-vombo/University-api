@@ -45,6 +45,7 @@ model AcademicSemester {
   studentEnrolledCourses     StudentEnrolledCourse[]     @relation(name: "EnrolledCourseSemester")
   studentEnrolledCourseMarks StudentEnrolledCourseMark[] @relation(name: "MarkSemester")
   studentSemesterPayments    StudentSemesterPayment[]
+  StudentCarriedCourse       StudentCarriedCourse[]
 
   @@map("academic_semesters")
 }
@@ -58,6 +59,7 @@ model AcademicFaculty {
   academicDepartments AcademicDepartment[]
   faculties           Faculty[]
   students            Student[]
+  admitionExame       AdmitionExameRegistration[]
   AdmitionExamePrice  AdmitionExamePrice[]
   AdmitionExamePeriod AdmitionExamePeriod[]
 
@@ -78,15 +80,15 @@ model AcademicDepartment {
   departmentHead    Users?          @relation("DepartmentHead", fields: [departmentHeadId], references: [id])
   staffMembers      Users[]         @relation("DepartmentStaff")
 
-  admitionExame  AdmitionExameRegistration[]
   offeredCourses OfferedCourse[]
 
   @@map("academic_departments")
 }
 
 model Student {
-  id                      String    @id @default(uuid())
-  studentId               String    @unique
+  id                      String      @id @default(uuid())
+  studentId               String      @unique
+  studentType             StudentType @default(NORMAL)
   firstName               String
   middleName              String?
   lastName                String
@@ -94,10 +96,10 @@ model Student {
   email                   String?
   contactNo               String?
   gender                  String
-  isWoker                 Boolean   @default(false)
-  shift                   Shift     @default(MORNING)
-  yearLevel               YearLevel @default(FIRST)
-  isActive                Boolean   @default(false)
+  isWoker                 Boolean     @default(false)
+  shift                   Shift       @default(MORNING)
+  yearLevel               YearLevel   @default(FIRST)
+  isActive                Boolean     @default(false)
   password                String
   gradeDeclarationFile    String
   biFile                  String
@@ -106,7 +108,7 @@ model Student {
   academicSemesterId      String
   academicFacultyId       String
   academicDepartmentId    String
-  admissionRegistrationId String?   @unique
+  admissionRegistrationId String?     @unique
 
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -122,6 +124,7 @@ model Student {
   studentEnrolledCourseMarks         StudentEnrolledCourseMark[]
   studentSemesterPayments            StudentSemesterPayment[]
   studentAcademicInfos               StudentAcademicInfo[]
+  StudentCarriedCourse               StudentCarriedCourse[]
 
   @@map("students")
 }
@@ -252,9 +255,9 @@ model AdmitionExameRegistration {
   createdAt       DateTime  @default(now())
   updateAt        DateTime  @updatedAt
 
-  departmentId String
-  department   AcademicDepartment @relation(fields: [departmentId], references: [id])
-  Student      Student?
+  academicFalcultyId String
+  academicFalculty   AcademicFaculty @relation(fields: [academicFalcultyId], references: [id])
+  Student            Student?
 
   @@map("admition_exame_registration")
 }
@@ -435,6 +438,23 @@ model CourseDiscipline {
   @@map("course_disciplines")
 }
 
+model StudentCarriedCourse {
+  id           String              @id @default(uuid())
+  studentId    String
+  disciplineId String
+  semesterId   String
+  shift        Shift
+  price        Int
+  status       CarriedCourseStatus @default(ACTIVE) // pode ser ACTIVE, COMPLETED, etc.
+  createdAt    DateTime            @default(now())
+
+  student    Student          @relation(fields: [studentId], references: [id])
+  discipline Discipline       @relation(fields: [disciplineId], references: [id])
+  semester   AcademicSemester @relation(fields: [semesterId], references: [id])
+
+  @@map("student_carried_courses")
+}
+
 model CoursePricing {
   id        String   @id @default(uuid())
   price     Float
@@ -456,20 +476,19 @@ model Discipline {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
-  courseDisciplines CourseDiscipline[]
+  courseDisciplines    CourseDiscipline[]
+  StudentCarriedCourse StudentCarriedCourse[]
 
   @@map("disciplines")
 }
 
 model StudentSemesterPayment {
   id                 String           @id @default(uuid())
-  paymentRecipt      String?
-  totalPayment       Int              @default(0)
+  paymentId          String
+  payment            Payment          @relation(fields: [paymentId], references: [id])
+  totalPayment       Int
   baseAmount         Int
   lateFee            Int              @default(0)
-  aprovedPayment     Boolean          @default(false)
-  paymentType        PAYMENTTYPE      @default(EXPRESS)
-  paymentStatus      PaymentStatus?   @default(PENDING)
   paymentMonth       Int
   paymentYear        Int
   createdAt          DateTime         @default(now())
@@ -506,6 +525,33 @@ model Events {
   updatedAt   DateTime @updatedAt
 }
 
+model Payment {
+  id                     String                   @id @default(uuid())
+  paymentRecipt          String?
+  totalAmount            Int                      @default(0)
+  approved               Boolean                  @default(false)
+  paymentType            PAYMENTTYPE              @default(REFERENCE)
+  status                 PAYMENTSTATUS            @default(NOT_PAID)
+  method                 PAYMENTMETHOD            @default(EXPRESS)
+  StudentSemesterPayment StudentSemesterPayment[]
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  PaymentReference PaymentReference[]
+}
+
+model PaymentReference {
+  id        String @id @default(uuid())
+  reference String
+  code      Int
+  message   String
+
+  paymentId String
+  payment   Payment  @relation(fields: [paymentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum SemesterRegistrationStatus {
   UPCOMING
   ONGOING
@@ -516,6 +562,12 @@ enum Shift {
   MORNING
   AFTERNOON
   EVENING
+}
+
+enum StudentType {
+  NORMAL
+  CADEIRANTE
+  BOLSEIRO
 }
 
 enum Status {
@@ -534,6 +586,12 @@ enum WeekDays {
   FRIDAY
 }
 
+enum CarriedCourseStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+}
+
 enum StudentEnrolledCourseStatus {
   ONGOING
   COMPLETED
@@ -545,10 +603,10 @@ enum ExamType {
   FINAL
 }
 
-enum PaymentStatus {
+enum PAYMENTSTATUS {
   PENDING
   NOT_PAID
-  FULL_PAID
+  PAID
 }
 
 enum YearLevel {
@@ -571,6 +629,11 @@ enum UserRole {
 }
 
 enum PAYMENTTYPE {
-  RECIPT
+  RECEIPT
+  REFERENCE
+}
+
+enum PAYMENTMETHOD {
+  INVOICE
   EXPRESS
 }

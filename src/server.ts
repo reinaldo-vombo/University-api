@@ -8,7 +8,7 @@ import path from 'path';
 const app = express();
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: config.FRONT_END_DOMAIN,
     credentials: true,
   })
 );
@@ -16,8 +16,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use('/uploads', express.static(path.join(__dirname, '..',  'storage', 'uploads')));
+app.use(
+  '/uploads',
+  express.static(path.join(__dirname, '..', 'storage', 'uploads'))
+);
 
 app.get('/', (_req, res) => {
   res.send('Hello, TypeScript + Express!');

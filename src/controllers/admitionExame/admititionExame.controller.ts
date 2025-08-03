@@ -7,17 +7,25 @@ import { AdmitionExameService } from './admitionExame.service';
 import httpStatus from 'http-status';
 
 const createAdmitionExameRegistration = asyncHandler(async (req, res) => {
-  const {
-    applicantName,
-    exameDate,
-    phoneNumber,
-
-    departmentId,
-    documentUrl,
-    paymentReciptUrl,
-  } = req.body;
+  const { applicantName, documentUrl, paymentReciptUrl } = req.body;
   const name: string = applicantName;
+  const now = new Date();
+  // Procurar fase atual
+  const currentFase = await prisma.exameFase.findFirst({
+    where: {
+      startDate: { lte: now },
+      endDate: { gte: now },
+    },
+  });
 
+  if (!currentFase) {
+    return sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: true,
+      message: 'Nenhuma fase de exame válida no momento.',
+      data: [],
+    });
+  }
   const exitenAplicant = await prisma.admitionExameRegistration.findUnique({
     where: {
       applicantName: name,
@@ -47,9 +55,12 @@ const createAdmitionExameRegistration = asyncHandler(async (req, res) => {
 
   const requestbody: any = {
     ...req.body,
+    faseId: currentFase.id,
     document: documentPath || documentUrl,
     paymentRecipt: paymentPath || paymentReciptUrl,
   };
+  console.log(requestbody);
+
   const result =
     await AdmitionExameService.createAdmitionExameRegistration(requestbody);
 

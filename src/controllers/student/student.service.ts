@@ -44,6 +44,11 @@ const getSingleStudentService = async (
     where: {
       studentId,
     },
+    include: {
+      academicDepartment: true,
+      studentAcademicInfos: true,
+      studentEnrolledCourseMarks: true,
+    },
   });
 
   return result;

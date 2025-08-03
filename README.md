@@ -3,9 +3,11 @@
 - API Documentation: [https://documenter.getpostman.com/view/20735271/2s9Y5bQgfi](https://documenter.getpostman.com/view/20735271/2s9Y5bQgfi)
 
 #### Description:
+
 The University Management Core Service is a comprehensive system engineered to efficiently manage critical aspects of academic operations within educational institutions. Leveraging the power of Prisma, Express.js, Node.js, and PostgreSQL, this project provides a robust foundation for overseeing courses, semesters, student registrations, and more.
 
 #### Key Features:
+
 1. Course Management: Easily create, update, and organize course offerings, ensuring accurate course information for students and faculty.
 2. Semester Administration: Seamlessly plan and manage academic semesters, including scheduling, course assignments, and resource allocation.
 3. Student Registrations: Streamline the registration process, allowing students to select and enroll in courses, manage their schedules, and monitor their academic progress.
@@ -19,7 +21,8 @@ The University Management Core Service is a comprehensive system engineered to e
 
 With the University Management Core Service, educational institutions can optimize their academic operations, reduce administrative burdens, and provide students with a smoother learning experience. Elevate the precision and efficiency of your institution's management processes with this comprehensive core service.
 
+# docker docker-compose
 
+# Unit text end-to-end cover-report
 
-
-
+# swegger api docuntation

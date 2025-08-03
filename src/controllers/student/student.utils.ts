@@ -1,3 +1,5 @@
+import { prisma } from '../../shared/prisma';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const groupByAcademicSemester = (data: any) => {
   const groupData = data.reduce((result: any, course: any) => {
@@ -42,7 +44,27 @@ const groupByAcademicSemester = (data: any) => {
   }, []);
   return groupData;
 };
+const generateUniqueStudentNumber = async (): Promise<string> => {
+  let unique = false;
+  let studentNumber = '';
+  const year = new Date().getFullYear();
+
+  while (!unique) {
+    const randomPart = Math.floor(1000 + Math.random() * 9000);
+    studentNumber = `${year}${randomPart}`;
+
+    const existing = await prisma.student.findUnique({
+      where: { studentId: studentNumber },
+      select: { id: true },
+    });
+
+    if (!existing) unique = true;
+  }
+
+  return studentNumber;
+};
 
 export const StudentUtils = {
   groupByAcademicSemester,
+  generateUniqueStudentNumber,
 };

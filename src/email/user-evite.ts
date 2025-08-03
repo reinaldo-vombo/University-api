@@ -8,7 +8,11 @@ const teamEmail = config.APP_EMAIL;
 const redirectUrl = config.FRONT_END_DOMAIN;
 const appName = config.APP_NAME;
 
-export function userEnviteEmail(name: string, validationCode: string) {
+export function userEnviteEmail(
+  name: string,
+  validationCode: string,
+  avatar: string | null
+) {
   const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
    <html>
    <head>
@@ -95,7 +99,7 @@ export function userEnviteEmail(name: string, validationCode: string) {
                               <img
                                  alt="${name}"
                                  height="64"
-                                 src="https://react-email-demo-jkedocxxs-resend.vercel.app/static/vercel-user.png"
+                                 src="${avatar || 'https://react-email-demo-jkedocxxs-resend.vercel.app/static/vercel-user.png'}"
                                  style="border-radius:9999px;display:block;outline:none;border:none;text-decoration:none"
                                  width="64" />
                            </td>
@@ -136,7 +140,7 @@ export function userEnviteEmail(name: string, validationCode: string) {
                         This link and code will only be valid for the next 5 minutes. If the
                         link does not work, you can use the login verification code directly:
                      </p>
-                      <code style="font-family: monospace;font-weight:700;padding: 1px 4px;background-color: #dfe1e4;letter-spacing:-0.3px;font-size:21px;border-radius:4px;color: #3c4149">
+                      <code style="margin: 0 0 15px;font-family: monospace;font-weight:700;padding: 1px 4px;background-color: #dfe1e4;letter-spacing:-0.3px;font-size:21px;border-radius:4px;color: #3c4149">
                         ${validationCode}
                       </code>
                      <a

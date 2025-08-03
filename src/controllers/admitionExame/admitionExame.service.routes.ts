@@ -16,11 +16,11 @@ router.get(
 );
 router.post(
   '/register',
-  // validateRequest(createadmitionExameZodSchema),
   upload.fields([
     { name: 'document', maxCount: 1 },
     { name: 'paymentRecipt', maxCount: 1 },
   ]),
+  validateRequest(createadmitionExameZodSchema),
   AdmitionExameController.createAdmitionExameRegistration
 );
 router.get(

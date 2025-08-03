@@ -2,9 +2,6 @@ import { z } from 'zod';
 
 export const createStudentZodSchema = z.object({
   body: z.object({
-    studentId: z.string({
-      required_error: 'Student id is required',
-    }),
     firstName: z.string({
       required_error: 'First name is required',
     }),
@@ -27,9 +24,6 @@ export const createStudentZodSchema = z.object({
     }),
     academicDepartmentId: z.string({
       required_error: 'Academic department is required',
-    }),
-    admissionRegistrationId: z.string({
-      required_error: 'Admition exame is required',
     }),
     academicFacultyId: z.string({
       required_error: 'Academic faculty is required',

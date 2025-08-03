@@ -20,20 +20,20 @@ async function main() {
       {
         name: 'Fase 1',
         ordem: 1,
-        startDate: new Date('2025-07-01'),
-        endDate: new Date('2025-07-05'),
+        startDate: new Date('2025-08-01'),
+        endDate: new Date('2025-08-10'),
       },
       {
         name: 'Fase 2',
         ordem: 2,
-        startDate: new Date('2025-07-06'),
-        endDate: new Date('2025-07-10'),
+        startDate: new Date('2025-08-11'),
+        endDate: new Date('2025-08-20'),
       },
       {
         name: 'Fase 3',
         ordem: 3,
-        startDate: new Date('2025-07-11'),
-        endDate: new Date('2025-07-15'),
+        startDate: new Date('2025-08-21'),
+        endDate: new Date('2025-08-30'),
       },
     ],
   });

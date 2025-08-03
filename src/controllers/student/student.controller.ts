@@ -7,27 +7,10 @@ import sendResponse from '../../shared/sendResponse';
 import { StudentService } from './student.service';
 import { prisma } from '../../shared/prisma';
 import { saveUploadedFiles } from '../../utils/saveUploadedFiles';
+import { StudentUtils } from './student.utils';
 
 const createStudent = asyncHandler(async (req, res) => {
-  const {
-    studentId,
-    firstName,
-    middleName,
-    lastName,
-    password,
-    email,
-    contactNo,
-    gender,
-    declarationFileUrl,
-    biFileUrl,
-    presentAddress,
-    academicSemesterId,
-    academicDepartmentId,
-    admissionRegistrationId,
-    academicFacultyId,
-  } = req.body;
-
-  const fullName: string = `${firstName} ${lastName}`;
+  const fullName: string = `${req.body.firstName} ${req.body.lastName}`;
 
   const aplicant = await prisma.admitionExameRegistration.findUnique({
     where: {
@@ -64,23 +47,16 @@ const createStudent = asyncHandler(async (req, res) => {
     ? await saveUploadedFiles(files.biFile[0])
     : null;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const studentId = StudentUtils.generateUniqueStudentNumber();
   const body: any = {
+    ...req.body,
     studentId,
-    firstName,
-    middleName,
-    lastName,
     password: hashedPassword,
-    email,
-    contactNo,
-    gender,
-    gradeDeclarationFile: documentPath || declarationFileUrl,
-    biFile: biFilePath || biFileUrl,
-    presentAddress,
-    academicSemesterId,
-    academicDepartmentId,
-    admissionRegistrationId,
-    academicFacultyId,
+    academicFacultyId: aplicant.academicFalcultyId,
+    admissionRegistrationId: aplicant.id,
+    gradeDeclarationFile: documentPath || req.body.declarationFileUrl,
+    biFile: biFilePath || req.body.biFileUrl,
   };
 
   const result = await StudentService.createStudentService(body);

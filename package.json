@@ -1,13 +1,20 @@
 {
+  "name": "Univercity-crm",
+  "version": "1.1.1",
+  "license": "ISC",
+  "description": "",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn src/server.ts",
-    "build": "npx prisma generate && ",
+    "build": "npx tsc",
     "start": "node dist/server.js",
     "seed": "ts-node src/domain/seed.ts",
     "push": "prisma db push",
     "migrate:dev": "prisma migrate dev --name",
     "reset": "prisma migrate reset"
   },
+  "author": "Reinaldo Vombo",
+  "keywords": [],
   "dependencies": {
     "@prisma/client": "^6.6.0",
     "@react-email/components": "^0.3.2",

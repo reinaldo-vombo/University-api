@@ -159,6 +159,7 @@ exports.Prisma.AcademicDepartmentScalarFieldEnum = {
 exports.Prisma.StudentScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
+  studentType: 'studentType',
   firstName: 'firstName',
   middleName: 'middleName',
   lastName: 'lastName',
@@ -267,7 +268,7 @@ exports.Prisma.AdmitionExameRegistrationScalarFieldEnum = {
   email: 'email',
   createdAt: 'createdAt',
   updateAt: 'updateAt',
-  departmentId: 'departmentId'
+  academicFalcultyId: 'academicFalcultyId'
 };
 
 exports.Prisma.AdmitionExamePriceScalarFieldEnum = {
@@ -388,6 +389,17 @@ exports.Prisma.CourseDisciplineScalarFieldEnum = {
   credits: 'credits'
 };
 
+exports.Prisma.StudentCarriedCourseScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  disciplineId: 'disciplineId',
+  semesterId: 'semesterId',
+  shift: 'shift',
+  price: 'price',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CoursePricingScalarFieldEnum = {
   id: 'id',
   price: 'price',
@@ -409,13 +421,10 @@ exports.Prisma.DisciplineScalarFieldEnum = {
 
 exports.Prisma.StudentSemesterPaymentScalarFieldEnum = {
   id: 'id',
-  paymentRecipt: 'paymentRecipt',
+  paymentId: 'paymentId',
   totalPayment: 'totalPayment',
   baseAmount: 'baseAmount',
   lateFee: 'lateFee',
-  aprovedPayment: 'aprovedPayment',
-  paymentType: 'paymentType',
-  paymentStatus: 'paymentStatus',
   paymentMonth: 'paymentMonth',
   paymentYear: 'paymentYear',
   createdAt: 'createdAt',
@@ -441,6 +450,28 @@ exports.Prisma.EventsScalarFieldEnum = {
   color: 'color',
   location: 'location',
   mandatory: 'mandatory',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  paymentRecipt: 'paymentRecipt',
+  totalAmount: 'totalAmount',
+  approved: 'approved',
+  paymentType: 'paymentType',
+  status: 'status',
+  method: 'method',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentReferenceScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  code: 'code',
+  message: 'message',
+  paymentId: 'paymentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -568,7 +599,7 @@ exports.Prisma.AdmitionExameRegistrationOrderByRelevanceFieldEnum = {
   rejectionReason: 'rejectionReason',
   phoneNumber: 'phoneNumber',
   email: 'email',
-  departmentId: 'departmentId'
+  academicFalcultyId: 'academicFalcultyId'
 };
 
 exports.Prisma.AdmitionExamePriceOrderByRelevanceFieldEnum = {
@@ -657,6 +688,13 @@ exports.Prisma.CourseDisciplineOrderByRelevanceFieldEnum = {
   semesterId: 'semesterId'
 };
 
+exports.Prisma.StudentCarriedCourseOrderByRelevanceFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  disciplineId: 'disciplineId',
+  semesterId: 'semesterId'
+};
+
 exports.Prisma.CoursePricingOrderByRelevanceFieldEnum = {
   id: 'id',
   courseId: 'courseId'
@@ -671,7 +709,7 @@ exports.Prisma.DisciplineOrderByRelevanceFieldEnum = {
 
 exports.Prisma.StudentSemesterPaymentOrderByRelevanceFieldEnum = {
   id: 'id',
-  paymentRecipt: 'paymentRecipt',
+  paymentId: 'paymentId',
   studentId: 'studentId',
   academicSemesterId: 'academicSemesterId'
 };
@@ -688,6 +726,18 @@ exports.Prisma.EventsOrderByRelevanceFieldEnum = {
   thumbnail: 'thumbnail',
   color: 'color'
 };
+
+exports.Prisma.PaymentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  paymentRecipt: 'paymentRecipt'
+};
+
+exports.Prisma.PaymentReferenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  message: 'message',
+  paymentId: 'paymentId'
+};
 exports.UserRole = exports.$Enums.UserRole = {
   super_admin: 'super_admin',
   admin: 'admin',
@@ -697,6 +747,12 @@ exports.UserRole = exports.$Enums.UserRole = {
   accountant: 'accountant',
   department_head: 'department_head',
   staff: 'staff'
+};
+
+exports.StudentType = exports.$Enums.StudentType = {
+  NORMAL: 'NORMAL',
+  CADEIRANTE: 'CADEIRANTE',
+  BOLSEIRO: 'BOLSEIRO'
 };
 
 exports.Shift = exports.$Enums.Shift = {
@@ -746,15 +802,26 @@ exports.ExamType = exports.$Enums.ExamType = {
   FINAL: 'FINAL'
 };
 
-exports.PAYMENTTYPE = exports.$Enums.PAYMENTTYPE = {
-  RECIPT: 'RECIPT',
-  EXPRESS: 'EXPRESS'
+exports.CarriedCourseStatus = exports.$Enums.CarriedCourseStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  DROPPED: 'DROPPED'
 };
 
-exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+exports.PAYMENTTYPE = exports.$Enums.PAYMENTTYPE = {
+  RECEIPT: 'RECEIPT',
+  REFERENCE: 'REFERENCE'
+};
+
+exports.PAYMENTSTATUS = exports.$Enums.PAYMENTSTATUS = {
   PENDING: 'PENDING',
   NOT_PAID: 'NOT_PAID',
-  FULL_PAID: 'FULL_PAID'
+  PAID: 'PAID'
+};
+
+exports.PAYMENTMETHOD = exports.$Enums.PAYMENTMETHOD = {
+  INVOICE: 'INVOICE',
+  EXPRESS: 'EXPRESS'
 };
 
 exports.Prisma.ModelName = {
@@ -782,11 +849,14 @@ exports.Prisma.ModelName = {
   StudentEnrolledCourse: 'StudentEnrolledCourse',
   StudentEnrolledCourseMark: 'StudentEnrolledCourseMark',
   CourseDiscipline: 'CourseDiscipline',
+  StudentCarriedCourse: 'StudentCarriedCourse',
   CoursePricing: 'CoursePricing',
   Discipline: 'Discipline',
   StudentSemesterPayment: 'StudentSemesterPayment',
   StudentAcademicInfo: 'StudentAcademicInfo',
-  Events: 'Events'
+  Events: 'Events',
+  Payment: 'Payment',
+  PaymentReference: 'PaymentReference'
 };
 
 /**

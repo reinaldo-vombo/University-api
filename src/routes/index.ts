@@ -19,7 +19,7 @@ import { DisciplineRoutes } from '../controllers/discipline/discipline.routes';
 import { EventsRoutes } from '../controllers/events/event.routes';
 import { CoursePricingRoutes } from '../controllers/coursePricing/coursePricing.routes';
 import { FacultyRoutes } from '../controllers/faculty/faculty.route';
-import { NotificationsRoutes } from '../controllers/notification/notifications.route';
+import { SemesterPaymentRoutes } from '../controllers/studentSemesterPayment/semesterPayment.routes';
 
 const router = express.Router();
 
@@ -105,8 +105,8 @@ const moduleRoutes = [
     routes: EventsRoutes,
   },
   {
-    path: '/notify',
-    routes: NotificationsRoutes,
+    path: '/semester-payments',
+    routes: SemesterPaymentRoutes,
   },
 ];
 
