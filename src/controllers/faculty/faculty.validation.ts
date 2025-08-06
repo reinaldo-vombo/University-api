@@ -2,9 +2,6 @@ import { z } from 'zod';
 
 export const createFacultyZodSchema = z.object({
   body: z.object({
-    facultyId: z.string({
-      required_error: 'Faculty ID is required',
-    }),
     firstName: z.string({
       required_error: 'First name is required',
     }),
@@ -27,7 +24,7 @@ export const createFacultyZodSchema = z.object({
     academicFacultyId: z.string({
       required_error: 'Academic faculty is required',
     }),
-    shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING'],).optional(),
+    shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING']).optional(),
   }),
 });
 
@@ -44,7 +41,7 @@ export const updateFacultyZodSchema = z.object({
     designation: z.string().optional(),
     academicDepartmentId: z.string().optional(),
     academicFacultyId: z.string().optional(),
-    shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING'],).optional(),
+    shift: z.enum(['MORNING', 'AFTERNOON', 'EVENING']).optional(),
   }),
 });
 

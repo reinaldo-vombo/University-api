@@ -404,14 +404,14 @@ const startNewSemesterService = async (id: string) => {
       studentSemesterRegistrations,
       async (studentSemReg: StudentSemesterRegistration) => {
         if (studentSemReg.totalCreditsTaken) {
-          await StudentSemesterPaymentController.createSemesterPaymentWithPayment(
-            tx,
-            {
-              studentId: studentSemReg.studentId,
-              academicSemesterId: semesterRegistration.academicSemesterId,
-              paymentRecipt: studentSemReg.paymentRecipt,
-            }
-          );
+          // await StudentSemesterPaymentController.createSemesterPaymentWithPayment(
+          //   tx,
+          //   {
+          //     studentId: studentSemReg.studentId,
+          //     academicSemesterId: semesterRegistration.academicSemesterId,
+          //     paymentRecipt: studentSemReg.paymentRecipt,
+          //   }
+          // );
         }
 
         const studentSemesterRegistrationCourses =

@@ -841,7 +841,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\develpment\\web\\back-End\\university\\src\\generated\\prisma",
+      "value": "E:\\university\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -855,7 +855,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\develpment\\web\\back-End\\university\\prisma\\schema.prisma",
+    "sourceFilePath": "E:\\university\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -873,7 +873,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mysql://root:redx1998@localhost:3306/university"
+        "value": "mysql://root:CI%232024@localhost:3306/university"
       }
     }
   },

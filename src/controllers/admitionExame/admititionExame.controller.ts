@@ -59,7 +59,6 @@ const createAdmitionExameRegistration = asyncHandler(async (req, res) => {
     document: documentPath || documentUrl,
     paymentRecipt: paymentPath || paymentReciptUrl,
   };
-  console.log(requestbody);
 
   const result =
     await AdmitionExameService.createAdmitionExameRegistration(requestbody);

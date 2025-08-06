@@ -12,7 +12,11 @@ const createAdmitionExameRegistration = async (
 };
 
 const getAllAdmitionExameRegistration = async () => {
-  const result = await prisma.admitionExameRegistration.findMany();
+  const result = await prisma.admitionExameRegistration.findMany({
+    include: {
+      fase: true,
+    },
+  });
   return {
     data: result,
   };
